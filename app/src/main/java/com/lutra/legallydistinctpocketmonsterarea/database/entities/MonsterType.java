@@ -10,6 +10,7 @@ import java.util.Objects;
 public class MonsterType {
   @PrimaryKey(autoGenerate = true)
   private int monsterTypeId;
+  @NonNull
   private String monsterTypeName;
   private String phrase;
   private int attackMax;
@@ -21,7 +22,7 @@ public class MonsterType {
   private ElementalType elementalType;
   private String imageFilePath;
 
-  public MonsterType(String monsterTypeName, String phrase, int attackMax, int attackMin,
+  public MonsterType(@NonNull String monsterTypeName, String phrase, int attackMax, int attackMin,
       int defenseMax, int defenseMin, int healthMax, int healthMin, ElementalType elementalType) {
     this.monsterTypeName = monsterTypeName;
     this.phrase = phrase;
@@ -42,11 +43,12 @@ public class MonsterType {
     this.monsterTypeId = monsterTypeId;
   }
 
+  @NonNull
   public String getMonsterTypeName() {
     return monsterTypeName;
   }
 
-  public void setMonsterTypeName(String monsterTypeName) {
+  public void setMonsterTypeName(@NonNull String monsterTypeName) {
     this.monsterTypeName = monsterTypeName;
   }
 
