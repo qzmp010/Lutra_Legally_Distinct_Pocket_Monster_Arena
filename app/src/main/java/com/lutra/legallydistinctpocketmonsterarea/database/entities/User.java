@@ -4,9 +4,11 @@ package com.lutra.legallydistinctpocketmonsterarea.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.lutra.legallydistinctpocketmonsterarea.database.AppDatabase;
+
 import java.util.Objects;
 
-@Entity(tableName = "users")
+@Entity(tableName = AppDatabase.USER_TABLE)
 
 public class User {
     @PrimaryKey(autoGenerate = true)
