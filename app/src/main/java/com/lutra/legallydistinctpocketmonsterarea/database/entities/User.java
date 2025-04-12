@@ -4,6 +4,8 @@ package com.lutra.legallydistinctpocketmonsterarea.database.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "users")
 
 public class User {
@@ -11,12 +13,25 @@ public class User {
     private int id;
     private String username;
     private String password;
+    private boolean isAdmin;
 
-    public User(String username, String password){
+    public User(String username, String password, boolean isAdmin){
         this.username = username;
         this.password = password;
+        this.isAdmin = isAdmin;
+    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && isAdmin == user.isAdmin && Objects.equals(username, user.username) && Objects.equals(password, user.password);
     }
 
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, isAdmin);
+    }
     public int getId() {
         return id;
     }
@@ -39,5 +54,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
