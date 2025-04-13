@@ -3,6 +3,7 @@ package com.lutra.legallydistinctpocketmonsterarea.database;
 import android.app.Application;
 import android.util.Log;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
@@ -13,12 +14,14 @@ public class AppRepository {
   public static final String LOG_TAG = "com.lutra.ldpm.logs";
   private final MonsterTypeDAO monsterTypeDAO;
   private final UserMonsterDAO userMonsterDAO;
+  private final UserDAO userDao;
   private static AppRepository repository;
 
   private AppRepository(Application application) {
     AppDatabase db = AppDatabase.getDatabase(application);
     this.monsterTypeDAO = db.monsterTypeDAO();
     this.userMonsterDAO = db.userMonsterDAO();
+    this.userDao = db.userDao();
   }
 
   public static AppRepository getRepository(Application application) {
@@ -143,4 +146,10 @@ public class AppRepository {
     }
     return null;
   }
+
+    public void insertUser(User user) {
+        AppDatabase.databaseWriteExecutor.execute(() -> {
+            userDao.insert(user);
+        });
+    }
 }

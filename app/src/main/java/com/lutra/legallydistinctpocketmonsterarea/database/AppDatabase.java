@@ -8,15 +8,18 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType.ElementalType;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {MonsterType.class, UserMonster.class}, version = 1, exportSchema = false)
+@Database(entities = {MonsterType.class, UserMonster.class, User.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
   private static final String DATABASE_NAME = "LDPMDatabase";
   public static final String MONSTER_TYPE_TABLE = "monsterTypeTable";
   public static final String USER_MONSTER_TABLE = "userMonsterTable";
+
+  public static final String USER_TABLE = "userTable";
 
   private static volatile AppDatabase INSTANCE;
   private static final int NUMBER_OF_THREADS = 4;
@@ -64,6 +67,13 @@ public abstract class AppDatabase extends RoomDatabase {
 
         userMonsterDAO.insert(new UserMonster("Jiggly", 16, 6,
             22, 0, (int)monsterTypeId2));
+
+        UserDAO userDao = INSTANCE.userDao();
+        User admin = new User("admin", "admin123", true);
+        userDao.insert(admin);
+
+        User testUser = new User("trainer1", "pokedex123", false);
+        userDao.insert(testUser);
       });
     }
   };
@@ -71,4 +81,6 @@ public abstract class AppDatabase extends RoomDatabase {
   public abstract MonsterTypeDAO monsterTypeDAO();
 
   public abstract UserMonsterDAO userMonsterDAO();
+
+  public abstract UserDAO userDao();
 }
