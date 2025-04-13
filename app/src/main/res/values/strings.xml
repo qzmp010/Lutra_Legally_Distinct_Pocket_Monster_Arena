@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Lutra Legally Distinct Pocket Monster Arena</string>
+    <string name="enemy_monster_image">Enemy Monster Image</string>
+    <string name="regular_attack">REGULAR ATTACK</string>
+    <string name="normal_attack">NORMAL ATTACK</string>
+    <string name="switch_monster">SWITCH MONSTER</string>
+    <string name="run_away">RUN AWAY!</string>
 </resources>
