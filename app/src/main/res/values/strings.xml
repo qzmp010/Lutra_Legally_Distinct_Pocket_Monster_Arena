@@ -1,3 +1,9 @@
 <resources>
-  <string name="app_name">Lutra Legally Distinct Pocket Monster Arena</string>
+    <string name="app_name">Lutra Legally Distinct Pocket Monster Arena</string>
+    <string name="welcome">Welcome!</string>
+    <string name="switch_monster">Switch Monster</string>
+    <string name="battle">Battle</string>
+    <string name="capture_monster">Capture Monster</string>
+    <string name="view_monster">View Monster</string>
+    <string name="logout">Logout</string>
 </resources>
