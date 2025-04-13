@@ -13,10 +13,11 @@ import androidx.core.view.WindowInsetsCompat;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityLobbyBinding;
 
 public class LobbyActivity extends AppCompatActivity {
-    ActivityLobbyBinding binding = ActivityLobbyBinding.inflate(getLayoutInflater());
+   // ActivityLobbyBinding binding = ActivityLobbyBinding.inflate(getLayoutInflater());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ActivityLobbyBinding binding = ActivityLobbyBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
 
         setContentView(binding.getRoot());
