@@ -11,20 +11,36 @@ public class UserMonster {
   @PrimaryKey(autoGenerate = true)
   private int userMonsterId;
   private String nickname;
+  private String phrase;
+  private ElementalType type;
   private int attack;
   private int defense;
-  private int health;
+  private int currentHealth;
+  private int maxHealth;
   private int userId;
   private int monsterTypeId;
 
-  public UserMonster(String nickname, int attack, int defense, int health, int userId,
+
+  public enum ElementalType {
+    NORMAL,
+    ELECTRIC,
+    FIRE,
+    GRASS,
+    WATER,
+  }
+
+  public UserMonster(String nickname, String phrase, ElementalType type, int attack, int defense, int maxHealth, int userId,
       int monsterTypeId) {
     this.nickname = nickname;
+    this.phrase = phrase;
+    this.type = type;
     this.attack = attack;
     this.defense = defense;
-    this.health = health;
+    this.maxHealth = maxHealth;
     this.userId = userId;
     this.monsterTypeId = monsterTypeId;
+
+    currentHealth = maxHealth;
   }
 
   public int getUserMonsterId() {
@@ -59,12 +75,36 @@ public class UserMonster {
     this.defense = defense;
   }
 
-  public int getHealth() {
-    return health;
+  public int getMaxHealth() {
+    return maxHealth;
   }
 
-  public void setHealth(int health) {
-    this.health = health;
+  public void setMaxHealth(int health) {
+    this.maxHealth = health;
+  }
+
+  public int getCurrentHealth() {
+    return currentHealth;
+  }
+
+  public void setCurrentHealth(int currentHealth) {
+    this.currentHealth = currentHealth;
+  }
+
+  public String getPhrase() {
+    return phrase;
+  }
+
+  public void setPhrase(String phrase) {
+    this.phrase = phrase;
+  }
+
+  public ElementalType getType() {
+    return type;
+  }
+
+  public void setType(ElementalType type) {
+    this.type = type;
   }
 
   public int getUserId() {
@@ -90,7 +130,7 @@ public class UserMonster {
         "nickname='" + nickname + '\'' +
         ", attack=" + attack +
         ", defense=" + defense +
-        ", health=" + health +
+        ", maxHealth=" + maxHealth +
         ", userId=" + userId +
         ", monsterTypeId=" + monsterTypeId +
         '}';
@@ -103,12 +143,12 @@ public class UserMonster {
     }
     UserMonster that = (UserMonster) o;
     return userMonsterId == that.userMonsterId && attack == that.attack && defense == that.defense
-        && health == that.health && userId == that.userId && monsterTypeId == that.monsterTypeId
+        && maxHealth == that.maxHealth && userId == that.userId && monsterTypeId == that.monsterTypeId
         && Objects.equals(nickname, that.nickname);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userMonsterId, nickname, attack, defense, health, userId, monsterTypeId);
+    return Objects.hash(userMonsterId, nickname, attack, defense, maxHealth, userId, monsterTypeId);
   }
 }
