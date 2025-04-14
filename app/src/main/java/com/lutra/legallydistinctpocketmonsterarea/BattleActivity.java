@@ -30,6 +30,7 @@ public class BattleActivity extends AppCompatActivity {
         repository = AppRepository.getRepository(getApplication());
 
         initializeBattle();
+        takeCombatTurn();
 
     }
 
@@ -45,8 +46,10 @@ public class BattleActivity extends AppCompatActivity {
         //TODO: Change default conditions to pull monsters from database for combat.
         //Below are default monsters for testing.
 
-        userMonster = new UserMonster("NotBulbasaur", "Yoooo, got any grass?", UserMonster.ElementalType.GRASS,8,5,30,420,420);
-        enemyMonster = new UserMonster("NotSquirtle", "I didn't know you liked to get wet...", UserMonster.ElementalType.WATER,8,4,20,421,421);
+        userMonster = new UserMonster("NotBulbasaur", "Yoooo, got any grass?",
+                UserMonster.ElementalType.GRASS,8,5,30,420,420);
+        enemyMonster = new UserMonster("NotSquirtle", "I didn't know you liked to get wet...",
+                UserMonster.ElementalType.WATER,8,4,20,421,421);
 
         //Rolls to see which monster goes first
         if(Math.abs(rand.nextInt() % 4) == 0) {
@@ -81,5 +84,29 @@ public class BattleActivity extends AppCompatActivity {
         }
 
         binding.battleDialog.setText(sb.toString());
+    }
+
+    private void takeCombatTurn() {
+        int attackValue = 0;
+
+        if(activeMonster == enemyMonster) {
+            if(rand.nextInt() % 2 == 0) {
+                attackValue = enemyMonster.specialAttack(userMonster.getType());
+            } else {
+                attackValue = enemyMonster.normalAttack();
+            }
+            userMonster.takeDamage(attackValue);
+            if(userMonster.getCurrentHealth() > 0) {
+                String userHP = userMonster.getCurrentHealth() + "/" + userMonster.getMaxHealth();
+                binding.userMonsterHP.setText(userHP);
+                activeMonster = userMonster;
+                takeCombatTurn();
+            } else {
+                String userHP = "0/" + userMonster.getMaxHealth();
+                binding.userMonsterHP.setText(userHP);
+                binding.battleDialog.setText(String.format("%s%n%s fainted! Battle demo ends for now.",
+                        userMonster.getPhrase(),userMonster.getNickname()));
+            }
+        }
     }
 }
