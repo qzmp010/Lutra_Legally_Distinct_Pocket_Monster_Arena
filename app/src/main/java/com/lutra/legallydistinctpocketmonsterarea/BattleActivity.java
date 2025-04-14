@@ -59,19 +59,22 @@ public class BattleActivity extends AppCompatActivity {
         String userMonsterName = userMonster.getNickname();
 
         binding.enemyMonsterName.setText(enemyMonsterName);
+        binding.enemyMonsterImage.setImageResource(R.drawable.ld_squirtle);
         //TODO: Consider replacing in layout with two separate fields so concatenation isn't needed.
         String enemyHP = enemyMonster.getCurrentHealth() + "/" + enemyMonster.getMaxHealth();
         binding.enemyMonsterHP.setText(enemyHP);
 
         binding.userMonsterName.setText(userMonster.getNickname());
+        binding.userMonsterImage.setImageResource(R.drawable.ld_bulbasaur_png);
         String userHP = userMonster.getCurrentHealth() + "/" + userMonster.getMaxHealth();
         binding.userMonsterHP.setText(userHP);
 
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("You have encountered a wild %s!%n", enemyMonsterName.toUpperCase()));
         sb.append(String.format("\"%s\"%n%n", enemyMonster.getPhrase()));
+
         sb.append(String.format("Go-go-gadget %s!%n", userMonsterName.toUpperCase()));
-        sb.append(String.format("\"%s\"%n%n", enemyMonster.getPhrase()));
+        sb.append(String.format("\"%s\"%n%n", userMonster.getPhrase()));
 
         if(activeMonster == enemyMonster){
             sb.append(String.format("%s gets the drop on %s.", enemyMonsterName, userMonsterName));

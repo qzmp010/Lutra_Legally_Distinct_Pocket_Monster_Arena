@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/enemyMonsterImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:contentDescription="@string/enemy_monster_image"
@@ -20,14 +20,14 @@
 
     <ImageView
         android:id="@+id/userMonsterImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="60dp"
         android:layout_marginStart="20dp"
         android:scaleX="-1"
         android:contentDescription="@string/enemy_monster_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/enemyMonsterImage"
+        app:layout_constraintTop_toBottomOf="@id/enemyMonsterName"
         tools:srcCompat="@tools:sample/avatars[2]" />
 
     <TextView
@@ -45,11 +45,11 @@
 
     <TextView
         android:id="@+id/userMonsterName"
-        android:layout_width="240dp"
+        android:layout_width="220dp"
         android:layout_height="30dp"
         android:text="UserMonsterName"
         android:textSize="24sp"
-        android:textStyle="bold|italic"
+        android:textStyle="bold"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toTopOf="@id/userMonsterHP"
         app:layout_constraintStart_toStartOf="@id/userMonsterHP"
