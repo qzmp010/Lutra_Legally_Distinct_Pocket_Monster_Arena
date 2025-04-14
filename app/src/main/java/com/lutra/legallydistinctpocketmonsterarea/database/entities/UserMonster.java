@@ -154,14 +154,83 @@ public class UserMonster {
     return attackValue;
   }
 
-  //TODO: Write attackModifier method
-  public double attackModifier (ElementalType type) {
-    return 1;
+  /**
+   * Calculates modifier for special attack based on traditional weaknesses.
+   * Takes in other monster's type as parameter
+   * @return attack modifier
+   */
+  public double attackModifier(ElementalType defending) {
+    double modifier = 1.0; //Default modifier
+
+    //No need to continue if we don't have an element
+    if(this.type.equals(ElementalType.NORMAL)) {
+      return modifier;
+    }
+
+    switch(defending) {
+      case WATER:
+        if(this.type.equals(ElementalType.ELECTRIC) ||
+                this.type.equals(ElementalType.GRASS)) {
+          modifier = 2.0;
+          break;
+        }
+        if(this.type.equals(ElementalType.FIRE) ||
+                this.type.equals(ElementalType.WATER)) {
+          modifier = 0.5;
+          break;
+        }
+        break;
+      case FIRE:
+        if(this.type.equals(ElementalType.WATER)) {
+          modifier = 2.0;
+          break;
+        }
+        if(this.type.equals(ElementalType.FIRE) ||
+                this.type.equals(ElementalType.GRASS)) {
+          modifier = 0.5;
+          break;
+        }
+        break;
+      case ELECTRIC:
+        if(this.type.equals(ElementalType.ELECTRIC)) {
+          modifier = 0.5;
+          break;
+        }
+        break;
+      case GRASS:
+        if(this.type.equals(ElementalType.FIRE)) {
+          modifier = 2.0;
+          break;
+        }
+        if(this.type.equals(ElementalType.GRASS) ||
+                this.type.equals(ElementalType.WATER) ||
+                this.type.equals(ElementalType.ELECTRIC)) {
+          modifier = 0.5;
+          break;
+        }
+        break;
+      default:
+
+    }
+
+    return modifier;
   }
 
-  //TODO: write takeDamage method
+  /**
+   * Calculates damage based on passed in attack value minus defense (+/- 2)
+   * Reduces health by damage.
+   * We want the monster to take some damage, so it takes 1 damage by default.
+   * @return Damage amount taken for flavortext.
+   */
   public int takeDamage(int damage) {
-    return 0;
+    Random rand = new Random();
+    damage = damage - (defense + (rand.nextInt() % 3));
+    if(damage <= 0) {
+      damage = 1;
+    }
+
+    currentHealth -= damage;
+    return damage;
   }
 
   @NonNull

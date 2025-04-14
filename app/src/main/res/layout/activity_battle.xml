@@ -89,6 +89,7 @@
         android:layout_marginTop="20dp"
         android:textSize="18sp"
         android:textStyle="italic"
+        android:gravity="bottom"
         android:text="A wild EnemyMonsterName has appeared!\nEnemy Monster uses special attack.\nIt's kinda effective...\nUserMonsterName is hit for XX damage.\nUserMonsterName is ready for action!\nEnemyMonsterName has fainted.\nYou have defeated EnemyMonsterName!"
         />
 
