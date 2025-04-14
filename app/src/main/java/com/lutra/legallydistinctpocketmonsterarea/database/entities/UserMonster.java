@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import com.lutra.legallydistinctpocketmonsterarea.database.AppDatabase;
 import java.util.Objects;
+import java.util.Random;
 
 @Entity(tableName = AppDatabase.USER_MONSTER_TABLE)
 public class UserMonster {
@@ -121,6 +122,46 @@ public class UserMonster {
 
   public void setMonsterTypeId(int monsterTypeId) {
     this.monsterTypeId = monsterTypeId;
+  }
+
+  /**
+   * Normal attack against monster.
+   * @return Random number within 2 of attack value
+   */
+  public int normalAttack() {
+    Random rand = new Random();
+    return attack + (rand.nextInt() % 3);
+  }
+
+  /**
+   * Special attack against monster.
+   * Extra damage modifier, but has 25% chance to miss.
+   * @return attackValue
+   */
+  public int specialAttack(ElementalType type) {
+    int attackValue = 0;
+    Random rand = new Random();
+
+    //If attack misses, stop further processing
+    if(rand.nextInt() % 4 == 0) {
+      return attackValue;
+    }
+
+    //We aren't dealing with fractional values in this man's program.
+    attackValue = (int) (attack + (rand.nextInt() % 3) * 1.5);
+    attackValue = (int) (attackValue * attackModifier(type));
+
+    return attackValue;
+  }
+
+  //TODO: Write attackModifier method
+  public double attackModifier (ElementalType type) {
+    return 1;
+  }
+
+  //TODO: write takeDamage method
+  public int takeDamage(int damage) {
+    return 0;
   }
 
   @NonNull

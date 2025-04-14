@@ -88,14 +88,28 @@ public class BattleActivity extends AppCompatActivity {
 
     private void takeCombatTurn() {
         int attackValue = 0;
+        int damage = 0;
+        StringBuilder sb = new StringBuilder();
+        String enemyMonsterName = enemyMonster.getNickname().toUpperCase();
+        String userMonsterName = userMonster.getNickname().toUpperCase();
 
         if(activeMonster == enemyMonster) {
             if(rand.nextInt() % 2 == 0) {
+                sb.append(String.format("%s uses a special move...%n", enemyMonsterName));
                 attackValue = enemyMonster.specialAttack(userMonster.getType());
+                if(attackValue <= 0) {
+                    sb.append(String.format("%s avoided the attack!%n%n", userMonsterName));
+                } else {
+                    //TODO: Check if elemental flavortext is needed
+                    damage = userMonster.takeDamage(attackValue);
+                    sb.append(String.format("%s is hit for %d damage.%n%n", userMonsterName, damage));
+                }
             } else {
                 attackValue = enemyMonster.normalAttack();
+                damage = userMonster.takeDamage(attackValue);
+                sb.append(String.format("%s is hit for %d damage.%n%n", userMonsterName, damage));
             }
-            userMonster.takeDamage(attackValue);
+            binding.battleDialog.setText(sb.toString());
             if(userMonster.getCurrentHealth() > 0) {
                 String userHP = userMonster.getCurrentHealth() + "/" + userMonster.getMaxHealth();
                 binding.userMonsterHP.setText(userHP);
@@ -104,8 +118,9 @@ public class BattleActivity extends AppCompatActivity {
             } else {
                 String userHP = "0/" + userMonster.getMaxHealth();
                 binding.userMonsterHP.setText(userHP);
-                binding.battleDialog.setText(String.format("%s%n%s fainted! Battle demo ends for now.",
+                sb.append(String.format("%s%n%s fainted! Battle demo ends for now.",
                         userMonster.getPhrase(),userMonster.getNickname()));
+                binding.battleDialog.setText(sb.toString());
             }
         }
     }
