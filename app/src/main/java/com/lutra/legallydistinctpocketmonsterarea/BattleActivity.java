@@ -1,7 +1,5 @@
 package com.lutra.legallydistinctpocketmonsterarea;
 
-import static android.view.View.FOCUS_DOWN;
-
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -18,11 +16,6 @@ public class BattleActivity extends AppCompatActivity {
 
     private ActivityBattleBinding binding;
     private AppRepository repository;
-
-    private boolean clickedNormalAttack = false;
-    private boolean clickedSpecialAttack = false;
-    private boolean clickedSwitchMonster = false;
-    private boolean clickedRunAway = false;
 
     UserMonster userMonster;
     UserMonster enemyMonster;
@@ -43,7 +36,7 @@ public class BattleActivity extends AppCompatActivity {
         repository = AppRepository.getRepository(getApplication());
 
         initializeBattle();
-        takeCombatTurn();
+        enemyTurn();
 
         binding.normalAttackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,72 +127,117 @@ public class BattleActivity extends AppCompatActivity {
 
     }
 
-    private void takeCombatTurn() {
+    private void enemyTurn() {
         int attackValue = 0;
         int damage = 0;
         String enemyMonsterName = enemyMonster.getNickname().toUpperCase();
         String userMonsterName = userMonster.getNickname().toUpperCase();
 
-        if(activeMonster == enemyMonster) {
-            //Enemy Monster has a 50% chance to use a special vs. normal attack.
-            if(rand.nextInt() % 2 == 0) {
-                binding.battleDialog.append(String.format("%s uses a special move...%n", enemyMonsterName));
-                attackValue = enemyMonster.specialAttack(userMonster.getType());
-                if(attackValue <= 0) {
-                    binding.battleDialog.append(String.format("%s avoided the attack!%n%n", userMonsterName));
-                } else {
-                    double modifier = enemyMonster.attackModifier(userMonster.getType());
-                    if(modifier > 1) {
-                        binding.battleDialog.append("It's su-cough...it worked really well!\n");
-                    } else if(modifier < 1) {
-                        binding.battleDialog.append("Dude, what were you thinking?\n");
-                    } else {
-                        binding.battleDialog.append("It was fine, I guess.\n");
-                    }
-                    damage = userMonster.takeDamage(attackValue);
-                    binding.battleDialog.append(String.format("%s is hit for %d damage.%n%n", userMonsterName, damage));
-                }
-            } else {
-                binding.battleDialog.append(String.format("%s is attacking.%n", enemyMonsterName));
-                attackValue = enemyMonster.normalAttack();
-                damage = userMonster.takeDamage(attackValue);
-                binding.battleDialog.append(String.format("%s is hit for %d damage.%n%n", userMonsterName, damage));
-            }
-            if(userMonster.getCurrentHealth() > 0) {
-                String userHP = userMonster.getCurrentHealth() + "/" + userMonster.getMaxHealth();
-                binding.userMonsterHP.setText(userHP);
-                activeMonster = userMonster;
-                takeCombatTurn();
-            } else {
-                String userHP = "0/" + userMonster.getMaxHealth();
-                binding.userMonsterHP.setText(userHP);
-                binding.battleDialog.append(String.format("%s%n%s fainted! Battle demo ends for now.",
-                        userMonster.getPhrase(),userMonster.getNickname()));
-            }
+        if(activeMonster == userMonster) {
+            return;
         }
+
+        //Enemy Monster has a 50% chance to use a special vs. normal attack.
+        if(rand.nextInt() % 2 == 0) {
+            binding.battleDialog.append(String.format("%n%s uses a special move...%n", enemyMonsterName));
+            attackValue = enemyMonster.specialAttack(userMonster.getType());
+            if(attackValue <= 0) {
+                binding.battleDialog.append(String.format("%s avoided the attack!%n", userMonsterName));
+            } else {
+                double modifier = enemyMonster.attackModifier(userMonster.getType());
+                if(modifier > 1) {
+                    binding.battleDialog.append("It's su-cough...it worked really well!\n");
+                } else if(modifier < 1) {
+                    binding.battleDialog.append("Dude, what were you thinking?\n");
+                } else {
+                    binding.battleDialog.append("It was fine, I guess.\n");
+                }
+                damage = userMonster.takeDamage(attackValue);
+                binding.battleDialog.append(String.format("%s is hit for %d damage.%n", userMonsterName, damage));
+            }
+        } else {
+            binding.battleDialog.append(String.format("%n%s is attacking.%n", enemyMonsterName));
+            attackValue = enemyMonster.normalAttack();
+            damage = userMonster.takeDamage(attackValue);
+            binding.battleDialog.append(String.format("%s is hit for %d damage.%n", userMonsterName, damage));
+        }
+        if(userMonster.getCurrentHealth() > 0) {
+            String userHP = userMonster.getCurrentHealth() + "/" + userMonster.getMaxHealth();
+            binding.userMonsterHP.setText(userHP);
+            activeMonster = userMonster;
+            enemyTurn();
+        } else {
+            String userHP = "0/" + userMonster.getMaxHealth();
+            binding.userMonsterHP.setText(userHP);
+            binding.battleDialog.append(String.format("%n%s%n%s fainted! Battle demo ends for now.",
+                    userMonster.getPhrase(),userMonster.getNickname()));
+        }
+
     }
 
     public void userAttack() {
-        binding.battleDialog.append("UserAttack clicked.\n\n");
-        activeMonster = enemyMonster;
-        takeCombatTurn();
+        int attackValue = 0;
+        int damage = 0;
+
+        binding.battleDialog.append(String.format("%n%s is attacking.%n", userMonster.getNickname().toUpperCase()));
+        attackValue = userMonster.normalAttack();
+        damage = enemyMonster.takeDamage(attackValue);
+        binding.battleDialog.append(String.format("%s is hit for %d damage.%n", enemyMonster.getNickname().toUpperCase(), damage));
+        if(!faintCheck()) {
+            activeMonster = enemyMonster;
+            enemyTurn();
+        }
     }
 
     public void userSpecial() {
-        binding.battleDialog.append("UserSpecial clicked.\n\n");
-        activeMonster = enemyMonster;
-        takeCombatTurn();
+        int attackValue = 0;
+        int damage = 0;
+
+        binding.battleDialog.append(String.format("%n%s uses a special move...%n", userMonster.getNickname().toUpperCase()));
+        attackValue = userMonster.specialAttack(enemyMonster.getType());
+        if(attackValue <= 0) {
+            binding.battleDialog.append(String.format("%s avoided the attack!%n", enemyMonster.getNickname().toUpperCase()));
+        } else {
+            double modifier = userMonster.attackModifier(enemyMonster.getType());
+            if(modifier > 1) {
+                binding.battleDialog.append("It's su-cough...it worked really well!\n");
+            } else if(modifier < 1) {
+                binding.battleDialog.append("Dude, what were you thinking?\n");
+            } else {
+                binding.battleDialog.append("It was fine, I guess.\n");
+            }
+            damage = enemyMonster.takeDamage(attackValue);
+            binding.battleDialog.append(String.format("%s is hit for %d damage.%n", enemyMonster.getNickname().toUpperCase(), damage));
+        }
+        if(!faintCheck()) {
+            activeMonster = enemyMonster;
+            enemyTurn();
+        }
+    }
+
+    public boolean faintCheck() {
+        if (enemyMonster.getCurrentHealth() > 0) {
+            String enemyHP = enemyMonster.getCurrentHealth() + "/" + enemyMonster.getMaxHealth();
+            binding.enemyMonsterHP.setText(enemyHP);
+            return false;
+        } else {
+            String userHP = "0/" + enemyMonster.getMaxHealth();
+            binding.enemyMonsterHP.setText(userHP);
+            binding.battleDialog.append(String.format("%n%s%n%s fainted! Battle demo ends for now.",
+                    enemyMonster.getPhrase(), enemyMonster.getNickname()));
+            return true;
+        }
     }
 
     public void userSwitch() {
         binding.battleDialog.append("UserSwitched clicked.\n\n");
         activeMonster = enemyMonster;
-        takeCombatTurn();
+        enemyTurn();
     }
 
     public void userRun() {
-        binding.battleDialog.append("UserSwitched clicked.\n\n");
+        binding.battleDialog.append("UserRun clicked.\n\n");
         activeMonster = enemyMonster;
-        takeCombatTurn();
+        enemyTurn();
     }
 }
