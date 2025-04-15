@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    
 
     // Temporary: go straight to LobbyActivity for testing
     Intent intent = new Intent(MainActivity.this, LobbyActivity.class);
