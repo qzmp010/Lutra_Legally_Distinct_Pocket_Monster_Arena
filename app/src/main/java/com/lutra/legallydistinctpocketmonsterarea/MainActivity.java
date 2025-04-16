@@ -34,5 +34,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(BattleActivity.intentFactory(getApplicationContext()));
       }
     });
+
+    binding.adminLobbyActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(AdminLobbyActivity.intentFactory(getApplicationContext()));
+      }
+    });
   }
 }
