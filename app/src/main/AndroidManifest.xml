@@ -18,6 +18,9 @@
         <activity
             android:name=".BattleActivity"
             android:exported="false" />
+      <activity
+            android:name="com.lutra.legallydistinctpocketmonsterarea.AdminLobbyActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

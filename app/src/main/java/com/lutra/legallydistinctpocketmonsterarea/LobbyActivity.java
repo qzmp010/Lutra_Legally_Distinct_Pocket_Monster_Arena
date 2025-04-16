@@ -15,8 +15,6 @@ import androidx.core.view.WindowInsetsCompat;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityLobbyBinding;
 
 public class LobbyActivity extends AppCompatActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
