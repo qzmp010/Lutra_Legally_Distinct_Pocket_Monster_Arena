@@ -13,5 +13,15 @@
     <string name="normal_attack">NORMAL ATTACK</string>
     <string name="switch_monster">SWITCH MONSTER</string>
     <string name="run_away">RUN AWAY!</string>
+    <string name="Welcome">Welcome</string>
+    <string name="edit_monsters">Edit monsters</string>
+    <string name="create_monster">Create monster</string>
+    <string name="Create_monster">Create Monster</string>
+    <string name="Edit_monster">Edit Monster</string>
+    <string name="edit_users">Edit Users</string>
+    <string name="create_user">Create User</string>
+    <string name="Logout">Logout</string>
+    <string name="button">Button</string>
+    <string name="Battle">Battle</string>
 
 </resources>
