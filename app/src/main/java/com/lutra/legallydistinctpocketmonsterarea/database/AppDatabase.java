@@ -57,7 +57,7 @@ public abstract class AppDatabase extends RoomDatabase {
         MonsterTypeDAO monsterTypeDAO = INSTANCE.monsterTypeDAO();
         long monsterTypeId = monsterTypeDAO.insert(new MonsterType("Lightning Mousey",
             "Aachoo!",R.drawable.ld_pikachu, 20, 15, 10,5,
-            25,20, ElementalType.ELECTRIC));
+            25,20, UserMonster.ElementalType.ELECTRIC));
 
         UserMonsterDAO userMonsterDAO = INSTANCE.userMonsterDAO();
         userMonsterDAO.insert(new UserMonster("Zappy", "ZZZZZZZT", R.drawable.ld_pikachu, UserMonster.ElementalType.ELECTRIC, 10, 4,
@@ -68,7 +68,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
         long monsterTypeId2 = monsterTypeDAO.insert(new MonsterType("Singing Balloon",
             "Poooof!",R.drawable.ld_jiggly, 18, 16, 8,6,
-            30,19, ElementalType.NORMAL));
+            30,19, UserMonster.ElementalType.NORMAL));
 
         userMonsterDAO.insert(new UserMonster("Jiggly", "Poooof!",R.drawable.ld_jiggly, UserMonster.ElementalType.NORMAL, 7, 4,
             22, 0, (int)monsterTypeId2));

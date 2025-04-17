@@ -92,10 +92,8 @@ public class BattleActivity extends AppCompatActivity {
         //Below are default monsters for testing.
 
         binding.battleDialog.setText("");
-        userMonster = new UserMonster("NotBulbasaur", "Yoooo, got any grass?", R.drawable.ld_bulbasaur_png,
-                UserMonster.ElementalType.GRASS,8,5,30,420,420);
-        enemyMonster = new UserMonster("NotSquirtle", "I didn't know you liked to get wet...", R.drawable.ld_squirtle,
-                UserMonster.ElementalType.WATER,8,4,20,421,421);
+        userMonster = MonsterFactory.getRandomMonster(repository);
+        enemyMonster = MonsterFactory.getRandomMonster(repository);
 
         //Rolls to see which monster goes first
         if(Math.abs(rand.nextInt() % 4) == 0) {

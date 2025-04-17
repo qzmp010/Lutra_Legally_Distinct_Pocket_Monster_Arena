@@ -16,10 +16,9 @@ public abstract class MonsterFactory {
 
     private static final String TAG = "MonsterFactory.java";
 
-    static UserMonster getRandomMonster() {
+    static UserMonster getRandomMonster(AppRepository repository) {
 
         Random rand = new Random();
-        AppRepository repository = AppRepository.getRepository();
 
         MonsterType template = null;
 
@@ -43,8 +42,25 @@ public abstract class MonsterFactory {
         }
 
         //Instantiate new monster based on template
-        return new UserMonster("NotBulbasaur", "Yoooo, got any grass?", R.drawable.ld_bulbasaur_png,
-            UserMonster.ElementalType.GRASS,8,5,30,420,420);
+        int health = template.getHealthMax() -
+                Math.abs(rand.nextInt() % (template.getHealthMax() - template.getHealthMin()));
+        int attack = template.getAttackMax() -
+                Math.abs(rand.nextInt() % (template.getAttackMax() - template.getAttackMin()));
+        int defense = template.getDefenseMax() -
+                Math.abs(rand.nextInt() % (template.getDefenseMax() - template.getDefenseMin()));
+
+        //TODO: Remove userID from UserMonster constructor
+        return new UserMonster(
+                template.getMonsterTypeName(),
+                template.getPhrase(),
+                template.getImageID(),
+                template.getElementalType(),
+                attack,
+                defense,
+                health,
+                420,
+                template.getMonsterTypeId()
+        );
     }
 
 }

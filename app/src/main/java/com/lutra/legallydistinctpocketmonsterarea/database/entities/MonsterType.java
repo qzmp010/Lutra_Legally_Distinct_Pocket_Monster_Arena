@@ -20,11 +20,10 @@ public class MonsterType {
   private int defenseMin;
   private int healthMax;
   private int healthMin;
-  private ElementalType elementalType;
-  private String imageFilePath;
+  private UserMonster.ElementalType elementalType;
 
   public MonsterType(@NonNull String monsterTypeName, String phrase, int imageID, int attackMax, int attackMin,
-      int defenseMax, int defenseMin, int healthMax, int healthMin, ElementalType elementalType) {
+      int defenseMax, int defenseMin, int healthMax, int healthMin, UserMonster.ElementalType elementalType) {
     this.monsterTypeName = monsterTypeName;
     this.phrase = phrase;
     this.imageID = imageID;
@@ -110,21 +109,20 @@ public class MonsterType {
     this.healthMin = healthMin;
   }
 
-  public ElementalType getElementalType() {
+  public UserMonster.ElementalType getElementalType() {
     return elementalType;
   }
 
-  public void setElementalType(
-      ElementalType elementalType) {
+  public void setElementalType(UserMonster.ElementalType elementalType) {
     this.elementalType = elementalType;
   }
 
-  public String getImageFilePath() {
-    return imageFilePath;
+  public int getImageID() {
+    return imageID;
   }
 
-  public void setImageFilePath(String imageFilePath) {
-    this.imageFilePath = imageFilePath;
+  public void setImageID(int imageID) {
+    this.imageID = imageID;
   }
 
   @NonNull
@@ -154,14 +152,13 @@ public class MonsterType {
         && defenseMin == that.defenseMin && healthMax == that.healthMax
         && healthMin == that.healthMin
         && Objects.equals(monsterTypeName, that.monsterTypeName)
-        && Objects.equals(phrase, that.phrase) && elementalType == that.elementalType
-        && Objects.equals(imageFilePath, that.imageFilePath);
+        && Objects.equals(phrase, that.phrase) && elementalType == that.elementalType;
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(monsterTypeId, monsterTypeName, phrase, attackMax, attackMin, defenseMax,
-        defenseMin, healthMax, healthMin, elementalType, imageFilePath);
+        defenseMin, healthMax, healthMin, elementalType);
   }
 
   public enum ElementalType {
