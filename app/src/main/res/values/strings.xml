@@ -21,5 +21,13 @@
     <string name="Logout">Logout</string>
     <string name="button">Button</string>
     <string name="Battle">Battle</string>
+    <string name="choose_monster">Choose Monster</string>
+    <string name="normal">NORMAL</string>
+    <string name="Normal">🙂NORMAL</string>
+    <string name="electric">⚡ELECTRIC</string>
+    <string name="water">🌊WATER</string>
+    <string name="grass">🌻GRASS</string>
+    <string name="fire">🔥FIRE</string>
+    <string name="enter_a_nickname">Enter a nickname</string>
 
 </resources>
