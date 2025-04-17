@@ -1,15 +1,11 @@
 package com.lutra.legallydistinctpocketmonsterarea;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
-import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
-import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityMainBinding;
-import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
   private ActivityMainBinding binding;
@@ -39,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         startActivity(AdminLobbyActivity.intentFactory(getApplicationContext()));
+      }
+    });
+
+    binding.viewMonstersActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(ViewMonstersActivity.intentFactory(getApplicationContext()));
       }
     });
   }
