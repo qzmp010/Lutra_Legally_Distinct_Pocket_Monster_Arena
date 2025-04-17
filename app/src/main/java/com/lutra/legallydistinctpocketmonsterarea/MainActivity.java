@@ -2,6 +2,7 @@ package com.lutra.legallydistinctpocketmonsterarea;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
@@ -17,11 +18,28 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    binding = ActivityMainBinding.inflate(getLayoutInflater());
+    setContentView(binding.getRoot());
     
+    binding.lobbyActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(LobbyActivity.intentFactory(getApplicationContext()));
+      }
+    });
 
-    // Temporary: go straight to LobbyActivity for testing
-    Intent intent = new Intent(MainActivity.this, LobbyActivity.class);
-    startActivity(intent);
+    binding.battleActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(BattleActivity.intentFactory(getApplicationContext()));
+      }
+    });
+
+    binding.adminLobbyActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(AdminLobbyActivity.intentFactory(getApplicationContext()));
+      }
+    });
   }
 }

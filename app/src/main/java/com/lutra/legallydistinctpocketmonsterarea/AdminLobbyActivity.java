@@ -1,5 +1,7 @@
 package com.lutra.legallydistinctpocketmonsterarea;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -59,6 +61,10 @@ public class AdminLobbyActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    public static Intent intentFactory(Context context) {
+        Intent intent = new Intent(context, AdminLobbyActivity.class);
+        return intent;
     }
 }
