@@ -29,20 +29,22 @@ public abstract class MonsterFactory {
             allMonsters = repository.getAllMonsterTypes();
         } catch (NullPointerException e) {
             Log.e(TAG, "Error: Unable to instantiate enemy monster.");
-            return null;
+            return new UserMonster("MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
+                UserMonster.ElementalType.NORMAL,1,1,1,420,-1);
         }
 
         //Pick one to use as a template
         if(allMonsters.isEmpty()) {
             Log.e(TAG, "Error: Unable to instantiate enemy monster.");
-            return null;
+            return new UserMonster("MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
+                    UserMonster.ElementalType.NORMAL,1,1,1,420,-1);
         } else {
             template = allMonsters.get(Math.abs(rand.nextInt() % allMonsters.size()));
         }
 
         //Instantiate new monster based on template
         return new UserMonster("NotBulbasaur", "Yoooo, got any grass?", R.drawable.ld_bulbasaur_png,
-                UserMonster.ElementalType.GRASS,8,5,30,420,420);
+            UserMonster.ElementalType.GRASS,8,5,30,420,420);
     }
 
 }
