@@ -56,25 +56,25 @@ public abstract class AppDatabase extends RoomDatabase {
         //insert initial test monsters
         MonsterTypeDAO monsterTypeDAO = INSTANCE.monsterTypeDAO();
         long monsterTypeId = monsterTypeDAO.insert(new MonsterType("Lightning Mousey",
-            "Aachoo!",R.drawable.ld_pikachu, 10, 5, 10,5,
+            "Aachoo!",R.drawable.ld_pikachu, 10, 7, 7,5,
             25,20, UserMonster.ElementalType.ELECTRIC));
 
         UserMonsterDAO userMonsterDAO = INSTANCE.userMonsterDAO();
-        userMonsterDAO.insert(new UserMonster("Zappy", "ZZZZZZZT", R.drawable.ld_pikachu, UserMonster.ElementalType.ELECTRIC, 10, 4,
-            25, 0, (int)monsterTypeId));
+        userMonsterDAO.insert(new UserMonster("Plantisaurus", "Yo, got any grass?", R.drawable.ld_bulbasaur_png, UserMonster.ElementalType.GRASS, 10, 6,
+            40, 0, 1));
 
-        userMonsterDAO.insert(new UserMonster("Bigger Zappy", "BUZZZZZZZT",R.drawable.ld_pikachu, UserMonster.ElementalType.ELECTRIC, 15, 7,
-            35, 0, (int)monsterTypeId));
+        userMonsterDAO.insert(new UserMonster("Zappy", "BUZZZZZZZT",R.drawable.ld_pikachu, UserMonster.ElementalType.ELECTRIC, 11, 5,
+            35, 0, 2));
 
         long monsterTypeId2 = monsterTypeDAO.insert(new MonsterType("Singing Balloon",
-            "Poooof!",R.drawable.ld_jiggly, 7,4, 8,6,
+            "Poooof!",R.drawable.ld_jiggly, 7,4, 6,4,
             30,19, UserMonster.ElementalType.NORMAL));
 
-        userMonsterDAO.insert(new UserMonster("Jiggly", "Poooof!",R.drawable.ld_jiggly, UserMonster.ElementalType.NORMAL, 7, 4,
-            22, 0, (int)monsterTypeId2));
+        userMonsterDAO.insert(new UserMonster("Splashturt", "I didn't know you liked to get wet!",R.drawable.ld_squirtle, UserMonster.ElementalType.WATER, 9, 7,
+            30, 0, 3));
 
-        userMonsterDAO.insert(new UserMonster("Wiggly", "Pop!",R.drawable.ld_jiggly, UserMonster.ElementalType.NORMAL, 17, 14,
-            42, 0, (int)monsterTypeId2));
+        userMonsterDAO.insert(new UserMonster("Flamizord", "Burninating the countryside!",R.drawable.ld_charizard, UserMonster.ElementalType.FIRE, 12, 4,
+            25, 0, (int)monsterTypeId2));
 
         UserDAO userDao = INSTANCE.userDao();
         User admin = new User("admin", "admin123", true);
