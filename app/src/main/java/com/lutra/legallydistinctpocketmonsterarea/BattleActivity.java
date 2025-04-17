@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
@@ -91,9 +92,9 @@ public class BattleActivity extends AppCompatActivity {
         //Below are default monsters for testing.
 
         binding.battleDialog.setText("");
-        userMonster = new UserMonster("NotBulbasaur", "Yoooo, got any grass?",
+        userMonster = new UserMonster("NotBulbasaur", "Yoooo, got any grass?", R.drawable.ld_bulbasaur_png,
                 UserMonster.ElementalType.GRASS,8,5,30,420,420);
-        enemyMonster = new UserMonster("NotSquirtle", "I didn't know you liked to get wet...",
+        enemyMonster = new UserMonster("NotSquirtle", "I didn't know you liked to get wet...", R.drawable.ld_squirtle,
                 UserMonster.ElementalType.WATER,8,4,20,421,421);
 
         //Rolls to see which monster goes first
@@ -107,13 +108,13 @@ public class BattleActivity extends AppCompatActivity {
         String userMonsterName = userMonster.getNickname();
 
         binding.enemyMonsterName.setText(enemyMonsterName);
-        binding.enemyMonsterImage.setImageResource(R.drawable.ld_squirtle);
+        binding.enemyMonsterImage.setImageResource(enemyMonster.getImageID());
         //TODO: Consider replacing in layout with two separate fields so concatenation isn't needed.
         String enemyHP = enemyMonster.getCurrentHealth() + "/" + enemyMonster.getMaxHealth();
         binding.enemyMonsterHP.setText(enemyHP);
 
         binding.userMonsterName.setText(userMonster.getNickname());
-        binding.userMonsterImage.setImageResource(R.drawable.ld_bulbasaur_png);
+        binding.userMonsterImage.setImageResource(userMonster.getImageID());
         String userHP = userMonster.getCurrentHealth() + "/" + userMonster.getMaxHealth();
         binding.userMonsterHP.setText(userHP);
 

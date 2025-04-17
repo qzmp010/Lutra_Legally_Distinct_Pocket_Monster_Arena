@@ -1,5 +1,7 @@
 package com.lutra.legallydistinctpocketmonsterarea;
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
@@ -39,7 +41,8 @@ public abstract class MonsterFactory {
         }
 
         //Instantiate new monster based on template
-        return new UserMonster("NotBulbasaur", "Yoooo, got any grass?",
+        return new UserMonster("NotBulbasaur", "Yoooo, got any grass?", R.drawable.ld_bulbasaur_png,
                 UserMonster.ElementalType.GRASS,8,5,30,420,420);
     }
+
 }
