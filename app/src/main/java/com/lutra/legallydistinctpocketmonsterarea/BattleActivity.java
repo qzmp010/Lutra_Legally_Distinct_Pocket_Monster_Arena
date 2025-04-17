@@ -19,6 +19,7 @@ public class BattleActivity extends AppCompatActivity {
 
     private ActivityBattleBinding binding;
     private AppRepository repository;
+    private int loggedInUserID = 0;
 
     UserMonster userMonster;
     UserMonster enemyMonster;
@@ -81,9 +82,9 @@ public class BattleActivity extends AppCompatActivity {
 
     /**
      * Initializes initial battle conditions:
-     * Restore's all users monsters' HP.
      * Selects desired user's monster from database as userMonster.
      * Rolls random monster from type list for enemyMonster.
+     * Renders display for both monsters
      * Determines which monster takes first turn (userMonster 75% chance)
      * Displays battle beginning dialog
      */
@@ -92,8 +93,8 @@ public class BattleActivity extends AppCompatActivity {
         //Below are default monsters for testing.
 
         binding.battleDialog.setText("");
-        userMonster = MonsterFactory.getRandomMonster(repository);
-        enemyMonster = MonsterFactory.getRandomMonster(repository);
+        userMonster = MonsterFactory.getUserMonster(repository);
+        enemyMonster = MonsterFactory.getRandomMonster(repository, loggedInUserID);
 
         //Rolls to see which monster goes first
         if(Math.abs(rand.nextInt() % 4) == 0) {
