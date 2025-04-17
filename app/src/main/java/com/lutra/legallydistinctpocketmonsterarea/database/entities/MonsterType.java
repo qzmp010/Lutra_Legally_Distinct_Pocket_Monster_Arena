@@ -13,6 +13,7 @@ public class MonsterType {
   @NonNull
   private String monsterTypeName;
   private String phrase;
+  private int imageID;
   private int attackMax;
   private int attackMin;
   private int defenseMax;
@@ -22,10 +23,11 @@ public class MonsterType {
   private ElementalType elementalType;
   private String imageFilePath;
 
-  public MonsterType(@NonNull String monsterTypeName, String phrase, int attackMax, int attackMin,
+  public MonsterType(@NonNull String monsterTypeName, String phrase, int imageID, int attackMax, int attackMin,
       int defenseMax, int defenseMin, int healthMax, int healthMin, ElementalType elementalType) {
     this.monsterTypeName = monsterTypeName;
     this.phrase = phrase;
+    this.imageID = imageID;
     this.attackMax = attackMax;
     this.attackMin = attackMin;
     this.defenseMax = defenseMax;

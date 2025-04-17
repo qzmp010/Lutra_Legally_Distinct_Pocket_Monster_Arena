@@ -15,7 +15,7 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {MonsterType.class, UserMonster.class, User.class}, version = 4, exportSchema = false)
+@Database(entities = {MonsterType.class, UserMonster.class, User.class}, version = 5, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
   private static final String DATABASE_NAME = "LDPMDatabase";
   public static final String MONSTER_TYPE_TABLE = "monsterTypeTable";
@@ -56,7 +56,7 @@ public abstract class AppDatabase extends RoomDatabase {
         //insert initial test monsters
         MonsterTypeDAO monsterTypeDAO = INSTANCE.monsterTypeDAO();
         long monsterTypeId = monsterTypeDAO.insert(new MonsterType("Lightning Mousey",
-            "Aachoo!", 20, 15, 10,5,
+            "Aachoo!",R.drawable.ld_pikachu, 20, 15, 10,5,
             25,20, ElementalType.ELECTRIC));
 
         UserMonsterDAO userMonsterDAO = INSTANCE.userMonsterDAO();
@@ -67,7 +67,7 @@ public abstract class AppDatabase extends RoomDatabase {
             35, 0, (int)monsterTypeId));
 
         long monsterTypeId2 = monsterTypeDAO.insert(new MonsterType("Singing Balloon",
-            "Poooof!", 18, 16, 8,6,
+            "Poooof!",R.drawable.ld_jiggly, 18, 16, 8,6,
             30,19, ElementalType.NORMAL));
 
         userMonsterDAO.insert(new UserMonster("Jiggly", "Poooof!",R.drawable.ld_jiggly, UserMonster.ElementalType.NORMAL, 7, 4,
