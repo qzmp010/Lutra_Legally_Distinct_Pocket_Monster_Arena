@@ -7,4 +7,94 @@
     android:layout_height="match_parent"
     tools:context=".CaptureActivity">
 
+    <ImageView
+        android:id="@+id/enemyMonsterImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:contentDescription="@string/enemy_monster_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars[2]" />
+
+    <TextView
+        android:id="@+id/enemyMonsterName"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:text="EnemyMonsterName"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        app:layout_constraintTop_toTopOf="@id/enemyMonsterImage"
+        app:layout_constraintStart_toEndOf="@id/enemyMonsterImage"
+        android:gravity="start"
+        />
+
+    <TextView
+        android:id="@+id/enemyMonsterHP"
+        android:layout_width="100dp"
+        android:layout_height="22dp"
+        android:textSize="18sp"
+        android:text="HP: XX/XX"
+        android:gravity="start"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/enemyMonsterName"
+        app:layout_constraintStart_toEndOf="@id/enemyMonsterImage"
+        />
+
+    <TextView
+        android:id="@+id/enemyMonsterType"
+        android:layout_width="120dp"
+        android:layout_height="22dp"
+        android:textSize="18sp"
+        android:text="Type: XXXXX"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/enemyMonsterName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/enemyMonsterHP"
+        />
+
+    <TextView
+        android:id="@+id/enemyMonsterAttack"
+        android:layout_width="100dp"
+        android:layout_height="22dp"
+        android:textSize="18sp"
+        android:text="ATT: XX"
+        android:gravity="start"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/enemyMonsterHP"
+        app:layout_constraintStart_toEndOf="@id/enemyMonsterImage"
+        />
+
+    <TextView
+        android:id="@+id/enemyMonsterDefense"
+        android:layout_width="100dp"
+        android:layout_height="22dp"
+        android:textSize="18sp"
+        android:text="DEF: XX"
+        android:gravity="start"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/enemyMonsterAttack"
+        app:layout_constraintStart_toEndOf="@id/enemyMonsterImage"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/enemyMonsterImage"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:text="[EnemyMonsterName] is weakened!\nDo you want to capture [EnemyMonsterName]?\n[Username] throws a...monster...orb?\n[EnemyMonsterName] was captured!\n[EnemyMonstername] got away...\nDo you want to give a nickname to [EnemyMonsterName]?"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
