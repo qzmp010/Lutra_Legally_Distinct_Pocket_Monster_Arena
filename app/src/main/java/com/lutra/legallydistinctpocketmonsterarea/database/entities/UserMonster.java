@@ -13,6 +13,7 @@ public class UserMonster {
   private int userMonsterId;
   private String nickname;
   private String phrase;
+  private int imageID;
   private ElementalType type;
   private int attack;
   private int defense;
@@ -30,10 +31,11 @@ public class UserMonster {
     WATER,
   }
 
-  public UserMonster(String nickname, String phrase, ElementalType type, int attack, int defense, int maxHealth, int userId,
+  public UserMonster(String nickname, String phrase, int imageID, ElementalType type, int attack, int defense, int maxHealth, int userId,
       int monsterTypeId) {
     this.nickname = nickname;
     this.phrase = phrase;
+    this.imageID = imageID;
     this.type = type;
     this.attack = attack;
     this.defense = defense;
@@ -106,6 +108,14 @@ public class UserMonster {
 
   public void setType(ElementalType type) {
     this.type = type;
+  }
+
+  public int getImageID() {
+    return imageID;
+  }
+
+  public void setImageID(int imageID) {
+    this.imageID = imageID;
   }
 
   public int getUserId() {
