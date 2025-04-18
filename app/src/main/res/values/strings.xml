@@ -4,4 +4,6 @@
     <string name="username">username</string>
     <string name="welcome_n_login">Welcome \n Login</string>
     <string name="login">Login</string>
+    <string name="preference_file_key">daclinkPreferenceFileName</string>
+    <string name="preference_userId_key">daclinkPreferenceUserIdKey</string>
 </resources>
