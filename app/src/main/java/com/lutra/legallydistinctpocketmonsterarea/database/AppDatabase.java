@@ -61,12 +61,18 @@ public abstract class AppDatabase extends RoomDatabase {
         userMonsterDAO.insert(new UserMonster("Zappy", "ZZZZZZZT", UserMonster.ElementalType.ELECTRIC, 10, 4,
             25, 0, (int)monsterTypeId));
 
+        userMonsterDAO.insert(new UserMonster("Bigger Zappy", "BUZZZZZZZT", UserMonster.ElementalType.ELECTRIC, 15, 7,
+            35, 0, (int)monsterTypeId));
+
         long monsterTypeId2 = monsterTypeDAO.insert(new MonsterType("Singing Balloon",
             "Poooof!", 18, 16, 8,6,
             30,19, ElementalType.NORMAL));
 
         userMonsterDAO.insert(new UserMonster("Jiggly", "Poooof!", UserMonster.ElementalType.NORMAL, 7, 4,
             22, 0, (int)monsterTypeId2));
+
+        userMonsterDAO.insert(new UserMonster("Wiggly", "Pop!", UserMonster.ElementalType.NORMAL, 17, 14,
+            42, 0, (int)monsterTypeId2));
 
         UserDAO userDao = INSTANCE.userDao();
         User admin = new User("admin", "admin123", true);

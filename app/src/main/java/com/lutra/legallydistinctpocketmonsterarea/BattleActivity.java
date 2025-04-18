@@ -1,5 +1,7 @@
 package com.lutra.legallydistinctpocketmonsterarea;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
@@ -239,5 +241,10 @@ public class BattleActivity extends AppCompatActivity {
         binding.battleDialog.append("UserRun clicked.\n\n");
         activeMonster = enemyMonster;
         enemyTurn();
+    }
+
+    public static Intent intentFactory(Context context) {
+        Intent intent = new Intent(context, BattleActivity.class);
+        return intent;
     }
 }

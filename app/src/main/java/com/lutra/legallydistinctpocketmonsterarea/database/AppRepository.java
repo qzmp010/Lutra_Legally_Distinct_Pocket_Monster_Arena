@@ -2,10 +2,12 @@ package com.lutra.legallydistinctpocketmonsterarea.database;
 
 import android.app.Application;
 import android.util.Log;
+import androidx.lifecycle.LiveData;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -147,9 +149,13 @@ public class AppRepository {
     return null;
   }
 
-    public void insertUser(User user) {
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            userDao.insert(user);
-        });
-    }
+  public LiveData<List<UserMonster>> getByUserIdLiveData(int userId) {
+    return userMonsterDAO.getByUserIdLiveData(userId);
+  }
+
+  public void insertUser(User user) {
+      AppDatabase.databaseWriteExecutor.execute(() -> {
+          userDao.insert(user);
+      });
+  }
 }

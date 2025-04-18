@@ -13,16 +13,13 @@
         android:theme="@style/Theme.LutraLegallyDistinctPocketMonsterArena"
         tools:targetApi="31">
         <activity
-            android:name=".ChooseMonsterActivity"
-            android:exported="false" />
-        <activity
             android:name=".LobbyActivity"
             android:exported="false" />
         <activity
             android:name=".BattleActivity"
             android:exported="false" />
-        <activity
-            android:name=".AdminLobbyActivity"
+      <activity
+            android:name="com.lutra.legallydistinctpocketmonsterarea.AdminLobbyActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -34,5 +31,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
