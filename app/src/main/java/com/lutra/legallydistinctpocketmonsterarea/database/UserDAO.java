@@ -1,5 +1,6 @@
 package com.lutra.legallydistinctpocketmonsterarea.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -19,9 +20,11 @@ public interface UserDAO {
     void delete(User user);
 
     @Query("SELECT * FROM " + AppDatabase.USER_TABLE + " ORDER BY username")
-    List<User> getAllUsers();
+    LiveData<List<User>> getAllUsers();
 
     @Query("DELETE FROM " +AppDatabase.USER_TABLE )
     void deleteAll();
 
+    @Query("SELECT * from " + AppDatabase.USER_TABLE + " WHERE username == :username")
+    LiveData<User> getUserByUserName(String username);
 }

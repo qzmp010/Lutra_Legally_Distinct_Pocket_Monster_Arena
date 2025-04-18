@@ -2,6 +2,9 @@ package com.lutra.legallydistinctpocketmonsterarea.database;
 
 import android.app.Application;
 import android.util.Log;
+
+import androidx.lifecycle.LiveData;
+
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
@@ -151,5 +154,9 @@ public class AppRepository {
         AppDatabase.databaseWriteExecutor.execute(() -> {
             userDao.insert(user);
         });
+    }
+
+    public LiveData<User> getUserByUserName(String username) {
+        return userDao.getUserByUserName(username);
     }
 }
