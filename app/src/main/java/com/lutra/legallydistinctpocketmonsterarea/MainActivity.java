@@ -44,5 +44,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(ViewMonstersActivity.intentFactory(getApplicationContext()));
       }
     });
+
+    binding.captureActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(CaptureActivity.intentFactory(getApplicationContext()));
+      }
+    });
   }
 }

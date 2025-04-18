@@ -17,6 +17,10 @@ import java.util.Random;
 
 public class BattleActivity extends AppCompatActivity {
 
+    public static final String ENEMY_ID = "BattleActivity.ENEMY_ID";
+    public static final String USER_ID = "BattleActivity.USER_ID";
+
+
     private ActivityBattleBinding binding;
     private AppRepository repository;
     private int loggedInUserID = 0;

@@ -19,6 +19,9 @@ public interface UserMonsterDAO {
   @Query("SELECT * FROM " + AppDatabase.USER_MONSTER_TABLE)
   List<UserMonster> getAll();
 
+  @Query("SELECT * FROM " + AppDatabase.USER_MONSTER_TABLE + " WHERE userMonsterId = :monsterID")
+  UserMonster getMonsterByMonsterId(int monsterID);
+
   @Query("SELECT * FROM " + AppDatabase.USER_MONSTER_TABLE + " WHERE userId = :userId")
   List<UserMonster> getByUserId(int userId);
 

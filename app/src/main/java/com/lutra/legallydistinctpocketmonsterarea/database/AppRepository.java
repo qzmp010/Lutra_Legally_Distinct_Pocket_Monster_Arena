@@ -131,6 +131,23 @@ public class AppRepository {
     return 0L;
   }
 
+    public UserMonster getUserMonsterById(int userMonsterId) {
+        Future<UserMonster> future = AppDatabase.databaseWriteExecutor.submit(
+                new Callable<UserMonster>() {
+                    @Override
+                    public UserMonster call() throws Exception {
+                        return userMonsterDAO.getMonsterByMonsterId(userMonsterId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(LOG_TAG, "Problem getting MonsterType by ID from repository");
+        }
+        return null;
+    }
+
   public ArrayList<UserMonster> getAllUserMonsters() {
     Future<ArrayList<UserMonster>> future = AppDatabase.databaseWriteExecutor.submit(
         new Callable<ArrayList<UserMonster>>() {
