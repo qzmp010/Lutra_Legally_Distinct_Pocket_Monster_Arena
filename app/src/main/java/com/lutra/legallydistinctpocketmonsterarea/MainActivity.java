@@ -3,15 +3,17 @@ package com.lutra.legallydistinctpocketmonsterarea;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
@@ -21,6 +23,9 @@ import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
   private static final String MAIN_ACTIVITY_USER_ID = "com.lutra.legallydistinctpocketmonsterarea.MAIN_ACTIVITY_USER_ID";
+  static final String SHARED_PREFERENCE_USERID_KEY = "com.lutra.legallydistinctpocketmonsterarea.SHARED_PREFERENCE_USERID_KEY";
+  private static final int LOGGED_OUT = -1;
+  private static final String SHARED_PREFERENCE_USERID_VALUE = "com.lutra.legallydistinctpocketmonsterarea.SHARED_PREFERENCE_USERID_VALUE";
   private ActivityMainBinding binding;
   private AppRepository repository;
 
@@ -33,16 +38,15 @@ public class MainActivity extends AppCompatActivity {
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
 
-    loginUser();
+    repository = AppRepository.getRepository(getApplication());
+    loginUser(savedInstanceState);
 
-    invalidateOptionsMenu();
 
     if(loggedInUserId == -1 ){
       Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
       startActivity(intent);
     }
 
-    repository = AppRepository.getRepository(getApplication());
 
     //todo: remove -- test read from database
     var userMonsters = repository.getAllUserMonsters();
@@ -53,9 +57,46 @@ public class MainActivity extends AppCompatActivity {
     binding.myTextView.setText(text + "\n\n\n\n" + text2);
   }
 
-  private void loginUser() {
-    loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID,-1);
+  private void loginUser(Bundle savedInstanceState) {
+
+    SharedPreferences sharedPreferences = getApplication().getSharedPreferences(SHARED_PREFERENCE_USERID_KEY,
+            Context.MODE_PRIVATE);
+
+    if(sharedPreferences.contains(SHARED_PREFERENCE_USERID_VALUE)){
+      loggedInUserId = sharedPreferences.getInt(SHARED_PREFERENCE_USERID_VALUE, LOGGED_OUT);
+
+    }
+    if(loggedInUserId == LOGGED_OUT & savedInstanceState != null && savedInstanceState.containsKey(SHARED_PREFERENCE_USERID_KEY)){
+      loggedInUserId = sharedPreferences.getInt(SHARED_PREFERENCE_USERID_KEY, LOGGED_OUT);
+    }
+    if(loggedInUserId == LOGGED_OUT){
+      loggedInUserId = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
+    }
+
+    if(loggedInUserId == LOGGED_OUT){
+      return;
+    }
+    LiveData<User> userObserver = repository.getUserByUserId(loggedInUserId);
+    userObserver.observe(this,user -> {
+      this.user = user;
+      if(user != null){
+        invalidateOptionsMenu();
+      }else{
+          logout();
+        }
+    });
+
   }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState){
+    super.onSaveInstanceState(outState);
+    outState.putInt(SHARED_PREFERENCE_USERID_KEY, loggedInUserId);
+    SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFERENCE_USERID_KEY, Context.MODE_PRIVATE);
+    SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+    sharedPrefEditor.putInt(MainActivity.SHARED_PREFERENCE_USERID_KEY, loggedInUserId);
+    sharedPrefEditor.apply();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -88,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
     alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
       @Override
       public void onClick(DialogInterface dialog, int which) {
-        loggout();
+        logout();
       }
     });
 
@@ -102,7 +143,13 @@ public class MainActivity extends AppCompatActivity {
     alertBuilder.create().show();
 
   }
-  private void loggout() {
+  private void logout() {
+    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SHARED_PREFERENCE_USERID_KEY, Context.MODE_PRIVATE);
+    SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+    sharedPrefEditor.putInt(SHARED_PREFERENCE_USERID_KEY,LOGGED_OUT);
+    sharedPrefEditor.apply();
+
+    getIntent().putExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
     startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
   }
 

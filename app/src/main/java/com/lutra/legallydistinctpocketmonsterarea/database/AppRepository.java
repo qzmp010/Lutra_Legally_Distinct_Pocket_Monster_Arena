@@ -159,4 +159,7 @@ public class AppRepository {
     public LiveData<User> getUserByUserName(String username) {
         return userDao.getUserByUserName(username);
     }
+    public LiveData<User> getUserByUserId(int userId) {
+        return userDao.getUserByUserId(userId);
+    }
 }

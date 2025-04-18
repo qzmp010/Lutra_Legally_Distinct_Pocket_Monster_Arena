@@ -2,6 +2,7 @@ package com.lutra.legallydistinctpocketmonsterarea;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
             if(user != null){
                 String password = binding.passwordLoginEditText.getText().toString();
                 if(password.equals(user.getPassword())){
+
                     startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(),user.getId()));
                 }else{
                     ToastMaker("Invalid password");
