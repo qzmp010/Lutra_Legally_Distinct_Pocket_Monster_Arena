@@ -5,9 +5,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import android.view.View;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -15,11 +19,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
+
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
+
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityMainBinding;
-import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
   private static final String MAIN_ACTIVITY_USER_ID = "com.lutra.legallydistinctpocketmonsterarea.MAIN_ACTIVITY_USER_ID";
@@ -37,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
+    
+    binding.lobbyActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(LobbyActivity.intentFactory(getApplicationContext()));
+      }
+    });
+
 
     repository = AppRepository.getRepository(getApplication());
     loginUser(savedInstanceState);
@@ -50,13 +63,27 @@ public class MainActivity extends AppCompatActivity {
     updateSharedPreference();
 
 
-    //todo: remove -- test read from database
-    var userMonsters = repository.getAllUserMonsters();
-    var monsterTypes = repository.getAllMonsterTypes();
+    binding.battleActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(BattleActivity.intentFactory(getApplicationContext()));
+      }
+    });
 
-    String text = monsterTypes == null ? "null" : monsterTypes.stream().map(MonsterType::toString).collect(Collectors.joining("\n\n"));
-    String text2 = userMonsters == null ? "null" : userMonsters.stream().map(UserMonster::toString).collect(Collectors.joining("\n\n"));
-    binding.myTextView.setText(text + "\n\n\n\n" + text2);
+
+    binding.adminLobbyActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(AdminLobbyActivity.intentFactory(getApplicationContext()));
+      }
+    });
+
+    binding.viewMonstersActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(ViewMonstersActivity.intentFactory(getApplicationContext()));
+      }
+    });
   }
 
   private void loginUser(Bundle savedInstanceState) {

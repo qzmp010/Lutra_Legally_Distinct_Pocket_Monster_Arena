@@ -5,26 +5,45 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import com.lutra.legallydistinctpocketmonsterarea.database.AppDatabase;
 import java.util.Objects;
+import java.util.Random;
 
 @Entity(tableName = AppDatabase.USER_MONSTER_TABLE)
 public class UserMonster {
   @PrimaryKey(autoGenerate = true)
   private int userMonsterId;
   private String nickname;
+  private String phrase;
+  private int imageID;
+  private ElementalType type;
   private int attack;
   private int defense;
-  private int health;
+  private int currentHealth;
+  private int maxHealth;
   private int userId;
   private int monsterTypeId;
 
-  public UserMonster(String nickname, int attack, int defense, int health, int userId,
+
+  public enum ElementalType {
+    NORMAL,
+    ELECTRIC,
+    FIRE,
+    GRASS,
+    WATER,
+  }
+
+  public UserMonster(String nickname, String phrase, int imageID, ElementalType type, int attack, int defense, int maxHealth, int userId,
       int monsterTypeId) {
     this.nickname = nickname;
+    this.phrase = phrase;
+    this.imageID = imageID;
+    this.type = type;
     this.attack = attack;
     this.defense = defense;
-    this.health = health;
+    this.maxHealth = maxHealth;
     this.userId = userId;
     this.monsterTypeId = monsterTypeId;
+
+    currentHealth = maxHealth;
   }
 
   public int getUserMonsterId() {
@@ -59,12 +78,44 @@ public class UserMonster {
     this.defense = defense;
   }
 
-  public int getHealth() {
-    return health;
+  public int getMaxHealth() {
+    return maxHealth;
   }
 
-  public void setHealth(int health) {
-    this.health = health;
+  public void setMaxHealth(int health) {
+    this.maxHealth = health;
+  }
+
+  public int getCurrentHealth() {
+    return currentHealth;
+  }
+
+  public void setCurrentHealth(int currentHealth) {
+    this.currentHealth = currentHealth;
+  }
+
+  public String getPhrase() {
+    return phrase;
+  }
+
+  public void setPhrase(String phrase) {
+    this.phrase = phrase;
+  }
+
+  public ElementalType getType() {
+    return type;
+  }
+
+  public void setType(ElementalType type) {
+    this.type = type;
+  }
+
+  public int getImageID() {
+    return imageID;
+  }
+
+  public void setImageID(int imageID) {
+    this.imageID = imageID;
   }
 
   public int getUserId() {
@@ -83,6 +134,115 @@ public class UserMonster {
     this.monsterTypeId = monsterTypeId;
   }
 
+  /**
+   * Normal attack against monster.
+   * @return Random number within 2 of attack value
+   */
+  public int normalAttack() {
+    Random rand = new Random();
+    return attack + (rand.nextInt() % 3);
+  }
+
+  /**
+   * Special attack against monster.
+   * Extra damage modifier, but has 25% chance to miss.
+   * @return attackValue
+   */
+  public int specialAttack(ElementalType type) {
+    int attackValue = 0;
+    Random rand = new Random();
+
+    //If attack misses, stop further processing
+    if(rand.nextInt() % 4 == 0) {
+      return attackValue;
+    }
+
+    //We aren't dealing with fractional values in this man's program.
+    attackValue = (int) (attack + (rand.nextInt() % 3) * 1.5);
+    attackValue = (int) (attackValue * attackModifier(type));
+
+    return attackValue;
+  }
+
+  /**
+   * Calculates modifier for special attack based on traditional weaknesses.
+   * Takes in other monster's type as parameter
+   * @return attack modifier
+   */
+  public double attackModifier(ElementalType defending) {
+    double modifier = 1.0; //Default modifier
+
+    //No need to continue if we don't have an element
+    if(this.type.equals(ElementalType.NORMAL)) {
+      return modifier;
+    }
+
+    switch(defending) {
+      case WATER:
+        if(this.type.equals(ElementalType.ELECTRIC) ||
+                this.type.equals(ElementalType.GRASS)) {
+          modifier = 2.0;
+          break;
+        }
+        if(this.type.equals(ElementalType.FIRE) ||
+                this.type.equals(ElementalType.WATER)) {
+          modifier = 0.5;
+          break;
+        }
+        break;
+      case FIRE:
+        if(this.type.equals(ElementalType.WATER)) {
+          modifier = 2.0;
+          break;
+        }
+        if(this.type.equals(ElementalType.FIRE) ||
+                this.type.equals(ElementalType.GRASS)) {
+          modifier = 0.5;
+          break;
+        }
+        break;
+      case ELECTRIC:
+        if(this.type.equals(ElementalType.ELECTRIC)) {
+          modifier = 0.5;
+          break;
+        }
+        break;
+      case GRASS:
+        if(this.type.equals(ElementalType.FIRE)) {
+          modifier = 2.0;
+          break;
+        }
+        if(this.type.equals(ElementalType.GRASS) ||
+                this.type.equals(ElementalType.WATER) ||
+                this.type.equals(ElementalType.ELECTRIC)) {
+          modifier = 0.5;
+          break;
+        }
+        break;
+      default:
+
+    }
+
+    return modifier;
+  }
+
+  /**
+   * Calculates damage based on passed in attack value minus defense (+/- 2)
+   * Reduces health by damage.
+   * We want the monster to take some damage, so it takes 1 damage by default.
+   * @return Damage amount taken for flavortext.
+   */
+  public int takeDamage(int damage) {
+    Random rand = new Random();
+    damage = damage - (defense + (rand.nextInt() % 3));
+    if(damage <= 0) {
+      damage = 1;
+    }
+
+    currentHealth -= damage;
+    return damage;
+  }
+
   @NonNull
   @Override
   public String toString() {
@@ -90,7 +250,7 @@ public class UserMonster {
         "nickname='" + nickname + '\'' +
         ", attack=" + attack +
         ", defense=" + defense +
-        ", health=" + health +
+        ", maxHealth=" + maxHealth +
         ", userId=" + userId +
         ", monsterTypeId=" + monsterTypeId +
         '}';
@@ -103,12 +263,12 @@ public class UserMonster {
     }
     UserMonster that = (UserMonster) o;
     return userMonsterId == that.userMonsterId && attack == that.attack && defense == that.defense
-        && health == that.health && userId == that.userId && monsterTypeId == that.monsterTypeId
+        && maxHealth == that.maxHealth && userId == that.userId && monsterTypeId == that.monsterTypeId
         && Objects.equals(nickname, that.nickname);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userMonsterId, nickname, attack, defense, health, userId, monsterTypeId);
+    return Objects.hash(userMonsterId, nickname, attack, defense, maxHealth, userId, monsterTypeId);
   }
 }
