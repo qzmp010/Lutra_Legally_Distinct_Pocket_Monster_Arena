@@ -121,58 +121,6 @@ public class MainActivity extends AppCompatActivity {
     updateSharedPreference();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.logged_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-      MenuItem item = menu.findItem(R.id.logoutMenuItem);
-      item.setVisible(true);
-      item.setTitle("Log out");
-      item.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(@NonNull MenuItem item) {
-          showLogoutDialog();
-          return false;
-        }
-      });
-        return true;
-    }
-
-  private void showLogoutDialog(){
-    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
-    final AlertDialog alertDialog = alertBuilder.create();
-
-    alertBuilder.setMessage("Logout?");
-
-    alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        logout();
-      }
-    });
-
-    alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-      @Override
-      public void onClick(DialogInterface dialog, int which) {
-        alertDialog.dismiss();
-      }
-    });
-
-    alertBuilder.create().show();
-
-  }
-  private void logout() {
-    loggedInUserId = LOGGED_OUT;
-    updateSharedPreference();
-
-    getIntent().putExtra(MAIN_ACTIVITY_USER_ID, LOGGED_OUT);
-    startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
-  }
 
   private void updateSharedPreference(){
     SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
