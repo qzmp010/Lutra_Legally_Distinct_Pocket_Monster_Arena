@@ -17,7 +17,6 @@
        android:name=".LoginActivity"
        android:exported="false" />
     <activity
-    <activity
       android:name=".ViewMonstersActivity"
       android:exported="false" />
     <activity
