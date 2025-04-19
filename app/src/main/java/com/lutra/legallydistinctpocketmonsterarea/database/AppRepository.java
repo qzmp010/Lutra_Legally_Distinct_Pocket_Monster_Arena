@@ -8,6 +8,7 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -16,6 +17,7 @@ public class AppRepository {
   public static final String LOG_TAG = "com.lutra.ldpm.logs";
   private final MonsterTypeDAO monsterTypeDAO;
   private final UserMonsterDAO userMonsterDAO;
+  private final UserMonsterWithTypeDAO userMonsterWithTypeDAO;
   private final UserDAO userDao;
   private static AppRepository repository;
 
@@ -23,6 +25,7 @@ public class AppRepository {
     AppDatabase db = AppDatabase.getDatabase(application);
     this.monsterTypeDAO = db.monsterTypeDAO();
     this.userMonsterDAO = db.userMonsterDAO();
+    this.userMonsterWithTypeDAO = db.userMonsterWithTypeDAO();
     this.userDao = db.userDao();
   }
 
@@ -167,6 +170,14 @@ public class AppRepository {
 
   public LiveData<List<UserMonster>> getByUserIdLiveData(int userId) {
     return userMonsterDAO.getByUserIdLiveData(userId);
+  }
+
+  public Map<UserMonster, MonsterType> getUserMonsterMapByUserId(int userId) {
+    return userMonsterWithTypeDAO.getUserMonsterMapByUserId(userId);
+  }
+
+  public LiveData<Map<UserMonster, MonsterType>> getUserMonsterMapByUserIdLiveData(int userId) {
+    return userMonsterWithTypeDAO.getUserMonsterMapByUserIdLiveData(userId);
   }
 
   public void insertUser(User user) {
