@@ -17,6 +17,6 @@ public class MonsterViewModel extends AndroidViewModel {
   }
 
   public LiveData<List<UserMonster>> getByUserIdLiveData(int userId) {
-    return repository.getByUserIdLiveData(userId);
+    return repository.getUserMonstersByUserIdLiveData(userId);
   }
 }
