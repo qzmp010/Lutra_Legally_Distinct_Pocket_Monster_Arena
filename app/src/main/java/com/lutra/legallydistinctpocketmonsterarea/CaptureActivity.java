@@ -102,7 +102,8 @@ public class CaptureActivity extends AppCompatActivity {
         alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
+                //TODO: Fix the delete query below
+                //repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
 
                 Intent intent = BattleActivity.intentFactory(getApplicationContext());
                 intent.putExtra(BattleActivity.USER_ID, loggedInUser);

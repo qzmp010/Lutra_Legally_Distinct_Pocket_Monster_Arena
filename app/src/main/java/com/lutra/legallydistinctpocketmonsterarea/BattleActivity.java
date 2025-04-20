@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.DrawableRes;
@@ -13,12 +14,14 @@ import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityBattleBinding;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BattleActivity extends AppCompatActivity {
 
     public static final String ENEMY_ID = "BattleActivity.ENEMY_ID";
     public static final String USER_ID = "BattleActivity.USER_ID";
+    public static final String TAG = "BattleActivity.Java";
 
 
     private ActivityBattleBinding binding;
@@ -247,9 +250,33 @@ public class BattleActivity extends AppCompatActivity {
     }
 
     public void userRun() {
-        binding.battleDialog.append("UserRun clicked.\n\n");
-        activeMonster = enemyMonster;
-        enemyTurn();
+        binding.battleDialog.append("\nYou try to run away...\n");
+
+        Random rand = new Random();
+        if(rand.nextInt() % 3 == 0) {
+            binding.battleDialog.append("...but cant escape!\n\n");
+            activeMonster = enemyMonster;
+            enemyTurn();
+        } else {
+            binding.battleDialog.append("...and did!");
+
+            ArrayList<UserMonster> userMonsters = new ArrayList<>();
+            while(userMonsters.isEmpty()) {
+                try {
+                    userMonsters = repository.getAllUserMonsters();
+                    for(UserMonster monster : userMonsters) {
+                        monster.setCurrentHealth(monster.getMaxHealth());
+                        repository.insertUserMonster(monster);
+                    }
+                } catch (RuntimeException e) {
+                    Log.e(TAG, "Couldn't restore monster health.");
+                }
+            }
+
+            Intent intent = LobbyActivity.intentFactory(getApplicationContext());
+            intent.putExtra(BattleActivity.USER_ID, loggedInUserID);
+            startActivity(intent);
+        }
     }
 
     private void loginUser() {
@@ -258,7 +285,11 @@ public class BattleActivity extends AppCompatActivity {
         }
 
         if(loggedInUserID == -1) {
-            loggedInUserID = getIntent().getIntExtra(CaptureActivity.USER_ID, 99);
+            loggedInUserID = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID, -1);
+        }
+
+        if(loggedInUserID == -1) {
+            loggedInUserID = getIntent().getIntExtra(CaptureActivity.USER_ID, -1);
         }
     }
 
