@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 public class AppRepository {
+
   public static final String LOG_TAG = "com.lutra.ldpm.logs";
   private final MonsterTypeDAO monsterTypeDAO;
   private final UserMonsterDAO userMonsterDAO;
@@ -31,20 +32,21 @@ public class AppRepository {
     this.userDao = db.userDao();
   }
 
-    /**
-     * Parameterless version of getRepository() for use with MonsterFactory class.
-     * Needed because we can't pass in an application context outside of an activity, and we need
-     * to be able to call it from a static method. Should function exactly the same if repository
-     * has already been initialized.
-     * @return The current repository.
-     */
+  /**
+   * Parameterless version of getRepository() for use with MonsterFactory class. Needed because we
+   * can't pass in an application context outside of an activity, and we need to be able to call it
+   * from a static method. Should function exactly the same if repository has already been
+   * initialized.
+   *
+   * @return The current repository.
+   */
   public static AppRepository getRepository() {
-      try {
-          return repository;
-      } catch (NullPointerException e) {
-          Log.e(LOG_TAG, "Error: repository could not be retrieved.");
-          return null;
-      }
+    try {
+      return repository;
+    } catch (NullPointerException e) {
+      Log.e(LOG_TAG, "Error: repository could not be retrieved.");
+      return null;
+    }
   }
 
   public static AppRepository getRepository(Application application) {
@@ -79,7 +81,7 @@ public class AppRepository {
     );
     try {
       return future.get();
-    } catch (InterruptedException |ExecutionException e) {
+    } catch (InterruptedException | ExecutionException e) {
       Log.i(LOG_TAG, "Problem inserting MonsterType into repository");
     }
     return 0L;
@@ -130,7 +132,7 @@ public class AppRepository {
     );
     try {
       return future.get();
-    } catch (InterruptedException |ExecutionException e) {
+    } catch (InterruptedException | ExecutionException e) {
       Log.i(LOG_TAG, "Problem inserting UserMonster into repository");
     }
     return 0L;
@@ -172,6 +174,14 @@ public class AppRepository {
 
   public LiveData<List<UserMonster>> getUserMonstersByUserIdLiveData(int userId) {
     return userMonsterDAO.getByUserIdLiveData(userId);
+  }
+
+  public LiveData<User> getUserByUserName(String username) {
+    return userDao.getUserByUserName(username);
+  }
+
+  public LiveData<User> getUserByUserId(int userId) {
+    return userDao.getUserByUserId(userId);
   }
 
   public HashMap<UserMonster, MonsterType> getUserMonstersWithTypeMap() {
@@ -225,8 +235,8 @@ public class AppRepository {
   }
 
   public void insertUser(User user) {
-      AppDatabase.databaseWriteExecutor.execute(() -> {
-          userDao.insert(user);
-      });
+    AppDatabase.databaseWriteExecutor.execute(() -> {
+      userDao.insert(user);
+    });
   }
 }
