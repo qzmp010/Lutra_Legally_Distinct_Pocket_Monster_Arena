@@ -21,5 +21,16 @@
     <string name="Logout">Logout</string>
     <string name="button">Button</string>
     <string name="Battle">Battle</string>
+    <string name="choosemonsteractivity">ChooseMonsterActivity</string>
+    <string name="choose_monster">Choose Your Monster</string>
+    <string name="Normal">Normal</string>
+    <string name="electric">Electric</string>
+    <string name="fire">Fire</string>
+    <string name="grass">Grass</string>
+    <string name="water">Water</string>
+    <string name="enter_a_nickname">Enter a nickname</string>
+    <string name="my_monsters">My Monsters</string>
+
+
 
 </resources>

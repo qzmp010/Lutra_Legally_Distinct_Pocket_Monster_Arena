@@ -1,5 +1,6 @@
 package com.lutra.legallydistinctpocketmonsterarea;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class ChooseMonsterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ActivityChooseMonsterBinding binding = ActivityChooseMonsterBinding.inflate(getLayoutInflater());
+        binding = ActivityChooseMonsterBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
 
         setContentView(binding.getRoot());
@@ -108,6 +109,10 @@ public class ChooseMonsterActivity extends AppCompatActivity {
         Toast.makeText(this, "Monster's nickname is " + nickname, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(ChooseMonsterActivity.this, LobbyActivity.class);
         startActivity(intent);
+    }
+    public static Intent intentFactory(Context context) {
+        Intent intent = new Intent(context, ChooseMonsterActivity.class);
+        return intent;
     }
 
 
