@@ -22,7 +22,6 @@ public class UserMonster {
   private int userId;
   private int monsterTypeId;
 
-
   public enum ElementalType {
     NORMAL,
     ELECTRIC,
@@ -247,9 +246,14 @@ public class UserMonster {
   @Override
   public String toString() {
     return "UserMonster{" +
-        "nickname='" + nickname + '\'' +
+        "userMonsterId=" + userMonsterId +
+        ", nickname='" + nickname + '\'' +
+        ", phrase='" + phrase + '\'' +
+        ", imageID=" + imageID +
+        ", type=" + type +
         ", attack=" + attack +
         ", defense=" + defense +
+        ", currentHealth=" + currentHealth +
         ", maxHealth=" + maxHealth +
         ", userId=" + userId +
         ", monsterTypeId=" + monsterTypeId +

@@ -4,11 +4,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterTypeWithUserMonsters;
 
-public class MonsterAdapter extends ListAdapter<UserMonster, MonsterViewHolder> {
+public class MonsterAdapter extends ListAdapter<MonsterTypeWithUserMonsters, MonsterViewHolder> {
 
-  public MonsterAdapter(@NonNull DiffUtil.ItemCallback<UserMonster> diffCallback) {
+  public MonsterAdapter(@NonNull DiffUtil.ItemCallback<MonsterTypeWithUserMonsters> diffCallback) {
     super(diffCallback);
   }
 
@@ -20,19 +20,19 @@ public class MonsterAdapter extends ListAdapter<UserMonster, MonsterViewHolder> 
 
   @Override
   public void onBindViewHolder(@NonNull MonsterViewHolder holder, int position) {
-    UserMonster current = getItem(position);
+    MonsterTypeWithUserMonsters current = getItem(position);
     holder.bind(current.toString());
   }
 
-  public static class UserMonsterDiff extends DiffUtil.ItemCallback<UserMonster> {
+  public static class UserMonsterDiff extends DiffUtil.ItemCallback<MonsterTypeWithUserMonsters> {
 
     @Override
-    public boolean areItemsTheSame(@NonNull UserMonster oldItem, @NonNull UserMonster newItem) {
+    public boolean areItemsTheSame(@NonNull MonsterTypeWithUserMonsters oldItem, @NonNull MonsterTypeWithUserMonsters newItem) {
       return oldItem == newItem;
     }
 
     @Override
-    public boolean areContentsTheSame(@NonNull UserMonster oldItem, @NonNull UserMonster newItem) {
+    public boolean areContentsTheSame(@NonNull MonsterTypeWithUserMonsters oldItem, @NonNull MonsterTypeWithUserMonsters newItem) {
       return oldItem.equals(newItem);
     }
   }

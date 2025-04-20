@@ -4,10 +4,13 @@ import android.app.Application;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterTypeWithUserMonsters;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -16,6 +19,7 @@ public class AppRepository {
   public static final String LOG_TAG = "com.lutra.ldpm.logs";
   private final MonsterTypeDAO monsterTypeDAO;
   private final UserMonsterDAO userMonsterDAO;
+  private final UserMonsterWithTypeDAO userMonsterWithTypeDAO;
   private final UserDAO userDao;
   private static AppRepository repository;
 
@@ -23,6 +27,7 @@ public class AppRepository {
     AppDatabase db = AppDatabase.getDatabase(application);
     this.monsterTypeDAO = db.monsterTypeDAO();
     this.userMonsterDAO = db.userMonsterDAO();
+    this.userMonsterWithTypeDAO = db.userMonsterWithTypeDAO();
     this.userDao = db.userDao();
   }
 
@@ -165,8 +170,58 @@ public class AppRepository {
     return null;
   }
 
-  public LiveData<List<UserMonster>> getByUserIdLiveData(int userId) {
+  public LiveData<List<UserMonster>> getUserMonstersByUserIdLiveData(int userId) {
     return userMonsterDAO.getByUserIdLiveData(userId);
+  }
+
+  public HashMap<UserMonster, MonsterType> getUserMonstersWithTypeMap() {
+    Future<HashMap<UserMonster, MonsterType>> future = AppDatabase.databaseWriteExecutor.submit(
+        new Callable<HashMap<UserMonster, MonsterType>>() {
+          @Override
+          public HashMap<UserMonster, MonsterType> call() throws Exception {
+            return (HashMap<UserMonster, MonsterType>) userMonsterWithTypeDAO.getUserMonstersWithTypeMap();
+          }
+        }
+    );
+    try {
+      return future.get();
+    } catch (InterruptedException | ExecutionException e) {
+      Log.i(LOG_TAG, "Problem getting UserMonsters with MonsterType from repository");
+    }
+    return null;
+  }
+
+  public LiveData<Map<UserMonster, MonsterType>> getUserMonstersWithTypeMapLiveData() {
+    return userMonsterWithTypeDAO.getUserMonstersWithTypeMapLiveData();
+  }
+
+  public Map<UserMonster, MonsterType> getUserMonsterMapByUserId(int userId) {
+    return userMonsterWithTypeDAO.getUserMonstersWithTypeMapByUserId(userId);
+  }
+
+  public LiveData<Map<UserMonster, MonsterType>> getUserMonsterMapByUserIdLiveData(int userId) {
+    return userMonsterWithTypeDAO.getUserMonstersWithTypeMapByUserIdLiveData(userId);
+  }
+
+  public ArrayList<MonsterTypeWithUserMonsters> getMonsterTypesWithUserMonsters() {
+    Future<ArrayList<MonsterTypeWithUserMonsters>> future = AppDatabase.databaseWriteExecutor.submit(
+        new Callable<ArrayList<MonsterTypeWithUserMonsters>>() {
+          @Override
+          public ArrayList<MonsterTypeWithUserMonsters> call() throws Exception {
+            return (ArrayList<MonsterTypeWithUserMonsters>) userMonsterWithTypeDAO.getMonsterTypesWithUserMonsters();
+          }
+        }
+    );
+    try {
+      return future.get();
+    } catch (InterruptedException | ExecutionException e) {
+      Log.i(LOG_TAG, "Problem getting MonsterTypes with UserMonsters from repository");
+    }
+    return null;
+  }
+
+  public LiveData<List<MonsterTypeWithUserMonsters>> getMonsterTypesWithUserMonstersLiveData() {
+    return userMonsterWithTypeDAO.getMonsterTypesWithUserMonstersLiveData();
   }
 
   public void insertUser(User user) {

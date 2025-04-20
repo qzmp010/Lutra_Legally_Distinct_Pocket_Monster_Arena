@@ -133,5 +133,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
   public abstract UserMonsterDAO userMonsterDAO();
 
+  public abstract UserMonsterWithTypeDAO userMonsterWithTypeDAO();
+
   public abstract UserDAO userDao();
 }
