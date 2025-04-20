@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import androidx.appcompat.app.AlertDialog;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,11 +48,44 @@ public class LobbyActivity extends AppCompatActivity {
         binding.Logout.setOnClickListener(new View.OnClickListener() { //handle logout part
             @Override
             public void onClick(View view) {
-                Toast.makeText(LobbyActivity.this, "Logout is clicked" ,Toast.LENGTH_SHORT).show();
+                showLogoutDialog();
             }
         });
 
+
     }
+    private void showLogoutDialog() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(LobbyActivity.this);
+        alertBuilder.setMessage("Logout?");
+
+        alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                logout();
+            }
+        });
+
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        alertBuilder.create().show();
+    }
+
+    private void logout() {
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+        sharedPrefEditor.putInt(getString(R.string.preference_userId_key), -1);
+        sharedPrefEditor.apply();
+
+        Intent intent = new Intent(LobbyActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
     public static Intent intentFactory(Context context) {
         Intent intent = new Intent(context, LobbyActivity.class);
