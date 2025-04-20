@@ -11,7 +11,7 @@ import java.util.Random;
 
 @Entity(tableName = AppDatabase.USER_MONSTER_TABLE)
 public class UserMonster {
-  @PrimaryKey
+  @PrimaryKey(autoGenerate = true)
   private int userMonsterId;
   private String nickname;
   private String phrase;
@@ -32,11 +32,11 @@ public class UserMonster {
     WATER,
   }
 
-  public UserMonster(String nickname, String phrase, int imageID, ElementalType type, int attack, int defense, int maxHealth, int userId,
+  public UserMonster(int userMonsterId, String nickname, String phrase, int imageID, ElementalType type, int attack, int defense, int maxHealth, int userId,
       int monsterTypeId) {
 
     //Make sure each monster has a unique ID set during runtime every time it is instantiated, whether it is inserted into the DB or not
-    this.setUserMonsterId(MonsterFactory.thisMonsterID++);
+    this.userMonsterId = userMonsterId;
 
     this.nickname = nickname;
     this.phrase = phrase;

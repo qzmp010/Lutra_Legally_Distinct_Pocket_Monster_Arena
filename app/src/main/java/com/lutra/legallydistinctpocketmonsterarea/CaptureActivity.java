@@ -49,13 +49,13 @@ public class CaptureActivity extends AppCompatActivity {
                     enemyMonster = repository.getUserMonsterById(enemyID);
                 } catch (RuntimeException e) {
                     Log.e(TAG, "Could not retrieve enemy monster.");
-                    enemyMonster = new UserMonster("MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
+                    enemyMonster = new UserMonster(-1, "MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
                             UserMonster.ElementalType.NORMAL, 1, 1, 1, 420, -1);
                 }
             }
         } else {
             Log.e(TAG, "Could not retrieve enemy monster.");
-            enemyMonster = new UserMonster("MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
+            enemyMonster = new UserMonster(-1, "MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
                     UserMonster.ElementalType.NORMAL, 1, 1, 1, 420, -1);
         }
 
