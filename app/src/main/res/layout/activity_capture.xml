@@ -93,6 +93,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
+        android:gravity="bottom"
         android:text="[EnemyMonsterName] is weakened!\nDo you want to capture [EnemyMonsterName]?\n[Username] throws a...monster...orb?\n[EnemyMonsterName] was captured!\n[EnemyMonstername] got away...\nDo you want to give a nickname to [EnemyMonsterName]?"
         android:textSize="18sp"
         android:textStyle="italic"
