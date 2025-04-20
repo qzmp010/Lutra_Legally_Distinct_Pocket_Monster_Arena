@@ -129,8 +129,10 @@ public class MonsterType {
   @Override
   public String toString() {
     return "MonsterType{" +
-        "monsterTypeName='" + monsterTypeName + '\'' +
+        "monsterTypeId=" + monsterTypeId +
+        ", monsterTypeName='" + monsterTypeName + '\'' +
         ", phrase='" + phrase + '\'' +
+        ", imageID=" + imageID +
         ", attackMax=" + attackMax +
         ", attackMin=" + attackMin +
         ", defenseMax=" + defenseMax +

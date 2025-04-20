@@ -27,11 +27,4 @@ public interface UserMonsterDAO {
 
   @Query("SELECT * FROM " + AppDatabase.USER_MONSTER_TABLE + " WHERE userId = :userId")
   LiveData<List<UserMonster>> getByUserIdLiveData(int userId);
-
-  @Query("SELECT * FROM " + AppDatabase.USER_MONSTER_TABLE
-      + " INNER JOIN " + AppDatabase.MONSTER_TYPE_TABLE
-      + " ON " + AppDatabase.USER_MONSTER_TABLE + ".monsterTypeId = "
-        + AppDatabase.MONSTER_TYPE_TABLE + ".monsterTypeId"
-      + " WHERE userId = :userId")
-  LiveData<Map<UserMonster, MonsterType>> getUserMonsterMapByUserIdLiveData(int userId);
 }
