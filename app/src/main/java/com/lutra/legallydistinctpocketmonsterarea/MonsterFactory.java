@@ -19,6 +19,8 @@ public abstract class MonsterFactory {
     private static final String TAG = "MonsterFactory.java";
     private static final int DEFAULT_USER = -1;
 
+    public static int thisMonsterID = 1;
+
     static UserMonster getRandomMonster(AppRepository repository) {
 
         Random rand = new Random();

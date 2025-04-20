@@ -46,7 +46,7 @@ public class CaptureActivity extends AppCompatActivity {
         if(enemyID != -1) {
             while(enemyMonster == null) {
                 try {
-                    repository.getUserMonsterById(enemyID);
+                    enemyMonster = repository.getUserMonsterById(enemyID);
                 } catch (RuntimeException e) {
                     Log.e(TAG, "Could not retrieve enemy monster.");
                     enemyMonster = new UserMonster("MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
@@ -138,8 +138,7 @@ public class CaptureActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 enemyMonster.setUserId(loggedInUser);
-                //TODO: Remove if successful
-                //repository.insertUserMonster(enemyMonster);
+                repository.insertUserMonster(enemyMonster);
 
                 Intent intent = BattleActivity.intentFactory(getApplicationContext());
                 intent.putExtra(CaptureActivity.USER_ID, loggedInUser);
@@ -164,8 +163,8 @@ public class CaptureActivity extends AppCompatActivity {
                 if(!newNickname.isEmpty() && newNickname.length() <= 12) {
                     enemyMonster.setNickname(newNickname);
                     enemyMonster.setUserId(loggedInUser);
-                    //TODO: Remove if successful
-                    //repository.insertUserMonster(enemyMonster);
+
+                    repository.insertUserMonster(enemyMonster);
 
                     renameDialog.dismiss();
 

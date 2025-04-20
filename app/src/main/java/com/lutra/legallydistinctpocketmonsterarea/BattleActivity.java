@@ -19,7 +19,6 @@ public class BattleActivity extends AppCompatActivity {
 
     public static final String ENEMY_ID = "BattleActivity.ENEMY_ID";
     public static final String USER_ID = "BattleActivity.USER_ID";
-    public static final String USER_MONSTER_ID = "BattleActivity.USER_MONSTER_ID";
 
 
     private ActivityBattleBinding binding;
