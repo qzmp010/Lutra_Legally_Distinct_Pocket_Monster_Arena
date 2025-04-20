@@ -18,9 +18,7 @@ import java.util.Random;
 public abstract class MonsterFactory {
 
     private static final String TAG = "MonsterFactory.java";
-    private static final int DEFAULT_ID = 0;
     private static final int DEFAULT_USER = -1;
-    private static int thisMonsterID = 10;
 
     static UserMonster getRandomMonster(AppRepository repository) {
 
@@ -53,7 +51,7 @@ public abstract class MonsterFactory {
                 Math.abs(rand.nextInt() % (template.getDefenseMax() - template.getDefenseMin()));
 
         return new UserMonster(
-                thisMonsterID++,
+                Math.abs(rand.nextInt()),
                 template.getMonsterTypeName(),
                 template.getPhrase(),
                 template.getImageID(),

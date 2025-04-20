@@ -88,6 +88,12 @@ public class CaptureActivity extends AppCompatActivity {
         alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                //Error check to make sure we don't have MissingNO
+                if(enemyMonster.getUserMonsterId() == -1) {
+                    Intent intent = BattleActivity.intentFactory(getApplicationContext());
+                    intent.putExtra(BattleActivity.USER_ID, loggedInUser);
+                    startActivity(intent);
+                }
                 captureDialog.dismiss();
                 captureMonster();
             }
