@@ -193,6 +193,10 @@ public class AppRepository {
     return userMonsterDAO.getByUserIdLiveData(userId);
   }
 
+  public void deleteMonsterByMonsterId(int monsterID) {
+      userMonsterDAO.deleteMonsterByMonsterId(monsterID);
+  }
+
   public LiveData<User> getUserByUserName(String username) {
     return userDao.getUserByUserName(username);
   }

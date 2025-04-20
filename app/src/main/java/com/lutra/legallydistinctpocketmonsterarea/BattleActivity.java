@@ -24,7 +24,7 @@ public class BattleActivity extends AppCompatActivity {
 
     private ActivityBattleBinding binding;
     private AppRepository repository;
-    private int loggedInUserID = 0;
+    private int loggedInUserID = -1;
 
     UserMonster userMonster;
     UserMonster enemyMonster;
@@ -38,6 +38,8 @@ public class BattleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityBattleBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        loginUser();
 
         //Inserted for testing, but I kinda like it anyway!
         binding.battleDialog.setMovementMethod(new ScrollingMovementMethod());
@@ -99,7 +101,7 @@ public class BattleActivity extends AppCompatActivity {
 
         binding.battleDialog.setText("");
         userMonster = MonsterFactory.getUserMonster(repository);
-        enemyMonster = MonsterFactory.getRandomMonster(repository, loggedInUserID);
+        enemyMonster = MonsterFactory.getRandomMonster(repository);
 
         //Rolls to see which monster goes first
         if(Math.abs(rand.nextInt() % 4) == 0) {
@@ -190,10 +192,7 @@ public class BattleActivity extends AppCompatActivity {
         attackValue = userMonster.normalAttack();
         damage = enemyMonster.takeDamage(attackValue);
         binding.battleDialog.append(String.format("%s is hit for %d damage.%n", enemyMonster.getNickname().toUpperCase(), damage));
-        if(!faintCheck()) {
-            activeMonster = enemyMonster;
-            enemyTurn();
-        }
+        faintCheck();
     }
 
     public void userSpecial() {
@@ -216,23 +215,29 @@ public class BattleActivity extends AppCompatActivity {
             damage = enemyMonster.takeDamage(attackValue);
             binding.battleDialog.append(String.format("%s is hit for %d damage.%n", enemyMonster.getNickname().toUpperCase(), damage));
         }
-        if(!faintCheck()) {
-            activeMonster = enemyMonster;
-            enemyTurn();
-        }
+        faintCheck();
     }
 
-    public boolean faintCheck() {
+    public void faintCheck() {
         if (enemyMonster.getCurrentHealth() > 0) {
             String enemyHP = enemyMonster.getCurrentHealth() + "/" + enemyMonster.getMaxHealth();
             binding.enemyMonsterHP.setText(enemyHP);
-            return false;
+
+            activeMonster = enemyMonster;
+            enemyTurn();
         } else {
             String userHP = "0/" + enemyMonster.getMaxHealth();
+            enemyMonster.setCurrentHealth(0);
             binding.enemyMonsterHP.setText(userHP);
-            binding.battleDialog.append(String.format("%n%s%n%s fainted! Battle demo ends for now.",
+            binding.battleDialog.append(String.format("%n%s%n%s fainted!",
                     enemyMonster.getPhrase(), enemyMonster.getNickname()));
-            return true;
+
+            repository.insertUserMonster(enemyMonster);
+
+            Intent intent = CaptureActivity.intentFactory(getApplicationContext());
+            intent.putExtra(BattleActivity.ENEMY_ID, enemyMonster.getUserMonsterId());
+            intent.putExtra(BattleActivity.USER_ID, loggedInUserID);
+            startActivity(intent);
         }
     }
 
@@ -246,6 +251,16 @@ public class BattleActivity extends AppCompatActivity {
         binding.battleDialog.append("UserRun clicked.\n\n");
         activeMonster = enemyMonster;
         enemyTurn();
+    }
+
+    private void loginUser() {
+        if(loggedInUserID == -1) {
+            loggedInUserID =  getIntent().getIntExtra(MainActivity.MAIN_ACTIVITY_USER_ID, -1);
+        }
+
+        if(loggedInUserID == -1) {
+            loggedInUserID = getIntent().getIntExtra(CaptureActivity.USER_ID, 99);
+        }
     }
 
     public static Intent intentFactory(Context context) {

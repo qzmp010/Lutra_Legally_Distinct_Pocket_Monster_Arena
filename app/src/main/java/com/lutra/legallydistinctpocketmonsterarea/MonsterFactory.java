@@ -17,8 +17,9 @@ import java.util.Random;
 public abstract class MonsterFactory {
 
     private static final String TAG = "MonsterFactory.java";
+    private static final int DEFAULT_USER = -1;
 
-    static UserMonster getRandomMonster(AppRepository repository, int userID) {
+    static UserMonster getRandomMonster(AppRepository repository) {
 
         Random rand = new Random();
 
@@ -56,7 +57,7 @@ public abstract class MonsterFactory {
                 attack,
                 defense,
                 health,
-                userID,
+                DEFAULT_USER,
                 template.getMonsterTypeId()
         );
     }

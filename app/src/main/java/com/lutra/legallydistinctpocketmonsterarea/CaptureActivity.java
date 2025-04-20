@@ -23,6 +23,7 @@ import java.util.Random;
 public class CaptureActivity extends AppCompatActivity {
 
     public static final String TAG = "CaptureActivity.java";
+    public static final String USER_ID = "CaptureActivity_USER_ID";
 
     private int loggedInUser;
     private int enemyID;
@@ -40,7 +41,7 @@ public class CaptureActivity extends AppCompatActivity {
         repository = AppRepository.getRepository(getApplication());
         enemyID = getIntent().getIntExtra(BattleActivity.ENEMY_ID, -1);
         //TODO: Change default value below - currently using for testing
-        loggedInUser = getIntent().getIntExtra(BattleActivity.USER_ID, 420);
+        loggedInUser = getIntent().getIntExtra(BattleActivity.USER_ID, 99);
 
         if(enemyID != -1) {
             while(enemyMonster == null) {
@@ -95,6 +96,8 @@ public class CaptureActivity extends AppCompatActivity {
         alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
+
                 Intent intent = BattleActivity.intentFactory(getApplicationContext());
                 intent.putExtra(BattleActivity.USER_ID, loggedInUser);
                 startActivity(intent);
@@ -135,10 +138,11 @@ public class CaptureActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 enemyMonster.setUserId(loggedInUser);
-                repository.insertUserMonster(enemyMonster);
+                //TODO: Remove if successful
+                //repository.insertUserMonster(enemyMonster);
 
                 Intent intent = BattleActivity.intentFactory(getApplicationContext());
-                intent.putExtra(BattleActivity.USER_ID, loggedInUser);
+                intent.putExtra(CaptureActivity.USER_ID, loggedInUser);
                 startActivity(intent);
             }
         });
@@ -160,12 +164,13 @@ public class CaptureActivity extends AppCompatActivity {
                 if(!newNickname.isEmpty() && newNickname.length() <= 12) {
                     enemyMonster.setNickname(newNickname);
                     enemyMonster.setUserId(loggedInUser);
-                    repository.insertUserMonster(enemyMonster);
+                    //TODO: Remove if successful
+                    //repository.insertUserMonster(enemyMonster);
 
                     renameDialog.dismiss();
 
                     Intent intent = BattleActivity.intentFactory(getApplicationContext());
-                    intent.putExtra(BattleActivity.USER_ID, loggedInUser);
+                    intent.putExtra(CaptureActivity.USER_ID, loggedInUser);
                     startActivity(intent);
                 } else {
                     Toast.makeText(CaptureActivity.this, "Invalid nickname.", LENGTH_SHORT).show();
