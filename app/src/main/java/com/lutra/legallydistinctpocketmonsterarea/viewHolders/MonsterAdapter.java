@@ -23,8 +23,7 @@ public class MonsterAdapter extends ListAdapter<Entry<UserMonster, MonsterType>,
   @Override
   public void onBindViewHolder(@NonNull MonsterViewHolder holder, int position) {
     Entry<UserMonster, MonsterType> current = getItem(position);
-    //holder.bind(current.toString());
-    holder.bind(current.getKey().toString() + " ---- " + current.getValue().toString());
+    holder.bind(current);
   }
 
   public static class UserMonsterDiff extends DiffUtil.ItemCallback<Entry<UserMonster, MonsterType>> {
