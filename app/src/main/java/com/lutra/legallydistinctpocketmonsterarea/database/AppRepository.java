@@ -209,7 +209,20 @@ public class AppRepository {
   }
 
   public void deleteMonsterByMonsterId(int monsterID) {
-      userMonsterDAO.deleteMonsterByMonsterId(monsterID);
+    Future future = AppDatabase.databaseWriteExecutor.submit(
+        new Callable() {
+          @Override
+          public Object call() throws Exception {
+            userMonsterDAO.deleteMonsterByMonsterId(monsterID);
+            return null;
+          }
+        }
+    );
+    try {
+      future.get();
+    } catch (InterruptedException | ExecutionException e) {
+      Log.i(LOG_TAG, "Problem deleting UserMonster with userMonsterId " + monsterID);
+    }
   }
 
   public LiveData<User> getUserByUserName(String username) {

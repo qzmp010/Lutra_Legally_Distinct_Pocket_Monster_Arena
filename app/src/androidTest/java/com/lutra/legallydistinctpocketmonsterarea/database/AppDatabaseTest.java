@@ -148,6 +148,16 @@ public class AppDatabaseTest extends TestCase {
 //    assertEquals(userMonsterTypeMap.get(splashturt), turtleType);
   }
 
+  @Test
+  public void testDeleteMonsterByMonsterId() {
+    long userMonsterId = userMonsterDAO.insert(new UserMonster(1,"Zappyer", "BUZZZZZZZT", R.drawable.ld_pikachu,
+        UserMonster.ElementalType.ELECTRIC, 11, 6,
+        35, 0, 0));
+    assertNotNull(userMonsterDAO.getMonsterByMonsterId((int)userMonsterId));
+    userMonsterDAO.deleteMonsterByMonsterId((int)userMonsterId);
+    assertNull(userMonsterDAO.getMonsterByMonsterId((int)userMonsterId));
+  }
+
   public void testUserDao() {
   }
 }
