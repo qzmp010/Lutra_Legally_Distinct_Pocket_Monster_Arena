@@ -82,31 +82,39 @@ public class ChooseMonsterActivity extends AppCompatActivity {
         builder.show();
     }
     private void createNickname(String type){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Would you like to add a nickname for you " + type);
+        EditText editText = new EditText(this);
+        editText.setHint("Nickname:");
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setMessage("Would you like to add a nickname for your " + type + "?");
 
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        alertBuilder.setView(editText);
+
+        alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                binding.NicknameEditText.setVisibility(View.VISIBLE);
-                createNewMonster();
+                String input = editText.getText().toString();
+                if(input.isEmpty()){
+                    input = type;
+                }
+                createNewMonster(input);
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+               createNewMonster(type);
             }
         });
-        builder.show();
+        alertBuilder.create().show();
 
     }
 
-    private void createNewMonster(){
-        String nickname = binding.NicknameEditText.getText().toString();
-        if(nickname.isEmpty()) {
-            nickname = "NORMAL";
-        }
-        Toast.makeText(this, "Monster's nickname is " + nickname, Toast.LENGTH_SHORT).show();
+    private void createNewMonster(String input){
+      String nickname = input;
+      if(nickname.isEmpty()) {
+         nickname = "NORMAL";
+       }
+        Toast.makeText(this, "Monster's nickname is " + input, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(ChooseMonsterActivity.this, LobbyActivity.class);
         startActivity(intent);
     }
