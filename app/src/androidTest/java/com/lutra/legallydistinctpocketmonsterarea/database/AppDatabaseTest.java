@@ -103,23 +103,23 @@ public class AppDatabaseTest extends TestCase {
     lizardType.setMonsterTypeId(lizardId);
     turtleType.setMonsterTypeId(turtleId);
 
-    UserMonster zappy = new UserMonster("Zappyer", "BUZZZZZZZT", R.drawable.ld_pikachu,
+    UserMonster zappy = new UserMonster(1,"Zappyer", "BUZZZZZZZT", R.drawable.ld_pikachu,
         UserMonster.ElementalType.ELECTRIC, 11, 6,
         35, userId, mouseyId);
 
-    UserMonster plantisaurus = new UserMonster("Plantisaurusy", "Yo, got any grass?",
+    UserMonster plantisaurus = new UserMonster(2,"Plantisaurusy", "Yo, got any grass?",
         R.drawable.ld_bulbasaur_png, UserMonster.ElementalType.GRASS, 10, 7,
         40, userId, dinoId);
 
-    UserMonster flamizord = new UserMonster("Flamizordor", "Burninating the countryside!",
+    UserMonster flamizord = new UserMonster(3,"Flamizordor", "Burninating the countryside!",
         R.drawable.ld_charizard, UserMonster.ElementalType.FIRE, 13, 4,
         25, userId, lizardId);
 
-    UserMonster warturt = new UserMonster("Warturtle", "I didn't know you liked to get wet!",
+    UserMonster warturt = new UserMonster(4,"Warturtle", "I didn't know you liked to get wet!",
         R.drawable.ld_squirtle, UserMonster.ElementalType.WATER, 12, 5,
         30, userId, turtleId);
 
-    UserMonster splashturt = new UserMonster("Splashturty", "I didn't know you liked to get wet!",
+    UserMonster splashturt = new UserMonster(5,"Splashturty", "I didn't know you liked to get wet!",
         R.drawable.ld_squirtle, UserMonster.ElementalType.WATER, 12, 5,
         30, userId, turtleId);
 

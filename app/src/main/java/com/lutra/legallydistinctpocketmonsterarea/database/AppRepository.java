@@ -71,6 +71,13 @@ public class AppRepository {
     return null;
   }
 
+  /**
+   * Inserts or updates MonsterType
+   * Inserts new entry if monsterTypeId is null or unique
+   * Updates existing entry if monsterTypeId exists
+   * @param monsterType to insert or update
+   * @return monsterTypeId of inserted MonsterType
+   */
   public long insertMonsterType(MonsterType monsterType) {
     Future<Long> future = AppDatabase.databaseWriteExecutor.submit(
         new Callable<Long>() {
@@ -122,6 +129,13 @@ public class AppRepository {
     return null;
   }
 
+  /**
+   * Inserts or updates UserMonster
+   * Inserts new entry if userMonsterId is null or unique
+   * Updates existing entry if userMonsterId exists
+   * @param userMonster to insert or update
+   * @return userMonsterId of inserted UserMonster
+   */
   public long insertUserMonster(UserMonster userMonster) {
     Future<Long> future = AppDatabase.databaseWriteExecutor.submit(
         new Callable<Long>() {
@@ -138,6 +152,23 @@ public class AppRepository {
     }
     return 0L;
   }
+
+    public UserMonster getUserMonsterById(int userMonsterId) {
+        Future<UserMonster> future = AppDatabase.databaseWriteExecutor.submit(
+                new Callable<UserMonster>() {
+                    @Override
+                    public UserMonster call() throws Exception {
+                        return userMonsterDAO.getMonsterByMonsterId(userMonsterId);
+                    }
+                }
+        );
+        try {
+            return future.get();
+        } catch (InterruptedException | ExecutionException e) {
+            Log.i(LOG_TAG, "Problem getting MonsterType by ID from repository");
+        }
+        return null;
+    }
 
   public ArrayList<UserMonster> getAllUserMonsters() {
     Future<ArrayList<UserMonster>> future = AppDatabase.databaseWriteExecutor.submit(
@@ -177,6 +208,10 @@ public class AppRepository {
     return userMonsterDAO.getByUserIdLiveData(userId);
   }
 
+  public void deleteMonsterByMonsterId(int monsterID) {
+      userMonsterDAO.deleteMonsterByMonsterId(monsterID);
+  }
+
   public LiveData<User> getUserByUserName(String username) {
     return userDao.getUserByUserName(username);
   }
@@ -185,12 +220,16 @@ public class AppRepository {
     return userDao.getUserByUserId(userId);
   }
 
-  public HashMap<UserMonster, MonsterType> getUserMonstersWithTypeMap() {
-    Future<HashMap<UserMonster, MonsterType>> future = AppDatabase.databaseWriteExecutor.submit(
-        new Callable<HashMap<UserMonster, MonsterType>>() {
+  /**
+   * Gets all UserMonsters with MonsterType
+   * @return ArrayList with Entry containing UserMonster as key and MonsterType as value
+   */
+  public List<Entry<UserMonster, MonsterType>> getUserMonstersWithTypeList() {
+    Future<List<Entry<UserMonster, MonsterType>>> future = AppDatabase.databaseWriteExecutor.submit(
+        new Callable<List<Entry<UserMonster, MonsterType>>>() {
           @Override
-          public HashMap<UserMonster, MonsterType> call() throws Exception {
-            return (HashMap<UserMonster, MonsterType>) userMonsterWithTypeDAO.getUserMonstersWithTypeMap();
+          public List<Entry<UserMonster, MonsterType>> call() throws Exception {
+            return new ArrayList<>(userMonsterWithTypeDAO.getUserMonstersWithTypeMap().entrySet());
           }
         }
     );
@@ -202,10 +241,6 @@ public class AppRepository {
     return null;
   }
 
-  public List<Entry<UserMonster, MonsterType>> getUserMonstersWithTypeList() {
-    return new ArrayList<>(getUserMonstersWithTypeMap().entrySet());
-  }
-
   public LiveData<List<Entry<UserMonster, MonsterType>>> getUserMonstersWithTypeListLiveData() {
     return Transformations.map(
         userMonsterWithTypeDAO.getUserMonstersWithTypeMapLiveData(),
@@ -213,10 +248,28 @@ public class AppRepository {
     );
   }
 
+  /**
+   * Gets UserMonsters with MonsterType for userId
+   * @param userId of user in which to retrieve UserMonsters
+   * @return ArrayList with Entry containing UserMonster as key and MonsterType as value
+   */
   public List<Entry<UserMonster, MonsterType>> getUserMonsterWithTypeListByUserId(int userId) {
-    return new ArrayList<Entry<UserMonster, MonsterType>>(
-        userMonsterWithTypeDAO.getUserMonstersWithTypeMapByUserId(userId).entrySet()
+    Future<List<Entry<UserMonster, MonsterType>>> future = AppDatabase.databaseWriteExecutor.submit(
+        new Callable<List<Entry<UserMonster, MonsterType>>>() {
+          @Override
+          public List<Entry<UserMonster, MonsterType>> call() throws Exception {
+            return new ArrayList<>(
+                userMonsterWithTypeDAO.getUserMonstersWithTypeMapByUserId(userId).entrySet()
+            );
+          }
+        }
     );
+    try {
+      return future.get();
+    } catch (InterruptedException | ExecutionException e) {
+      Log.i(LOG_TAG, "Problem getting UserMonsters with MonsterType by userId from repository");
+    }
+    return null;
   }
 
   public LiveData<List<Entry<UserMonster, MonsterType>>> getUserMonsterWithTypeListByUserIdLiveData(int userId) {

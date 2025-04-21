@@ -107,17 +107,17 @@ public abstract class AppDatabase extends RoomDatabase {
 
         //Starters
         UserMonsterDAO userMonsterDAO = INSTANCE.userMonsterDAO();
-        userMonsterDAO.insert(new UserMonster("Plantisaurus", "Yo, got any grass?", R.drawable.ld_bulbasaur_png, UserMonster.ElementalType.GRASS, 10, 7,
-            40, 0, 1));
+        userMonsterDAO.insert(new UserMonster(1, "Plantisaurus", "Yo, got any grass?", R.drawable.ld_bulbasaur_png, UserMonster.ElementalType.GRASS, 10, 7,
+            40, 49, 1));
 
-        userMonsterDAO.insert(new UserMonster("Zappy", "BUZZZZZZZT",R.drawable.ld_pikachu, UserMonster.ElementalType.ELECTRIC, 11, 6,
-            35, 0, 2));
+        userMonsterDAO.insert(new UserMonster(2, "Zappy", "BUZZZZZZZT",R.drawable.ld_pikachu, UserMonster.ElementalType.ELECTRIC, 11, 6,
+            35, 49, 2));
 
-        userMonsterDAO.insert(new UserMonster("Splashturt", "I didn't know you liked to get wet!",R.drawable.ld_squirtle, UserMonster.ElementalType.WATER, 12, 5,
+        userMonsterDAO.insert(new UserMonster(3, "Splashturt", "I didn't know you liked to get wet!",R.drawable.ld_squirtle, UserMonster.ElementalType.WATER, 12, 5,
             30, 0, 3));
 
-        userMonsterDAO.insert(new UserMonster("Flamizord", "Burninating the countryside!",R.drawable.ld_charizard, UserMonster.ElementalType.FIRE, 13, 4,
-            25, 0, 3));
+        userMonsterDAO.insert(new UserMonster(4, "Flamizord", "Burninating the countryside!",R.drawable.ld_charizard, UserMonster.ElementalType.FIRE, 13, 4,
+            25, 0, 4));
 
         UserDAO userDao = INSTANCE.userDao();
         User admin = new User("admin", "admin123", true);

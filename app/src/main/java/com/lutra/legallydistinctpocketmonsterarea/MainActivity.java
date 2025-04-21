@@ -27,7 +27,7 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
-  private static final String MAIN_ACTIVITY_USER_ID = "com.lutra.legallydistinctpocketmonsterarea.MAIN_ACTIVITY_USER_ID";
+  public static final String MAIN_ACTIVITY_USER_ID = "com.lutra.legallydistinctpocketmonsterarea.MAIN_ACTIVITY_USER_ID";
   static final String SHARED_PREFERENCE_USERID_KEY = "com.lutra.legallydistinctpocketmonsterarea.SHARED_PREFERENCE_USERID_KEY";
   static final String SAVED_INSTANCE_STATE_USERID_KEY = "com.lutra.legallydistinctpocketmonsterarea.SAVED_INSTANCE_STATE_USERID_KEY";
   private static final int LOGGED_OUT = -1;
@@ -66,7 +66,10 @@ public class MainActivity extends AppCompatActivity {
     binding.battleActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        startActivity(BattleActivity.intentFactory(getApplicationContext()));
+        Intent intent = BattleActivity.intentFactory(getApplicationContext());
+        //Random user number for intent testing
+        intent.putExtra(MAIN_ACTIVITY_USER_ID, 49);
+        startActivity(intent);
       }
     });
 
@@ -82,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         startActivity(ViewMonstersActivity.intentFactory(getApplicationContext()));
+      }
+    });
+
+    binding.captureActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(CaptureActivity.intentFactory(getApplicationContext()));
       }
     });
   }
