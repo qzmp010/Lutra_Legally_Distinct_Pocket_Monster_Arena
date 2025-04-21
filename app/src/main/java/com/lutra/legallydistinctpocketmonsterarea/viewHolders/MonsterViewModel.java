@@ -8,7 +8,7 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterTypeWithUserMonsters;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 
 public class MonsterViewModel extends AndroidViewModel {
 
@@ -23,7 +23,7 @@ public class MonsterViewModel extends AndroidViewModel {
     return repository.getMonsterTypesWithUserMonstersLiveData();
   }
 
-  public LiveData<Map<UserMonster, MonsterType>> getUserMonstersWithTypeMapLiveData() {
-    return repository.getUserMonstersWithTypeMapLiveData();
+  public LiveData<List<Entry<UserMonster, MonsterType>>> getUserMonstersWithTypeListLiveData() {
+    return repository.getUserMonstersWithTypeListLiveData();
   }
 }

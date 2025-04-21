@@ -3,6 +3,7 @@ package com.lutra.legallydistinctpocketmonsterarea.database;
 import android.app.Application;
 import android.util.Log;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Transformations;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterTypeWithUserMonsters;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
@@ -10,7 +11,7 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -201,19 +202,31 @@ public class AppRepository {
     return null;
   }
 
-  public LiveData<Map<UserMonster, MonsterType>> getUserMonstersWithTypeMapLiveData() {
-    return userMonsterWithTypeDAO.getUserMonstersWithTypeMapLiveData();
+  public List<Entry<UserMonster, MonsterType>> getUserMonstersWithTypeList() {
+    return new ArrayList<>(getUserMonstersWithTypeMap().entrySet());
   }
 
-  public Map<UserMonster, MonsterType> getUserMonsterMapByUserId(int userId) {
-    return userMonsterWithTypeDAO.getUserMonstersWithTypeMapByUserId(userId);
+  public LiveData<List<Entry<UserMonster, MonsterType>>> getUserMonstersWithTypeListLiveData() {
+    return Transformations.map(
+        userMonsterWithTypeDAO.getUserMonstersWithTypeMapLiveData(),
+        m -> new ArrayList<>(m.entrySet())
+    );
   }
 
-  public LiveData<Map<UserMonster, MonsterType>> getUserMonsterMapByUserIdLiveData(int userId) {
-    return userMonsterWithTypeDAO.getUserMonstersWithTypeMapByUserIdLiveData(userId);
+  public List<Entry<UserMonster, MonsterType>> getUserMonsterWithTypeListByUserId(int userId) {
+    return new ArrayList<Entry<UserMonster, MonsterType>>(
+        userMonsterWithTypeDAO.getUserMonstersWithTypeMapByUserId(userId).entrySet()
+    );
   }
 
-  public ArrayList<MonsterTypeWithUserMonsters> getMonsterTypesWithUserMonsters() {
+  public LiveData<List<Entry<UserMonster, MonsterType>>> getUserMonsterWithTypeListByUserIdLiveData(int userId) {
+    return Transformations.map(
+        userMonsterWithTypeDAO.getUserMonstersWithTypeMapByUserIdLiveData(userId),
+        m -> new ArrayList<>(m.entrySet())
+    );
+  }
+
+  public List<MonsterTypeWithUserMonsters> getMonsterTypesWithUserMonsters() {
     Future<ArrayList<MonsterTypeWithUserMonsters>> future = AppDatabase.databaseWriteExecutor.submit(
         new Callable<ArrayList<MonsterTypeWithUserMonsters>>() {
           @Override
