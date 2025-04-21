@@ -4,11 +4,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
-import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterTypeWithUserMonsters;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
+import java.util.Map.Entry;
 
-public class MonsterAdapter extends ListAdapter<MonsterTypeWithUserMonsters, MonsterViewHolder> {
+public class MonsterAdapter extends ListAdapter<Entry<UserMonster, MonsterType>, MonsterViewHolder> {
 
-  public MonsterAdapter(@NonNull DiffUtil.ItemCallback<MonsterTypeWithUserMonsters> diffCallback) {
+  public MonsterAdapter(@NonNull DiffUtil.ItemCallback<Entry<UserMonster, MonsterType>> diffCallback) {
     super(diffCallback);
   }
 
@@ -20,19 +22,19 @@ public class MonsterAdapter extends ListAdapter<MonsterTypeWithUserMonsters, Mon
 
   @Override
   public void onBindViewHolder(@NonNull MonsterViewHolder holder, int position) {
-    MonsterTypeWithUserMonsters current = getItem(position);
-    holder.bind(current.toString());
+    Entry<UserMonster, MonsterType> current = getItem(position);
+    holder.bind(current);
   }
 
-  public static class UserMonsterDiff extends DiffUtil.ItemCallback<MonsterTypeWithUserMonsters> {
+  public static class UserMonsterDiff extends DiffUtil.ItemCallback<Entry<UserMonster, MonsterType>> {
 
     @Override
-    public boolean areItemsTheSame(@NonNull MonsterTypeWithUserMonsters oldItem, @NonNull MonsterTypeWithUserMonsters newItem) {
+    public boolean areItemsTheSame(@NonNull Entry<UserMonster, MonsterType> oldItem, @NonNull Entry<UserMonster, MonsterType> newItem) {
       return oldItem == newItem;
     }
 
     @Override
-    public boolean areContentsTheSame(@NonNull MonsterTypeWithUserMonsters oldItem, @NonNull MonsterTypeWithUserMonsters newItem) {
+    public boolean areContentsTheSame(@NonNull Entry<UserMonster, MonsterType> oldItem, @NonNull Entry<UserMonster, MonsterType> newItem) {
       return oldItem.equals(newItem);
     }
   }
