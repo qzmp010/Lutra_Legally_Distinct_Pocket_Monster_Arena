@@ -102,7 +102,7 @@ public class BattleActivity extends AppCompatActivity {
         //Below are default monsters for testing.
 
         binding.battleDialog.setText("");
-        userMonster = MonsterFactory.getUserMonster(repository);
+        userMonster = MonsterFactory.getUserMonster(repository, loggedInUserID);
         enemyMonster = MonsterFactory.getRandomMonster(repository);
 
         //Rolls to see which monster goes first
@@ -180,8 +180,9 @@ public class BattleActivity extends AppCompatActivity {
         } else {
             String userHP = "0/" + userMonster.getMaxHealth();
             binding.userMonsterHP.setText(userHP);
-            binding.battleDialog.append(String.format("%n%s%n%s fainted! Battle demo ends for now.",
+            binding.battleDialog.append(String.format("%n%s%n%s fainted! Time to run!",
                     userMonster.getPhrase(),userMonster.getNickname()));
+            userRun();
         }
 
     }

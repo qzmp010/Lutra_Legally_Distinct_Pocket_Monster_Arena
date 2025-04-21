@@ -64,12 +64,12 @@ public abstract class MonsterFactory {
         );
     }
 
-    public static UserMonster getUserMonster(AppRepository repository) {
+    public static UserMonster getUserMonster(AppRepository repository, int userID) {
         Random rand = new Random();
         ArrayList<UserMonster> userMonsters = new ArrayList<>();
         while(userMonsters.isEmpty()) {
             try {
-                userMonsters = repository.getAllUserMonsters();
+                userMonsters = repository.getUserMonstersByUserId(userID);
             } catch (RuntimeException e) {
                 Log.e(TAG, "Error: Unable to instantiate enemy monster.");
                 return new UserMonster(-1, "MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
