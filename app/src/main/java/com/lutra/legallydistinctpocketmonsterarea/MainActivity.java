@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
-
+    
     binding.lobbyActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -84,13 +84,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(ViewMonstersActivity.intentFactory(getApplicationContext()));
       }
     });
-    binding.ChooseMonsterActivityButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        startActivity(ChooseMonsterActivity.intentFactory(getApplicationContext()));
-      }
-    });
-
   }
 
   private void loginUser(Bundle savedInstanceState) {

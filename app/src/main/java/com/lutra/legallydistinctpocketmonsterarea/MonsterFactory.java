@@ -1,5 +1,6 @@
 package com.lutra.legallydistinctpocketmonsterarea;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -17,8 +18,9 @@ import java.util.Random;
 public abstract class MonsterFactory {
 
     private static final String TAG = "MonsterFactory.java";
+    private static final int DEFAULT_USER = -1;
 
-    static UserMonster getRandomMonster(AppRepository repository, int userID) {
+    static UserMonster getRandomMonster(AppRepository repository) {
 
         Random rand = new Random();
 
@@ -31,7 +33,7 @@ public abstract class MonsterFactory {
                 allMonsters = repository.getAllMonsterTypes();
             } catch (RuntimeException e) {
                 Log.e(TAG, "Error: Unable to instantiate enemy monster.");
-                return new UserMonster("MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
+                return new UserMonster(-1, "MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
                         UserMonster.ElementalType.NORMAL, 1, 1, 1, 420, -1);
             }
         }
@@ -49,6 +51,7 @@ public abstract class MonsterFactory {
                 Math.abs(rand.nextInt() % (template.getDefenseMax() - template.getDefenseMin()));
 
         return new UserMonster(
+                Math.abs(rand.nextInt()),
                 template.getMonsterTypeName(),
                 template.getPhrase(),
                 template.getImageID(),
@@ -56,20 +59,20 @@ public abstract class MonsterFactory {
                 attack,
                 defense,
                 health,
-                userID,
+                DEFAULT_USER,
                 template.getMonsterTypeId()
         );
     }
 
-    public static UserMonster getUserMonster(AppRepository repository) {
+    public static UserMonster getUserMonster(AppRepository repository, int userID) {
         Random rand = new Random();
         ArrayList<UserMonster> userMonsters = new ArrayList<>();
         while(userMonsters.isEmpty()) {
             try {
-                userMonsters = repository.getAllUserMonsters();
+                userMonsters = repository.getUserMonstersByUserId(userID);
             } catch (RuntimeException e) {
                 Log.e(TAG, "Error: Unable to instantiate enemy monster.");
-                return new UserMonster("MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
+                return new UserMonster(-1, "MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
                         UserMonster.ElementalType.NORMAL,1,1,1,420,-1);
             }
         }
