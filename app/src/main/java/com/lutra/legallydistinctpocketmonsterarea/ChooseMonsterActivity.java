@@ -94,21 +94,23 @@ public class ChooseMonsterActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 String input = editText.getText().toString();
                 if(input.isEmpty()){
-                    input = type;
+                    Toast.makeText(ChooseMonsterActivity.this, "Nickname cannot be blank", Toast.LENGTH_SHORT).show();
+                    createNickname(type);
+                    return;
                 }
                 createNewMonster(input);
             }
         });
+
         alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-               createNewMonster(type);
+                createNewMonster(type);
             }
         });
+
         alertBuilder.create().show();
-
     }
-
     private void createNewMonster(String input){
       String nickname = input;
       if(nickname.isEmpty()) {

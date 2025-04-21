@@ -81,14 +81,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/GRASS" />
-    <EditText
-        android:id="@+id/NicknameEditText"
-        android:hint="@string/enter_a_nickname"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/WATER"
-        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
