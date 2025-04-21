@@ -37,6 +37,8 @@
   <string name="choosemonsteractivity">ChooseMonsterActivity</string>
   <string name="preference_file_key">daclinkPreferenceFileName</string>
   <string name="preference_userId_key">daclinkPreferenceUserIdKey</string>
+  <string name="monster_image">Monster Image</string>
+  <string name="view_label_type_health_attack_defense">🌈 Type:\n❤️ Health:\n🗡️ Attack:\n🛡️ Defense:</string>
 
 
 

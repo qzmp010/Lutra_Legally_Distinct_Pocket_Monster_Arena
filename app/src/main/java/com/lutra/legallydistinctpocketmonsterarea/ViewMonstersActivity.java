@@ -37,7 +37,7 @@ public class ViewMonstersActivity extends AppCompatActivity {
 
     //todo: get data for specific userId
     //todo: separate each entry by UserMonster
-    monsterViewModel.getMonsterTypesWithUserMonstersLiveData().observe(this, adapter::submitList);
+    monsterViewModel.getUserMonstersWithTypeListLiveData().observe(this, adapter::submitList);
   }
 
   public static Intent intentFactory(Context context) {
