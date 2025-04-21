@@ -2,6 +2,7 @@ package com.lutra.legallydistinctpocketmonsterarea.database;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -16,8 +17,14 @@ public interface UserMonsterDAO {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   long insert(UserMonster userMonster);
 
+  @Query("DELETE FROM " + AppDatabase.USER_MONSTER_TABLE + " WHERE userMonsterId = :monsterID")
+  abstract void deleteMonsterByMonsterId(int monsterID);
+
   @Query("SELECT * FROM " + AppDatabase.USER_MONSTER_TABLE)
   List<UserMonster> getAll();
+
+  @Query("SELECT * FROM " + AppDatabase.USER_MONSTER_TABLE + " WHERE userMonsterId = :monsterID")
+  UserMonster getMonsterByMonsterId(int monsterID);
 
   @Query("SELECT * FROM " + AppDatabase.USER_MONSTER_TABLE + " WHERE userId = :userId")
   List<UserMonster> getByUserId(int userId);
