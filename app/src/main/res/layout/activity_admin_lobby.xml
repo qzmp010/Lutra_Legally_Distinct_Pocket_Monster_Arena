@@ -50,19 +50,6 @@
       />
 
   <Button
-      android:id="@+id/CreateMonsterButton"
-      android:layout_width="200dp"
-      android:layout_height="70dp"
-      android:layout_marginTop="28dp"
-      android:gravity="center"
-      android:text="@string/Create_monster"
-      android:textSize="20sp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.488"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/EditMonstersButton" />
-
-  <Button
       android:id="@+id/EditUsersButton"
       android:layout_width="200dp"
       android:layout_height="70dp"
@@ -73,7 +60,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.497"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/CreateMonsterButton" />
+      app:layout_constraintTop_toBottomOf="@+id/EditMonstersButton" />
 
   <Button
       android:id="@+id/CreateUserButton"
