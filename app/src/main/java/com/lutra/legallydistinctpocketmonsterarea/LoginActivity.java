@@ -33,6 +33,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 verifyUser();
+                startActivity(SignUpActivity.intentFactory(LoginActivity.this));
+
 
             }
         });
