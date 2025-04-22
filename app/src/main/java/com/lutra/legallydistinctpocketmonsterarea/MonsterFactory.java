@@ -21,7 +21,7 @@ public abstract class MonsterFactory {
     private static final int DEFAULT_USER = -1;
     private static final int DEFAULT_ID = 0;
 
-    static UserMonster getRandomMonster(AppRepository repository) {
+    public static UserMonster getRandomMonster(AppRepository repository) {
 
         Random rand = new Random();
 
@@ -68,7 +68,7 @@ public abstract class MonsterFactory {
     /**
      * Use this function to insert a monster with known characteristics into the database. Order of params listed below.
      * @param repository A good instance of the repository.
-     * @param monsterTypeID Type ID of monster to instantiate.
+     * @param monsterTypeID Defaults: (1)FlowerDino (2)WeirdTurtle (3)FireLizard (4)LightningMousey (5)SingingBalloon
      * @param nickname Use "" as default.
      * @param phrase Use "" as default.
      * @param attack Suggested range between 5 (very weak) to 15 (very strong)
