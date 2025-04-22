@@ -29,6 +29,14 @@ public interface UserMonsterWithTypeDAO {
       + " INNER JOIN " + AppDatabase.MONSTER_TYPE_TABLE
       + " ON " + AppDatabase.USER_MONSTER_TABLE + ".monsterTypeId = "
       + AppDatabase.MONSTER_TYPE_TABLE + ".monsterTypeId"
+      + " WHERE userMonsterId = :userMonsterId"
+      + " LIMIT 1")
+  Map<UserMonster, MonsterType> getUserMonsterWithTypeMapByUserMonsterId(int userMonsterId);
+
+  @Query("SELECT * FROM " + AppDatabase.USER_MONSTER_TABLE
+      + " INNER JOIN " + AppDatabase.MONSTER_TYPE_TABLE
+      + " ON " + AppDatabase.USER_MONSTER_TABLE + ".monsterTypeId = "
+      + AppDatabase.MONSTER_TYPE_TABLE + ".monsterTypeId"
       + " WHERE userId = :userId")
   Map<UserMonster, MonsterType> getUserMonstersWithTypeMapByUserId(int userId);
 
