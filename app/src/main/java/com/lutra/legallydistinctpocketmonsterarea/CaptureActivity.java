@@ -30,6 +30,8 @@ public class CaptureActivity extends AppCompatActivity {
     private UserMonster enemyMonster;
     private AppRepository repository;
 
+    private boolean deleted = false;
+
     private ActivityCaptureBinding binding;
 
     @Override
@@ -103,14 +105,13 @@ public class CaptureActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                boolean deleted = false;
-                while(!deleted) {
-                    deleted = repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
-                }
 
-                Intent intent = BattleActivity.intentFactory(getApplicationContext());
-                intent.putExtra(BattleActivity.USER_ID, loggedInUser);
-                startActivity(intent);
+                deleted = true;
+                showExitDialog();
+
+                //Intent intent = BattleActivity.intentFactory(getApplicationContext());
+                //intent.putExtra(BattleActivity.USER_ID, loggedInUser);
+                //startActivity(intent);
             }
         });
 
@@ -123,14 +124,8 @@ public class CaptureActivity extends AppCompatActivity {
         if(rand.nextInt() % 3 == 0) {
             binding.captureDialog.append(String.format("%s got away.%n", enemyMonster.getNickname().toUpperCase()));
 
-            boolean deleted = false;
-            while(!deleted) {
-                deleted = repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
-            }
+            deleted = true;
 
-            Intent intent = BattleActivity.intentFactory(getApplicationContext());
-            intent.putExtra(BattleActivity.USER_ID, loggedInUser);
-            startActivity(intent);
         } else {
             binding.captureDialog.append(String.format("You captured %s!!!%n", enemyMonster.getNickname().toUpperCase()));
             showRenameDialog();
@@ -204,4 +199,25 @@ public class CaptureActivity extends AppCompatActivity {
 
         alertBuilder.create().show();
     }
+
+    private void showExitDialog() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        AlertDialog renameDialog = alertBuilder.create();
+        alertBuilder.setTitle("Click to exit");
+
+        repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
+
+        alertBuilder.setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                renameDialog.dismiss();
+                Intent intent = BattleActivity.intentFactory(getApplicationContext());
+                intent.putExtra(BattleActivity.USER_ID, loggedInUser);
+                startActivity(intent);
+            }
+        });
+
+        alertBuilder.create().show();
+    }
+
 }
