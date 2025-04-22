@@ -240,10 +240,10 @@ public class BattleActivity extends AppCompatActivity {
             binding.battleDialog.append(String.format("%n%s%n%s fainted!",
                     enemyMonster.getPhrase(), enemyMonster.getNickname()));
 
-            repository.insertUserMonster(enemyMonster);
+            long enemyID = repository.insertUserMonster(enemyMonster);
 
             Intent intent = CaptureActivity.intentFactory(getApplicationContext());
-            intent.putExtra(BattleActivity.ENEMY_ID, enemyMonster.getUserMonsterId());
+            intent.putExtra(BattleActivity.ENEMY_ID, (int) enemyID);
             intent.putExtra(BattleActivity.USER_ID, loggedInUserID);
             startActivity(intent);
         }
