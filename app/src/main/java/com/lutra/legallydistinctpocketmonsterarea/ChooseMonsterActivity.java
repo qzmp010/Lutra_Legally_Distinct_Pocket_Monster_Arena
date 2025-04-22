@@ -22,13 +22,18 @@ import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityChooseMons
 
 import java.util.ArrayList;
 
+
 public class ChooseMonsterActivity extends AppCompatActivity {
     private ActivityChooseMonsterBinding binding;
+    private AppRepository repository;
+    private int selectedMonsterTypeId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        binding = ActivityChooseMonsterBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
+        repository = AppRepository.getRepository(getApplication());
+
+        binding = ActivityChooseMonsterBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
         binding.NORMAL.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +70,28 @@ public class ChooseMonsterActivity extends AppCompatActivity {
     }
 
     private void confirmMonster(String type) {
+        switch (type) {
+            case "GRASS":
+                selectedMonsterTypeId = 1; // FlowerDino
+                break;
+            case "WATER":
+                selectedMonsterTypeId = 2; // WeirdTurtle
+                break;
+            case "FIRE":
+                selectedMonsterTypeId = 3; // FireLizard
+                break;
+            case "ELECTRIC":
+                selectedMonsterTypeId = 4; // LightningMousey
+                break;
+            case "NORMAL":
+                selectedMonsterTypeId = 5; // SingingBalloon
+
+                break;
+            default:
+                selectedMonsterTypeId = -1;
+                break;
+        }
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want " + type + "?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -112,10 +139,24 @@ public class ChooseMonsterActivity extends AppCompatActivity {
         alertBuilder.create().show();
     }
     private void createNewMonster(String input){
-      String nickname = input;
-      if(nickname.isEmpty()) {
-         nickname = "NORMAL";
-       }
+        String nickname = input;
+        String setPhrase ="I am the default monster";
+        int attack = 13;
+        int defense = 7;
+        int health = 30;
+        int monsterTypeId = selectedMonsterTypeId;
+        int userID = getIntent().getIntExtra("USER_ID", -1);
+
+        MonsterFactory.createNewMonster(
+        repository,
+        monsterTypeId,
+        nickname,
+        setPhrase,
+        attack,
+        defense,
+        health,
+        userID
+        );
         Toast.makeText(this, "Monster's nickname is " + input, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(ChooseMonsterActivity.this, LobbyActivity.class);
         startActivity(intent);
