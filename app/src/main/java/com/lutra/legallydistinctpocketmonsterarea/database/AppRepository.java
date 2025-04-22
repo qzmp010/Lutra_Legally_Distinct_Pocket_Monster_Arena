@@ -8,6 +8,7 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterTypeWithUserMonsters;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -148,9 +149,28 @@ public class AppRepository {
         try {
             return future.get();
         } catch (InterruptedException | ExecutionException e) {
-            Log.i(LOG_TAG, "Problem getting MonsterType by ID from repository");
+            Log.i(LOG_TAG, "Problem getting UserMonster by ID from repository");
         }
         return null;
+    }
+
+    public Entry<UserMonster, MonsterType> getUserMonsterWithTypeById(int userMonsterId) {
+      Future<Entry<UserMonster, MonsterType>> future = AppDatabase.databaseWriteExecutor.submit(
+          new Callable<Entry<UserMonster, MonsterType>>() {
+            @Override
+            public Entry<UserMonster, MonsterType> call() throws Exception {
+              return userMonsterWithTypeDAO
+                  .getUserMonsterWithTypeMapByUserMonsterId(userMonsterId)
+                  .entrySet().stream().findFirst().orElse(new SimpleEntry<>(null, null));
+            }
+          }
+      );
+      try {
+        return future.get();
+      } catch (InterruptedException | ExecutionException e) {
+        Log.i(LOG_TAG, "Problem getting UserMonster with MonsterType by userMonsterId: " + userMonsterId);
+      }
+      return null;
     }
 
   public ArrayList<UserMonster> getAllUserMonsters() {
