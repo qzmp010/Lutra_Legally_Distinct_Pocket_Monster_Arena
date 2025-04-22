@@ -171,7 +171,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 21,
                 91,
                 49,
-                4
+                5
         ));
 
         UserDAO userDao = INSTANCE.userDao();

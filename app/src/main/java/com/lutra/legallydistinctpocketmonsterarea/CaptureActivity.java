@@ -102,8 +102,11 @@ public class CaptureActivity extends AppCompatActivity {
         alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //TODO: Fix the delete query below
-                //repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
+
+                boolean deleted = false;
+                while(!deleted) {
+                    deleted = repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
+                }
 
                 Intent intent = BattleActivity.intentFactory(getApplicationContext());
                 intent.putExtra(BattleActivity.USER_ID, loggedInUser);
@@ -119,6 +122,11 @@ public class CaptureActivity extends AppCompatActivity {
         binding.captureDialog.append("You throw a...monster...orb?\n");
         if(rand.nextInt() % 3 == 0) {
             binding.captureDialog.append(String.format("%s got away.%n", enemyMonster.getNickname().toUpperCase()));
+
+            boolean deleted = false;
+            while(!deleted) {
+                deleted = repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
+            }
 
             Intent intent = BattleActivity.intentFactory(getApplicationContext());
             intent.putExtra(BattleActivity.USER_ID, loggedInUser);
