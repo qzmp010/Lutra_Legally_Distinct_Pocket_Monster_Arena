@@ -30,8 +30,6 @@ public class CaptureActivity extends AppCompatActivity {
     private UserMonster enemyMonster;
     private AppRepository repository;
 
-    private boolean deleted = false;
-
     private ActivityCaptureBinding binding;
 
     @Override
@@ -92,9 +90,7 @@ public class CaptureActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //Error check to make sure we don't have MissingNO
                 if(enemyMonster.getUserMonsterId() == -1) {
-                    Intent intent = BattleActivity.intentFactory(getApplicationContext());
-                    intent.putExtra(BattleActivity.USER_ID, loggedInUser);
-                    startActivity(intent);
+                    showExitDialog();
                 }
                 captureDialog.dismiss();
                 captureMonster();
@@ -105,13 +101,8 @@ public class CaptureActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-
-                deleted = true;
+                repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
                 showExitDialog();
-
-                //Intent intent = BattleActivity.intentFactory(getApplicationContext());
-                //intent.putExtra(BattleActivity.USER_ID, loggedInUser);
-                //startActivity(intent);
             }
         });
 
@@ -124,7 +115,8 @@ public class CaptureActivity extends AppCompatActivity {
         if(rand.nextInt() % 3 == 0) {
             binding.captureDialog.append(String.format("%s got away.%n", enemyMonster.getNickname().toUpperCase()));
 
-            deleted = true;
+            repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
+            showExitDialog();
 
         } else {
             binding.captureDialog.append(String.format("You captured %s!!!%n", enemyMonster.getNickname().toUpperCase()));
@@ -150,9 +142,7 @@ public class CaptureActivity extends AppCompatActivity {
                 enemyMonster.setUserId(loggedInUser);
                 repository.insertUserMonster(enemyMonster);
 
-                Intent intent = BattleActivity.intentFactory(getApplicationContext());
-                intent.putExtra(CaptureActivity.USER_ID, loggedInUser);
-                startActivity(intent);
+                showExitDialog();
             }
         });
 
@@ -177,10 +167,7 @@ public class CaptureActivity extends AppCompatActivity {
                     repository.insertUserMonster(enemyMonster);
 
                     renameDialog.dismiss();
-
-                    Intent intent = BattleActivity.intentFactory(getApplicationContext());
-                    intent.putExtra(CaptureActivity.USER_ID, loggedInUser);
-                    startActivity(intent);
+                    showExitDialog();
                 } else {
                     Toast.makeText(CaptureActivity.this, "Invalid nickname.", LENGTH_SHORT).show();
                     renameDialog.dismiss();
@@ -203,16 +190,13 @@ public class CaptureActivity extends AppCompatActivity {
     private void showExitDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         AlertDialog renameDialog = alertBuilder.create();
-        alertBuilder.setTitle("Click to exit");
 
-        repository.deleteMonsterByMonsterId(enemyMonster.getUserMonsterId());
-
-        alertBuilder.setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+        alertBuilder.setNeutralButton("Return to Battle", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 renameDialog.dismiss();
                 Intent intent = BattleActivity.intentFactory(getApplicationContext());
-                intent.putExtra(BattleActivity.USER_ID, loggedInUser);
+                intent.putExtra(CaptureActivity.USER_ID, loggedInUser);
                 startActivity(intent);
             }
         });
