@@ -98,8 +98,13 @@ public class BattleActivity extends AppCompatActivity {
      * Displays battle beginning dialog
      */
     private void initializeBattle() {
-        //TODO: Change default conditions to pull monsters from database for combat.
+        //TODO: Call SwitchingMonster activity if the user monster has not been pulled.
+
         //Below are default monsters for testing.
+        //TODO: Remove this for testing
+        MonsterFactory.createNewMonster(repository, 1, "Plantisaurus", "Yo, got any grass?", 10, 7, 40, loggedInUserID);
+        MonsterFactory.createNewMonster(repository, 2, "Splashturt", "I didn't know you liked to get wet!", 11, 6, 35, loggedInUserID);
+        MonsterFactory.createNewMonster(repository, 3, "Flamizord", "Burninating the countryside!!", 13, 4, 25, loggedInUserID);
 
         binding.battleDialog.setText("");
         userMonster = MonsterFactory.getUserMonster(repository, loggedInUserID);

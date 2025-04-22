@@ -60,23 +60,6 @@ public abstract class AppDatabase extends RoomDatabase {
         //Max, Min Health
         //Type
         MonsterTypeDAO monsterTypeDAO = INSTANCE.monsterTypeDAO();
-        monsterTypeDAO.insert(new MonsterType(
-                "Lightning Mousey",
-                "Aa-chooooooo!",
-                R.drawable.ld_pikachu,
-                10, 7,
-                7, 5,
-                25,20,
-                UserMonster.ElementalType.ELECTRIC));
-
-        monsterTypeDAO.insert(new MonsterType(
-                "Singing Balloon",
-                "Poooooooof!",
-                R.drawable.ld_jiggly,
-                7,4,
-                6,4,
-                22,17,
-                UserMonster.ElementalType.NORMAL));
 
         monsterTypeDAO.insert(new MonsterType(
                 "Flower Dino",
@@ -105,19 +88,23 @@ public abstract class AppDatabase extends RoomDatabase {
                 23,16,
                 UserMonster.ElementalType.FIRE));
 
-        //Starters
-        UserMonsterDAO userMonsterDAO = INSTANCE.userMonsterDAO();
-        userMonsterDAO.insert(new UserMonster(1, "Plantisaurus", "Yo, got any grass?", R.drawable.ld_bulbasaur_png, UserMonster.ElementalType.GRASS, 10, 7,
-            40, 49, 1));
+        monsterTypeDAO.insert(new MonsterType(
+                "Lightning Mousey",
+                "Aa-chooooooo!",
+                R.drawable.ld_pikachu,
+                10, 7,
+                7, 5,
+                25,20,
+                UserMonster.ElementalType.ELECTRIC));
 
-        userMonsterDAO.insert(new UserMonster(2, "Zappy", "BUZZZZZZZT",R.drawable.ld_pikachu, UserMonster.ElementalType.ELECTRIC, 11, 6,
-            35, 49, 2));
-
-        userMonsterDAO.insert(new UserMonster(3, "Splashturt", "I didn't know you liked to get wet!",R.drawable.ld_squirtle, UserMonster.ElementalType.WATER, 12, 5,
-            30, 0, 3));
-
-        userMonsterDAO.insert(new UserMonster(4, "Flamizord", "Burninating the countryside!",R.drawable.ld_charizard, UserMonster.ElementalType.FIRE, 13, 4,
-            25, 0, 4));
+        monsterTypeDAO.insert(new MonsterType(
+                "Singing Balloon",
+                "Poooooooof!",
+                R.drawable.ld_jiggly,
+                7,4,
+                6,4,
+                22,17,
+                UserMonster.ElementalType.NORMAL));
 
         UserDAO userDao = INSTANCE.userDao();
         User admin = new User("admin", "admin123", true);

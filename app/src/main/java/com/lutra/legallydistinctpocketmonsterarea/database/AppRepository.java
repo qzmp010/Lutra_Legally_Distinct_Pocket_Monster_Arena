@@ -34,23 +34,6 @@ public class AppRepository {
     this.userDao = db.userDao();
   }
 
-  /**
-   * Parameterless version of getRepository() for use with MonsterFactory class. Needed because we
-   * can't pass in an application context outside of an activity, and we need to be able to call it
-   * from a static method. Should function exactly the same if repository has already been
-   * initialized.
-   *
-   * @return The current repository.
-   */
-  public static AppRepository getRepository() {
-    try {
-      return repository;
-    } catch (NullPointerException e) {
-      Log.e(LOG_TAG, "Error: repository could not be retrieved.");
-      return null;
-    }
-  }
-
   public static AppRepository getRepository(Application application) {
     if (repository != null) {
       return repository;
@@ -185,7 +168,7 @@ public class AppRepository {
       try {
         return future.get();
       } catch (InterruptedException | ExecutionException e) {
-        Log.i(LOG_TAG, "Problem getting UserMonster with MonsterType by userMonsterId from repository");
+        Log.i(LOG_TAG, "Problem getting UserMonster with MonsterType by userMonsterId: " + userMonsterId);
       }
       return null;
     }
