@@ -27,6 +27,7 @@ public class BattleActivity extends AppCompatActivity {
     private ActivityBattleBinding binding;
     private AppRepository repository;
     private int loggedInUserID = -1;
+    private int userMonsterID = -1;
 
     UserMonster userMonster;
     UserMonster enemyMonster;
@@ -99,12 +100,6 @@ public class BattleActivity extends AppCompatActivity {
      */
     private void initializeBattle() {
         //TODO: Call SwitchingMonster activity if the user monster has not been pulled.
-
-        //Below are default monsters for testing.
-        //TODO: Remove this for testing
-        MonsterFactory.createNewMonster(repository, 1, "Plantisaurus", "Yo, got any grass?", 10, 7, 40, loggedInUserID);
-        MonsterFactory.createNewMonster(repository, 2, "Splashturt", "I didn't know you liked to get wet!", 11, 6, 35, loggedInUserID);
-        MonsterFactory.createNewMonster(repository, 3, "Flamizord", "Burninating the countryside!!", 13, 4, 25, loggedInUserID);
 
         binding.battleDialog.setText("");
         userMonster = MonsterFactory.getUserMonster(repository, loggedInUserID);
