@@ -42,7 +42,7 @@ public class LobbyActivity extends AppCompatActivity {
         binding.battleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = BattleActivity.intentFactory(getApplicationContext());
+                Intent intent = SwitchMonsterActivity.intentFactory(getApplicationContext());
                 intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserID);
                 startActivity(intent);
             }

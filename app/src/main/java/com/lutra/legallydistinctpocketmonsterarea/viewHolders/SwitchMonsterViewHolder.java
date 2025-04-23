@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.lutra.legallydistinctpocketmonsterarea.BattleActivity;
 import com.lutra.legallydistinctpocketmonsterarea.LobbyActivity;
 import com.lutra.legallydistinctpocketmonsterarea.R;
+import com.lutra.legallydistinctpocketmonsterarea.SwitchMonsterActivity;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 
@@ -70,6 +71,7 @@ public class SwitchMonsterViewHolder extends RecyclerView.ViewHolder {
                         confirmDialog.dismiss();
                         Intent intent = BattleActivity.intentFactory(itemView.getContext());
                         intent.putExtra(LobbyActivity.LOBBY_USER_ID, userMonsterEntry.getUserId());
+                        intent.putExtra(SwitchMonsterActivity.MONSTER_ID, userMonsterEntry.getUserMonsterId());
                         itemView.getContext().startActivity(intent);
                     }
                 });

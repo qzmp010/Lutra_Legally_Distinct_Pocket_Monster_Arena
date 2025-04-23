@@ -49,6 +49,7 @@ public class BattleActivity extends AppCompatActivity {
 
         repository = AppRepository.getRepository(getApplication());
 
+        getUserMonster();
         initializeBattle();
         enemyTurn();
 
@@ -87,7 +88,17 @@ public class BattleActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    private void getUserMonster() {
+        userMonsterID = getIntent().getIntExtra(SwitchMonsterActivity.MONSTER_ID, -1);
+        if(userMonsterID == -1) {
+            userMonster = new UserMonster(-1, "MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
+                    UserMonster.ElementalType.NORMAL,1,1,1,420,-1);
+        }
+        else {
+            userMonster = repository.getUserMonsterById(userMonsterID);
+        }
     }
 
     /**
@@ -102,7 +113,6 @@ public class BattleActivity extends AppCompatActivity {
         //TODO: Call SwitchingMonster activity if the user monster has not been pulled.
 
         binding.battleDialog.setText("");
-        userMonster = MonsterFactory.getUserMonster(repository, loggedInUserID);
         enemyMonster = MonsterFactory.getRandomMonster(repository);
 
         //Rolls to see which monster goes first

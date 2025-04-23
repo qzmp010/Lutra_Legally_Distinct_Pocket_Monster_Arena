@@ -195,7 +195,7 @@ public class CaptureActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 renameDialog.dismiss();
-                Intent intent = BattleActivity.intentFactory(getApplicationContext());
+                Intent intent = SwitchMonsterActivity.intentFactory(getApplicationContext());
                 intent.putExtra(CaptureActivity.USER_ID, loggedInUser);
                 startActivity(intent);
             }

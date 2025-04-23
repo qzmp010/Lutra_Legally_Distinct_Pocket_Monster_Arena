@@ -31,6 +31,8 @@ public class SwitchMonsterActivity extends AppCompatActivity {
     private AppRepository repository;
     private SwitchMonsterViewModel monsterViewModel;
 
+    public static final String MONSTER_ID = "SwitchMonsterActivity.MONSTER_ID";
+
     private int loggedInUser = -1;
 
     @Override
@@ -64,6 +66,10 @@ public class SwitchMonsterActivity extends AppCompatActivity {
 
         if(loggedInUser == -1) {
             loggedInUser = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID, -1);
+        }
+
+        if(loggedInUser == -1) {
+            loggedInUser = getIntent().getIntExtra(CaptureActivity.USER_ID, -1);
         }
 
         if(loggedInUser == -1) {
