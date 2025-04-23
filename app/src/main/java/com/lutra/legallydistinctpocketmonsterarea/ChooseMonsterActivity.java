@@ -27,6 +27,8 @@ public class ChooseMonsterActivity extends AppCompatActivity {
     private ActivityChooseMonsterBinding binding;
     private AppRepository repository;
     private int selectedMonsterTypeId = -1;
+    private int userID = -1; //default
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class ChooseMonsterActivity extends AppCompatActivity {
         repository = AppRepository.getRepository(getApplication());
 
         binding = ActivityChooseMonsterBinding.inflate(getLayoutInflater());
+        userID = getIntent().getIntExtra("USER_ID", -1);
 
         setContentView(binding.getRoot());
         binding.NORMAL.setOnClickListener(new View.OnClickListener() {
@@ -145,7 +148,6 @@ public class ChooseMonsterActivity extends AppCompatActivity {
         int defense = 7;
         int health = 30;
         int monsterTypeId = selectedMonsterTypeId;
-        int userID = getIntent().getIntExtra("USER_ID", -1);
 
         MonsterFactory.createNewMonster(
         repository,
