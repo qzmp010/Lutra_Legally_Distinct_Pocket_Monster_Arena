@@ -1,4 +1,5 @@
 <resources>
+
   <string name="app_name">Lutra Legally Distinct Pocket Monster Arena</string>
 
   <string name="welcome">Welcome!</string>
@@ -22,7 +23,6 @@
   <string name="button">Button</string>
   <string name="Battle">Battle</string>
   <string name="my_monsters">My Monsters</string>
-
   <string name="choose_monster">Choose Your Monster</string>
   <string name="Normal">Normal</string>
   <string name="electric">Electric</string>
@@ -37,6 +37,8 @@
   <string name="choosemonsteractivity">ChooseMonsterActivity</string>
   <string name="preference_file_key">daclinkPreferenceFileName</string>
   <string name="preference_userId_key">daclinkPreferenceUserIdKey</string>
+  <string name="welcome_n_sign_up">Welcome\n Sign up</string>
+  <string name="sign_up">Sign Up</string>
   <string name="monster_image">Monster Image</string>
   <string name="view_label_type_health_attack_defense">🌈 Type:\n❤️ Health:\n🗡️ Attack:\n🛡️ Defense:</string>
 
