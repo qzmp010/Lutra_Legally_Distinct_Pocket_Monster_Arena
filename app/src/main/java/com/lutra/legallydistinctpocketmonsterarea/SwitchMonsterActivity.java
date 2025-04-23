@@ -14,15 +14,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivitySwitchMonsterBinding;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterAdapter;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterViewModel;
+import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterAdapter;
+import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SwitchMonsterActivity extends AppCompatActivity {
 
     private ActivitySwitchMonsterBinding binding;
     private AppRepository repository;
-    private MonsterViewModel monsterViewModel;
+    private SwitchMonsterViewModel monsterViewModel;
+
+    private int loggedInUser = 49;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +38,10 @@ public class SwitchMonsterActivity extends AppCompatActivity {
         binding = ActivitySwitchMonsterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        monsterViewModel = new ViewModelProvider(this).get(MonsterViewModel.class);
+        monsterViewModel = new ViewModelProvider(this).get(SwitchMonsterViewModel.class);
 
         RecyclerView recyclerView = binding.switchMonsterRecyclerView;
-        final MonsterAdapter adapter = new MonsterAdapter(new MonsterAdapter.UserMonsterDiff());
+        final SwitchMonsterAdapter adapter = new SwitchMonsterAdapter(new SwitchMonsterAdapter.UserMonsterDiff());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -41,14 +49,8 @@ public class SwitchMonsterActivity extends AppCompatActivity {
 
         //todo: get data for specific userId
         //todo: separate each entry by UserMonster
-        monsterViewModel.getUserMonstersWithTypeListLiveData().observe(this, adapter::submitList);
-
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(SwitchMonsterActivity.this, "Man, you sure clicked it!", LENGTH_SHORT).show();
-            }
-        });
+        monsterViewModel.getUserMonstersByUserIdLiveData(loggedInUser).observe(
+                this,monsters -> {adapter.submitList(monsters);});
     }
 
     public static Intent intentFactory(Context context) {
