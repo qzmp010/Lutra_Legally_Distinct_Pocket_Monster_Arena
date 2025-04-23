@@ -3,6 +3,8 @@ package com.lutra.legallydistinctpocketmonsterarea.database.entities;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.lutra.legallydistinctpocketmonsterarea.MonsterFactory;
 import com.lutra.legallydistinctpocketmonsterarea.database.AppDatabase;
 import java.util.Objects;
 import java.util.Random;
@@ -22,7 +24,6 @@ public class UserMonster {
   private int userId;
   private int monsterTypeId;
 
-
   public enum ElementalType {
     NORMAL,
     ELECTRIC,
@@ -31,8 +32,12 @@ public class UserMonster {
     WATER,
   }
 
-  public UserMonster(String nickname, String phrase, int imageID, ElementalType type, int attack, int defense, int maxHealth, int userId,
+  public UserMonster(int userMonsterId, String nickname, String phrase, int imageID, ElementalType type, int attack, int defense, int maxHealth, int userId,
       int monsterTypeId) {
+
+    //Make sure each monster has a unique ID set during runtime every time it is instantiated, whether it is inserted into the DB or not
+    this.userMonsterId = userMonsterId;
+
     this.nickname = nickname;
     this.phrase = phrase;
     this.imageID = imageID;
@@ -247,9 +252,14 @@ public class UserMonster {
   @Override
   public String toString() {
     return "UserMonster{" +
-        "nickname='" + nickname + '\'' +
+        "userMonsterId=" + userMonsterId +
+        ", nickname='" + nickname + '\'' +
+        ", phrase='" + phrase + '\'' +
+        ", imageID=" + imageID +
+        ", type=" + type +
         ", attack=" + attack +
         ", defense=" + defense +
+        ", currentHealth=" + currentHealth +
         ", maxHealth=" + maxHealth +
         ", userId=" + userId +
         ", monsterTypeId=" + monsterTypeId +

@@ -50,5 +50,26 @@
     android:textSize="24sp"
     android:id="@+id/viewMonstersActivityButton"
     />
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toBottomOf="@id/adminLobbyActivityButton"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:text="@string/choosemonsteractivity"
+      android:textSize="24sp"
+      android:id="@+id/ChooseMonsterActivityButton"
+      />
+
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toBottomOf="@id/viewMonstersActivityButton"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:text="CaptureActivity"
+      android:textSize="24sp"
+      android:id="@+id/captureActivityButton"
+      />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

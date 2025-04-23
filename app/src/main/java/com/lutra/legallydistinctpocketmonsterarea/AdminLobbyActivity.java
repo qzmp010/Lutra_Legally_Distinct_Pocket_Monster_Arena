@@ -18,17 +18,21 @@ import androidx.core.view.WindowInsetsCompat;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityAdminLobbyBinding;
 
 public class AdminLobbyActivity extends AppCompatActivity {
+    private  int loggedInUserID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityAdminLobbyBinding binding  = ActivityAdminLobbyBinding.inflate(getLayoutInflater());
 
+
         setContentView(binding.getRoot());
         binding.BattleB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AdminLobbyActivity.this, "Battle button is clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = BattleActivity.intentFactory(getApplicationContext());
+                intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserID);
+                startActivity(intent);
             }
 
 
@@ -37,12 +41,6 @@ public class AdminLobbyActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(AdminLobbyActivity.this, "Edit Monster button is clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
-        binding.CreateMonsterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(AdminLobbyActivity.this, "Create Monster button is clicked", Toast.LENGTH_SHORT).show();
             }
         });
         binding.EditUsersButton.setOnClickListener(new View.OnClickListener() {

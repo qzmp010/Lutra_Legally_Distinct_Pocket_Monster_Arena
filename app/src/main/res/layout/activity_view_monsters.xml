@@ -22,11 +22,12 @@
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/viewMonstersRecyclerView"
     android:layout_width="0dp"
-    android:layout_height="500dp"
+    android:layout_height="0dp"
     android:layout_margin="16dp"
     android:padding="2dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/myMonstersTextView"
+    app:layout_constraintBottom_toBottomOf="parent"
     tools:listitem="@layout/recycler_item_monster" />
 </androidx.constraintlayout.widget.ConstraintLayout>

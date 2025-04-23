@@ -18,11 +18,18 @@ import androidx.core.view.WindowInsetsCompat;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityLobbyBinding;
 
 public class LobbyActivity extends AppCompatActivity {
+
+    public static final String LOBBY_USER_ID = "LobbyActivity.java_LOBBY_USER_ID";
+
+    private int loggedInUserID = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityLobbyBinding binding = ActivityLobbyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        loginUser();
 
         String user_name = getIntent().getStringExtra("username");
 
@@ -34,15 +41,17 @@ public class LobbyActivity extends AppCompatActivity {
 
         binding.battleButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { //toast for testing purposes, need to implement Battle Activity
-                Toast.makeText(LobbyActivity.this, "Battle button is clicked", Toast.LENGTH_SHORT).show();
-
+            public void onClick(View view) {
+                Intent intent = BattleActivity.intentFactory(getApplicationContext());
+                intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserID);
+                startActivity(intent);
             }
         });
         binding.ViewMonster.setOnClickListener(new View.OnClickListener() { //need to implement View Monster Activity
             @Override
             public void onClick(View view) {
-                Toast.makeText(LobbyActivity.this, "View monster is clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = ViewMonstersActivity.intentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
         binding.Logout.setOnClickListener(new View.OnClickListener() { //handle logout part
@@ -84,6 +93,16 @@ public class LobbyActivity extends AppCompatActivity {
         Intent intent = new Intent(LobbyActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void loginUser() {
+        if(loggedInUserID == -1) {
+            loggedInUserID =  getIntent().getIntExtra(MainActivity.MAIN_ACTIVITY_USER_ID, -1);
+        }
+
+        if(loggedInUserID == -1) {
+            loggedInUserID = getIntent().getIntExtra(BattleActivity.USER_ID, -1);
+        }
     }
 
 

@@ -35,8 +35,9 @@ public class ViewMonstersActivity extends AppCompatActivity {
 
     repository = AppRepository.getRepository(getApplication());
 
-    //todo: get data for specifc userId
-    monsterViewModel.getByUserIdLiveData(0).observe(this, adapter::submitList);
+    //todo: get data for specific userId
+    //todo: separate each entry by UserMonster
+    monsterViewModel.getUserMonstersWithTypeListLiveData().observe(this, adapter::submitList);
   }
 
   public static Intent intentFactory(Context context) {
