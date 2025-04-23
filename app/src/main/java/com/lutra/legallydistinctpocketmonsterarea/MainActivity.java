@@ -94,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(CaptureActivity.intentFactory(getApplicationContext()));
       }
     });
+
+    binding.switchMonsterActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(SwitchMonsterActivity.intentFactory(getApplicationContext()));
+      }
+    });
   }
 
   private void loginUser(Bundle savedInstanceState) {
