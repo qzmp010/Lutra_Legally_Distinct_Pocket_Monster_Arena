@@ -31,8 +31,6 @@ public class SwitchMonsterActivity extends AppCompatActivity {
     private AppRepository repository;
     private SwitchMonsterViewModel monsterViewModel;
 
-    public static final String USER_ID = "SwitchMonsterActivity.USER_ID";
-
     private int loggedInUser = -1;
 
     @Override

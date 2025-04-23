@@ -2,6 +2,7 @@ package com.lutra.legallydistinctpocketmonsterarea.viewHolders;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lutra.legallydistinctpocketmonsterarea.BattleActivity;
@@ -57,13 +60,31 @@ public class SwitchMonsterViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = BattleActivity.intentFactory(itemView.getContext());
-                intent.putExtra(LobbyActivity.LOBBY_USER_ID, userMonsterEntry.getUserId());
-                itemView.getContext().startActivity(intent);
+                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(itemView.getContext());
+                AlertDialog confirmDialog = alertBuilder.create();
+                alertBuilder.setTitle(String.format("Battle with %s?", userMonsterEntry.getNickname()));
+
+                alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        confirmDialog.dismiss();
+                        Intent intent = BattleActivity.intentFactory(itemView.getContext());
+                        intent.putExtra(LobbyActivity.LOBBY_USER_ID, userMonsterEntry.getUserId());
+                        itemView.getContext().startActivity(intent);
+                    }
+                });
+
+                alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        confirmDialog.dismiss();
+                    }
+                });
+
+                alertBuilder.create().show();
             }
         });
     }
-
 
     static SwitchMonsterViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
