@@ -46,9 +46,13 @@
 
 
   <string name="view_label_type_health_attack_defense">🌈 Type:\n❤️ Health:\n🗡️ Attack:\n🛡️ Defense:</string>
-
-
-
+  <string name="lobby_activity">Lobby Activity</string>
+  <string name="battle_activity">Battle Activity</string>
+  <string name="admin_lobby_activity">Admin Lobby Activity</string>
+  <string name="view_monsters">View Monsters</string>
+  <string name="choose_monster_activity">Choose Monster Activity</string>
+  <string name="capture_activity">Capture Activity</string>
+  <string name="EDit_monsters">Edit Monsters</string>
 
 
 </resources>

@@ -84,10 +84,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(ViewMonstersActivity.intentFactory(getApplicationContext()));
       }
     });
-    binding.ChooseMonsterActivityButton.setOnClickListener(new View.OnClickListener() {
+    binding.chooseMonsterActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         startActivity(ChooseMonsterActivity.intentFactory(getApplicationContext()));
+      }
+    });
+    binding.editMonstersActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        startActivity(EditMonstersActivity.intentFactory(getApplicationContext()));
       }
     });
 
