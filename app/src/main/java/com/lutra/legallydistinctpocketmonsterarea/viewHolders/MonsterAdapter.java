@@ -39,7 +39,6 @@ public class MonsterAdapter extends ListAdapter<Entry<UserMonster, MonsterType>,
     });
 
   }
-
   public static class UserMonsterDiff extends DiffUtil.ItemCallback<Entry<UserMonster, MonsterType>> {
 
     @Override

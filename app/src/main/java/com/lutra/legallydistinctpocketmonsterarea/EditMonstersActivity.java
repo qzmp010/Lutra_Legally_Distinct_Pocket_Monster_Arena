@@ -41,6 +41,14 @@ public class EditMonstersActivity extends AppCompatActivity {
         RecyclerView recyclerView = binding.EditMonstersRecyclerView;
 
         final MonsterAdapter adapter = new MonsterAdapter(new MonsterAdapter.UserMonsterDiff());
+
+        adapter.setOnClickListener(new MonsterAdapter.OnClickListener() {
+            @Override
+            public void onClick(UserMonster monster) {
+                Toast.makeText(EditMonstersActivity.this, "Clicked " +monster.getNickname(), Toast.LENGTH_SHORT).show();
+                editNickname(monster);
+            }
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
