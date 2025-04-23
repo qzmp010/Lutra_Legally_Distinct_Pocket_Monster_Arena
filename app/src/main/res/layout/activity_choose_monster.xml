@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChooseMonsterActivity">
+
+    <TextView
+        android:id="@+id/ChooseMonsterTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="680dp"
+        android:gravity="center"
+        android:text="@string/choose_monster"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/NORMAL"
+        android:layout_width="219dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center"
+        android:text="@string/Normal"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ChooseMonsterTextView" />
+
+    <Button
+        android:id="@+id/ELECTRIC"
+        android:layout_width="219dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="@string/electric"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NORMAL" />
+
+    <Button
+        android:id="@+id/FIRE"
+        android:layout_width="219dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:text="@string/fire"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ELECTRIC" />
+
+    <Button
+        android:id="@+id/GRASS"
+        android:layout_width="219dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="@string/grass"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FIRE" />
+
+    <Button
+        android:id="@+id/WATER"
+        android:layout_width="219dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="60dp"
+        android:gravity="center"
+        android:text="@string/water"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/GRASS" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

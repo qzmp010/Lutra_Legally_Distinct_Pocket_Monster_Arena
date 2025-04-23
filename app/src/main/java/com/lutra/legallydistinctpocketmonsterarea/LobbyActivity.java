@@ -50,7 +50,8 @@ public class LobbyActivity extends AppCompatActivity {
         binding.ViewMonster.setOnClickListener(new View.OnClickListener() { //need to implement View Monster Activity
             @Override
             public void onClick(View view) {
-                Toast.makeText(LobbyActivity.this, "View monster is clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = ViewMonstersActivity.intentFactory(getApplicationContext());
+                startActivity(intent);
             }
         });
         binding.Logout.setOnClickListener(new View.OnClickListener() { //handle logout part

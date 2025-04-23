@@ -66,10 +66,7 @@ public class MainActivity extends AppCompatActivity {
     binding.battleActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = BattleActivity.intentFactory(getApplicationContext());
-        //Random user number for intent testing
-        intent.putExtra(MAIN_ACTIVITY_USER_ID, 49);
-        startActivity(intent);
+        startActivity(BattleActivity.intentFactory(getApplicationContext()));
       }
     });
 
@@ -87,11 +84,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(ViewMonstersActivity.intentFactory(getApplicationContext()));
       }
     });
-
-    binding.captureActivityButton.setOnClickListener(new View.OnClickListener() {
+    binding.ChooseMonsterActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        startActivity(CaptureActivity.intentFactory(getApplicationContext()));
+        startActivity(ChooseMonsterActivity.intentFactory(getApplicationContext()));
       }
     });
 
@@ -102,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
       }
     });
   }
+
 
   private void loginUser(Bundle savedInstanceState) {
 

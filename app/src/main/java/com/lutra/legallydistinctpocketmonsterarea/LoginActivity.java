@@ -34,6 +34,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 verifyUser();
 
+
+            }
+        });
+        binding.signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(SignUpActivity.intentFactory(LoginActivity.this));
             }
         });
 
@@ -51,12 +58,16 @@ public class LoginActivity extends AppCompatActivity {
         userObserver.observe(this,user -> {
             if(user != null){
                 String password = binding.passwordLoginEditText.getText().toString();
-                if(password.equals(user.getPassword())){
+                if (password.equals(user.getPassword())) {
+                    if (user.isAdmin()) {
 
-                    startActivity(MainActivity.mainActivityIntentFactory(getApplicationContext(),user.getId()));
-                }else{
-                    ToastMaker("Invalid password");
-                    binding.passwordLoginEditText.setSelection(0);
+                        startActivity(AdminLobbyActivity.intentFactory(getApplicationContext()));
+                    } else {
+                        // 👤 Redirect to Normal Lobby
+                        Intent intent = LobbyActivity.intentFactory(getApplicationContext());
+                        startActivity(intent);
+                    }
+                    finish();
                 }
             }else{
                 ToastMaker(String.format(" %s is not a valid username", username));
