@@ -180,6 +180,10 @@ public abstract class AppDatabase extends RoomDatabase {
 
         User testUser = new User("trainer1", "pokedex123", false);
         userDao.insert(testUser);
+
+        User davidTest = new User("david", "12345", false);
+        davidTest.setId(49);
+        userDao.insert(davidTest);
       });
     }
   };

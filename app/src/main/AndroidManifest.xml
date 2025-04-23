@@ -31,6 +31,9 @@
         android:name=".BattleActivity"
         android:exported="false" />
     <activity
+        android:name=".CaptureActivity"
+        android:exported="false" />
+    <activity
         android:name=".ChooseMonsterActivity"
         android:exported="false" />
     <activity

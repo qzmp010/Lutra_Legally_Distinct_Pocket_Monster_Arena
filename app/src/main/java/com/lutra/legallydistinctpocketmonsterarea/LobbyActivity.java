@@ -101,6 +101,10 @@ public class LobbyActivity extends AppCompatActivity {
         }
 
         if(loggedInUserID == -1) {
+            loggedInUserID = getIntent().getIntExtra(LoginActivity.USER_ID, -1);
+        }
+
+        if(loggedInUserID == -1) {
             loggedInUserID = getIntent().getIntExtra(BattleActivity.USER_ID, -1);
         }
     }

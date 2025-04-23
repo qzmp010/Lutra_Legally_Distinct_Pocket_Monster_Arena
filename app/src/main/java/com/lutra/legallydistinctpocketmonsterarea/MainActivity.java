@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
     binding.battleActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        startActivity(BattleActivity.intentFactory(getApplicationContext()));
+        Intent intent  = BattleActivity.intentFactory(getApplicationContext());
+        intent.putExtra(MainActivity.MAIN_ACTIVITY_USER_ID, 49);
+        startActivity(intent);
       }
     });
 
