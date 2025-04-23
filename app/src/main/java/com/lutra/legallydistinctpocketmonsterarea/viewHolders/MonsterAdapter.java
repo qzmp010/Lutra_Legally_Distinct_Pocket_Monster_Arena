@@ -9,6 +9,14 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.Map.Entry;
 
 public class MonsterAdapter extends ListAdapter<Entry<UserMonster, MonsterType>, MonsterViewHolder> {
+ private OnClickListener onClickListener;
+  public interface OnClickListener{
+    void onClick(UserMonster monster);
+  }
+  public void setOnClickListener(OnClickListener onClickListener) {
+    this.onClickListener = onClickListener;
+  }
+
 
   public MonsterAdapter(@NonNull DiffUtil.ItemCallback<Entry<UserMonster, MonsterType>> diffCallback) {
     super(diffCallback);
@@ -24,6 +32,12 @@ public class MonsterAdapter extends ListAdapter<Entry<UserMonster, MonsterType>,
   public void onBindViewHolder(@NonNull MonsterViewHolder holder, int position) {
     Entry<UserMonster, MonsterType> current = getItem(position);
     holder.bind(current);
+    holder.itemView.setOnClickListener(view -> {
+      if (onClickListener != null) {
+        onClickListener.onClick(current.getKey());
+      }
+    });
+
   }
 
   public static class UserMonsterDiff extends DiffUtil.ItemCallback<Entry<UserMonster, MonsterType>> {
