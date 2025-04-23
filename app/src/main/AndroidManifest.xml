@@ -28,6 +28,8 @@
     <activity
         android:name=".ChooseMonsterActivity"
         android:exported="false" />
+    <activity android:name=".EditMonstersActivity"
+        android:exported="false" />
 
     <activity
       android:name="com.lutra.legallydistinctpocketmonsterarea.AdminLobbyActivity"
