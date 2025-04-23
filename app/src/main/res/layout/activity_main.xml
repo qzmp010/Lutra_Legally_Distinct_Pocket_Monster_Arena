@@ -1,75 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/main"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
   <Button
+      android:id="@+id/lobbyActivityButton"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:text="@string/lobby_activity"
+      android:textSize="24sp"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      android:text="Lobby Activity"
-      android:textSize="24sp"
-      android:id="@+id/lobbyActivityButton"
-    />
+      app:layout_constraintEnd_toEndOf="parent" />
 
   <Button
+      android:id="@+id/battleActivityButton"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:text="@string/battle_activity"
+      android:textSize="24sp"
       app:layout_constraintTop_toBottomOf="@id/lobbyActivityButton"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      android:text="BattleActivity"
-      android:textSize="24sp"
-      android:id="@+id/battleActivityButton"
-      />
+      app:layout_constraintEnd_toEndOf="parent" />
 
   <Button
+      android:id="@+id/adminLobbyActivityButton"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:text="@string/admin_lobby_activity"
+      android:textSize="24sp"
       app:layout_constraintTop_toBottomOf="@id/battleActivityButton"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      android:text="AdminLobbyActivity"
-      android:textSize="24sp"
-      android:id="@+id/adminLobbyActivityButton"
-      />
+      app:layout_constraintEnd_toEndOf="parent" />
 
   <Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toBottomOf="@id/adminLobbyActivityButton"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:text="ViewMonstersActivity"
-    android:textSize="24sp"
-    android:id="@+id/viewMonstersActivityButton"
-    />
-  <Button
+      android:id="@+id/viewMonstersActivityButton"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:text="@string/view_monsters"
+      android:textSize="24sp"
       app:layout_constraintTop_toBottomOf="@id/adminLobbyActivityButton"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      android:text="@string/choosemonsteractivity"
-      android:textSize="24sp"
-      android:id="@+id/ChooseMonsterActivityButton"
-      />
+      app:layout_constraintEnd_toEndOf="parent" />
 
   <Button
+      android:id="@+id/chooseMonsterActivityButton"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:text="@string/choose_monster_activity"
+      android:textSize="24sp"
       app:layout_constraintTop_toBottomOf="@id/viewMonstersActivityButton"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      android:text="CaptureActivity"
-      android:textSize="24sp"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  <Button
       android:id="@+id/captureActivityButton"
-      />
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/capture_activity"
+      android:textSize="24sp"
+      app:layout_constraintTop_toBottomOf="@id/chooseMonsterActivityButton"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  <Button
+      android:id="@+id/editMonstersActivityButton"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/EDit_monsters"
+      android:textSize="24sp"
+      app:layout_constraintTop_toBottomOf="@id/captureActivityButton"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
