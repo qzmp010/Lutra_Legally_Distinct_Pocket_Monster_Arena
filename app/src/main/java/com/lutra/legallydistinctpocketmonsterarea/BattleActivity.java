@@ -245,9 +245,9 @@ public class BattleActivity extends AppCompatActivity {
     }
 
     public void userSwitch() {
-        binding.battleDialog.append("UserSwitched clicked.\n\n");
-        activeMonster = enemyMonster;
-        enemyTurn();
+        Intent intent = SwitchMonsterActivity.intentFactory(getApplicationContext());
+        intent.putExtra(USER_ID, loggedInUserID);
+        startActivity(intent);
     }
 
     public void userRun() {

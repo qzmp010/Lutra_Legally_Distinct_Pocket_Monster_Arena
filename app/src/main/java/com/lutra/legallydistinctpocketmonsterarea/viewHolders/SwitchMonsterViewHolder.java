@@ -2,6 +2,7 @@ package com.lutra.legallydistinctpocketmonsterarea.viewHolders;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.lutra.legallydistinctpocketmonsterarea.BattleActivity;
+import com.lutra.legallydistinctpocketmonsterarea.LobbyActivity;
 import com.lutra.legallydistinctpocketmonsterarea.R;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
@@ -53,13 +57,13 @@ public class SwitchMonsterViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(
-                        itemView.getContext(),
-                        String.format("My ID is %d", userMonsterEntry.getUserMonsterId()),
-                        LENGTH_SHORT).show();
+                Intent intent = BattleActivity.intentFactory(itemView.getContext());
+                intent.putExtra(LobbyActivity.LOBBY_USER_ID, userMonsterEntry.getUserId());
+                itemView.getContext().startActivity(intent);
             }
         });
     }
+
 
     static SwitchMonsterViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())

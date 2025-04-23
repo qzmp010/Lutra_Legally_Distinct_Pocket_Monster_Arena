@@ -19,6 +19,7 @@ import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivitySwitchMons
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterAdapter;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterViewModel;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterAdapter;
+import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterViewHolder;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterViewModel;
 
 import java.util.ArrayList;
@@ -30,13 +31,17 @@ public class SwitchMonsterActivity extends AppCompatActivity {
     private AppRepository repository;
     private SwitchMonsterViewModel monsterViewModel;
 
-    private int loggedInUser = 49;
+    public static final String USER_ID = "SwitchMonsterActivity.USER_ID";
+
+    private int loggedInUser = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySwitchMonsterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        loginUser();
 
         monsterViewModel = new ViewModelProvider(this).get(SwitchMonsterViewModel.class);
 
@@ -51,6 +56,22 @@ public class SwitchMonsterActivity extends AppCompatActivity {
         //todo: separate each entry by UserMonster
         monsterViewModel.getUserMonstersByUserIdLiveData(loggedInUser).observe(
                 this,monsters -> {adapter.submitList(monsters);});
+
+    }
+
+    private void loginUser() {
+        if(loggedInUser == -1) {
+            loggedInUser = getIntent().getIntExtra(BattleActivity.USER_ID, -1);
+        }
+
+        if(loggedInUser == -1) {
+            loggedInUser = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID, -1);
+        }
+
+        if(loggedInUser == -1) {
+            Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
+            startActivity(intent);
+        }
     }
 
     public static Intent intentFactory(Context context) {
