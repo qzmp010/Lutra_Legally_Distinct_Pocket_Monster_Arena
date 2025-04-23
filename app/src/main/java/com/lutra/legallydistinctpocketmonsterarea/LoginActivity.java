@@ -33,9 +33,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 verifyUser();
+
+
+            }
+        });
+        binding.signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 startActivity(SignUpActivity.intentFactory(LoginActivity.this));
-
-
             }
         });
 
