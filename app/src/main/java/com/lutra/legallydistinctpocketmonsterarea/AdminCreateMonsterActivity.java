@@ -5,22 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
-import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityAdminEditMonsterBinding;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class AdminCreateMonsterActivity extends AppCompatActivity {
@@ -46,7 +40,7 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
     View view = binding.getRoot();
     setContentView(view);
 
-    binding.adminEditMonsterEditTextView.setText(R.string.create_monster);
+    binding.adminEditMonsterEditTextView.setText(R.string.Create_monster);
     monsterTypeId = getIntent().getIntExtra(MONSTER_TYPE_ID_KEY, 0);
     monsterType = repository.getMonsterTypeById(monsterTypeId);
     userList = repository.getAllUsers().getValue();
@@ -83,14 +77,20 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
         monsterType.getDefenseMax())
     );
 
+    binding.adminEditMonsterReturnButton.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        backToMonsterTypes();
+      }
+    });
+
     binding.adminEditMonsterSaveButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
         if (validateInput()) {
           insertMonster();
           toastMaker(monsterNickname + " was created successfully!");
-          Intent intent = AdminSelectMonsterTypeActivity.intentFactory(getApplicationContext());
-          startActivity(intent);
+          backToMonsterTypes();
         }
       }
     });
@@ -171,6 +171,11 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
         monsterHealth,
         monsterUserId
         );
+  }
+
+  public void backToMonsterTypes() {
+    Intent intent = AdminSelectMonsterTypeActivity.intentFactory(getApplicationContext());
+    startActivity(intent);
   }
 
   public static Intent intentFactory(Context context, int monsterTypeId) {

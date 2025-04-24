@@ -5,8 +5,17 @@
   android:id="@+id/adminEditMonsterActivity"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".AdminCreateMonsterActivity"
-  android:paddingTop="50dp">
+  tools:context=".AdminCreateMonsterActivity">
+
+  <Button
+    android:layout_width="0dp"
+    android:layout_height="50dp"
+    android:text="@string/back_to_monster_types"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="50dp"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginStart="10dp"
+    android:id="@+id/adminEditMonsterReturnButton" />
 
   <TextView
     android:id="@+id/adminEditMonsterEditTextView"
@@ -15,7 +24,7 @@
     android:gravity="center"
     android:text="@string/Edit_monster"
     android:textSize="36sp"
-    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/adminEditMonsterReturnButton"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -58,6 +67,7 @@
     android:layout_width="190dp"
     android:layout_height="50dp"
     android:layout_marginStart="8dp"
+    android:autofillHints="@string/enter_nickname"
     android:padding="8dp"
     android:hint="@string/enter_nickname"
     android:inputType="text"
@@ -81,6 +91,7 @@
     android:layout_width="190dp"
     android:layout_height="50dp"
     android:layout_marginStart="8dp"
+    android:autofillHints="@string/enter_health"
     android:padding="8dp"
     android:hint="@string/enter_health"
     android:inputType="number"
@@ -104,6 +115,7 @@
     android:layout_width="190dp"
     android:layout_height="50dp"
     android:layout_marginStart="8dp"
+    android:autofillHints="@string/enter_attack"
     android:padding="8dp"
     android:hint="@string/enter_attack"
     android:inputType="number"
@@ -127,6 +139,7 @@
     android:layout_width="190dp"
     android:layout_height="50dp"
     android:layout_marginStart="8dp"
+    android:autofillHints="@string/enter_defense"
     android:padding="8dp"
     android:hint="@string/enter_defense"
     android:inputType="number"
@@ -162,7 +175,7 @@
     android:layout_marginStart="20dp"
     android:layout_marginEnd="20dp"
     android:layout_marginBottom="50dp"
-    android:text="Save"
+    android:text="@string/save"
     android:textSize="25sp"/>
 
 

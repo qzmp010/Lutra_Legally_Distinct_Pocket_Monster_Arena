@@ -5,17 +5,26 @@
   android:id="@+id/adminSelectMonsterType"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".AdminSelectMonsterTypeActivity"
-  android:paddingTop="50dp">
+  tools:context=".AdminSelectMonsterTypeActivity" >
+
+  <Button
+    android:layout_width="0dp"
+    android:layout_height="50dp"
+    android:text="@string/back_to_lobby"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="50dp"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginStart="10dp"
+    android:id="@+id/adminSelectMonsterTypeReturnButton" />
 
   <TextView
     android:id="@+id/adminSelectMonsterTypeCreateTextView"
     android:layout_width="395dp"
-    android:layout_height="70dp"
+    android:layout_height="50dp"
     android:gravity="center"
     android:text="@string/Create_monster"
     android:textSize="36sp"
-    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/adminSelectMonsterTypeReturnButton"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"/>
 
