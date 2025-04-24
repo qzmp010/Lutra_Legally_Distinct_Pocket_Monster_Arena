@@ -2,8 +2,9 @@ package com.lutra.legallydistinctpocketmonsterarea.database;
 
 import android.app.Application;
 import android.util.Log;
-import android.util.Pair;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterTypeWithUserMonsters;
@@ -12,6 +13,7 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -270,24 +272,52 @@ public class AppRepository {
     );
   }
 
-  public LiveData<List<Pair<UserMonster, MonsterType>>> getUserMonstersWithTypePairsLiveData() {
-    return Transformations.map(
-        userMonsterWithTypeDAO.getUserMonstersWithTypeMapLiveData(),
-        m -> m.entrySet().stream().map(e ->
-            new Pair<>(e.getKey(), e.getValue())).toList()
-    );
-  }
-
+  /**
+   * Gets all UserMonsters with associated MonsterType and User
+   * Combines two LiveData objects into one
+   * @return LiveData of List of Triple containing <UserMonster, MonsterType, User>
+   */
   public LiveData<List<Triple<UserMonster, MonsterType, User>>> getUserMonstersWithTypeAndUserLiveData() {
-    return Transformations.map(
-        userMonsterWithTypeDAO.getUserMonstersWithTypeMapLiveData(),
-        m -> m.entrySet().stream().map(e ->
-            new Triple<>(
-                e.getKey(),
-                e.getValue(),
-                userDao.getUserByUserId(e.getKey().getUserId()).getValue())
-        ).toList()
-    );
+    var mediatorLiveData = new MediatorLiveData<List<Triple<UserMonster, MonsterType, User>>>();
+    var userMonsterWithTypeMapLiveData = userMonsterWithTypeDAO.getUserMonstersWithTypeMapLiveData();
+    var userListLiveData = userDao.getAllUsers();
+
+    mediatorLiveData.addSource(userMonsterWithTypeMapLiveData,
+        new Observer<Map<UserMonster, MonsterType>>() {
+          @Override
+          public void onChanged(Map<UserMonster, MonsterType> userMonsterMonsterTypeMap) {
+            if (userMonsterMonsterTypeMap != null && userListLiveData.getValue() != null) {
+              mediatorLiveData.setValue(userMonsterMonsterTypeMap.entrySet().stream()
+                  .map(e ->
+                      new Triple<>(
+                          e.getKey(),
+                          e.getValue(),
+                          userListLiveData.getValue().stream()
+                              .filter(u -> u.getId() == e.getKey().getUserId())
+                              .findFirst().orElse(null)
+                      )).toList());
+            }
+          }
+        });
+
+    mediatorLiveData.addSource(userListLiveData, new Observer<List<User>>() {
+      @Override
+      public void onChanged(List<User> users) {
+        if (userMonsterWithTypeMapLiveData.getValue() != null && users != null) {
+          mediatorLiveData.setValue(userMonsterWithTypeMapLiveData.getValue().entrySet().stream()
+              .map(e ->
+                  new Triple<>(
+                      e.getKey(),
+                      e.getValue(),
+                      users.stream()
+                          .filter(u -> u.getId() == e.getKey().getUserId())
+                          .findFirst().orElse(null)
+                  )).toList());
+        }
+      }
+    });
+
+    return mediatorLiveData;
   }
 
   /**
