@@ -1,5 +1,6 @@
 package com.lutra.legallydistinctpocketmonsterarea.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -14,6 +15,9 @@ public interface MonsterTypeDAO {
 
   @Query("SELECT * FROM " + AppDatabase.MONSTER_TYPE_TABLE)
   List<MonsterType> getAll();
+
+  @Query("SELECT * FROM " + AppDatabase.MONSTER_TYPE_TABLE)
+  LiveData<List<MonsterType>> getAllLiveData();
 
   @Query("SELECT * FROM "
       + AppDatabase.MONSTER_TYPE_TABLE

@@ -2,32 +2,44 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/myMonsters"
+  android:id="@+id/adminSelectMonsterType"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".ViewMonstersActivity"
+  tools:context=".AdminSelectMonsterTypeActivity"
   android:paddingTop="50dp">
 
   <TextView
-    android:id="@+id/myMonstersTextView"
+    android:id="@+id/adminSelectMonsterTypeCreateTextView"
     android:layout_width="395dp"
-    android:layout_height="100dp"
+    android:layout_height="70dp"
     android:gravity="center"
-    android:text="@string/my_monsters"
+    android:text="@string/Create_monster"
     android:textSize="36sp"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"/>
 
+  <TextView
+    android:id="@+id/adminSelectMonsterTypeSelectTextView"
+    android:layout_width="395dp"
+    android:layout_height="30dp"
+    android:gravity="center"
+    android:text="@string/select_a_type_of_monster"
+    android:textSize="18sp"
+    app:layout_constraintTop_toBottomOf="@+id/adminSelectMonsterTypeCreateTextView"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
   <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/viewMonstersRecyclerView"
+    android:id="@+id/selectMonsterTypeRecyclerView"
     android:layout_width="0dp"
     android:layout_height="0dp"
     android:layout_margin="16dp"
     android:padding="2dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/myMonstersTextView"
+    app:layout_constraintTop_toBottomOf="@+id/adminSelectMonsterTypeSelectTextView"
     app:layout_constraintBottom_toBottomOf="parent"
     tools:listitem="@layout/recycler_item_monster" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

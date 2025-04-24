@@ -105,6 +105,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(SwitchMonsterActivity.intentFactory(getApplicationContext()));
       }
     });
+
+    binding.adminCreateMonsterActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(AdminSelectMonsterTypeActivity.intentFactory(getApplicationContext()));
+      }
+    });
   }
 
 

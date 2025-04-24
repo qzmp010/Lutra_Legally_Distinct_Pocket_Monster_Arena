@@ -96,6 +96,10 @@ public class AppRepository {
     return null;
   }
 
+  public LiveData<List<MonsterType>> getAllMonsterTypesLiveData() {
+    return monsterTypeDAO.getAllLiveData();
+  }
+
   public MonsterType getMonsterTypeById(int monsterTypeId) {
     Future<MonsterType> future = AppDatabase.databaseWriteExecutor.submit(
         new Callable<MonsterType>() {
