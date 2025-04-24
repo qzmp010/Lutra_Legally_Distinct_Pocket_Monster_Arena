@@ -7,15 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".SwitchMonsterActivity">
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="@string/back_to_lobby"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="10dp"
+        android:id="@+id/returnButton"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/switchMonsterRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"
         android:padding="2dp"
+        app:layout_constraintTop_toBottomOf="@id/returnButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/recycler_item_monster" />
 

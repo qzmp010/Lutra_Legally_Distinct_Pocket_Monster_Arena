@@ -41,7 +41,7 @@
   <string name="sign_up">Sign Up</string>
   <string name="monster_image">Monster Image</string>
   <string name="view_label_type_health_attack_defense">🌈 Type:\n❤️ Health:\n🗡️ Attack:\n🛡️ Defense:</string>
-
+    <string name="back_to_lobby">Back to Lobby</string>
 
 
 </resources>

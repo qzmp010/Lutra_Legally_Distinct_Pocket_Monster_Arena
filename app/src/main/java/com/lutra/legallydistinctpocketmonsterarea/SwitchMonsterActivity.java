@@ -32,6 +32,7 @@ public class SwitchMonsterActivity extends AppCompatActivity {
     private SwitchMonsterViewModel monsterViewModel;
 
     public static final String MONSTER_ID = "SwitchMonsterActivity.MONSTER_ID";
+    public static final String USER_ID = "SwitchMonsterActivity.USER_ID";
 
     private int loggedInUser = -1;
 
@@ -56,6 +57,15 @@ public class SwitchMonsterActivity extends AppCompatActivity {
         //todo: separate each entry by UserMonster
         monsterViewModel.getUserMonstersByUserIdLiveData(loggedInUser).observe(
                 this,monsters -> {adapter.submitList(monsters);});
+
+        binding.returnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = LobbyActivity.intentFactory(getApplicationContext());
+                intent.putExtra(USER_ID, loggedInUser);
+                startActivity(intent);
+            }
+        });
 
     }
 
