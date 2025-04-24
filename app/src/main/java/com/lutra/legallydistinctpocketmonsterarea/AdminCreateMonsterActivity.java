@@ -43,7 +43,6 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
     binding.adminEditMonsterEditTextView.setText(R.string.Create_monster);
     monsterTypeId = getIntent().getIntExtra(MONSTER_TYPE_ID_KEY, 0);
     monsterType = repository.getMonsterTypeById(monsterTypeId);
-    userList = repository.getAllUsers().getValue();
 
     LiveData<List<User>> userListObserver = repository.getAllUsers();
     userListObserver.observe(this,uL -> {
