@@ -12,16 +12,16 @@ import androidx.appcompat.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
-
 import androidx.core.view.WindowInsetsCompat;
 
+import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityLobbyBinding;
 
 public class LobbyActivity extends AppCompatActivity {
 
     public static final String LOBBY_USER_ID = "LobbyActivity.java_LOBBY_USER_ID";
-
     private int loggedInUserID = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,9 @@ public class LobbyActivity extends AppCompatActivity {
         ActivityLobbyBinding binding = ActivityLobbyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         loginUser();
+
 
         String user_name = getIntent().getStringExtra("username");
 
@@ -47,14 +49,22 @@ public class LobbyActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        binding.ViewMonster.setOnClickListener(new View.OnClickListener() { //need to implement View Monster Activity
+        binding.EditMonstersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = EditMonstersActivity.intentFactory(getApplicationContext());
+                intent.putExtra(LobbyActivity.LOBBY_USER_ID,loggedInUserID);
+                startActivity(intent);
+            }
+        });
+        binding.ViewMonster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = ViewMonstersActivity.intentFactory(getApplicationContext());
                 startActivity(intent);
             }
         });
-        binding.Logout.setOnClickListener(new View.OnClickListener() { //handle logout part
+        binding.Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showLogoutDialog();

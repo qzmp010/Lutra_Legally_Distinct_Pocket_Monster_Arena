@@ -53,6 +53,7 @@
   <string name="choose_monster_activity">Choose Monster Activity</string>
   <string name="capture_activity">Capture Activity</string>
   <string name="EDit_monsters">Edit Monsters</string>
+  <string name="edit_Monsters">Edit Monsters</string>
   <string name="select_a_type_of_monster">Select a type of Monster</string>
   <string name="set_the_stats_of_the_monster">Set the stats of the Monster</string>
   <string name="label_admin_health_range">❤️ Health (%d - %d):</string>
@@ -66,6 +67,5 @@
   <string name="label_admin_nickname">📛 Nickname:</string>
   <string name="back_to_monster_types">Back to Monster Types</string>
   <string name="save">Save</string>
-
 
 </resources>
