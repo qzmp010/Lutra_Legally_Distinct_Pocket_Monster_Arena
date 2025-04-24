@@ -2,6 +2,7 @@ package com.lutra.legallydistinctpocketmonsterarea.database;
 
 import android.app.Application;
 import android.util.Log;
+import android.util.Pair;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
@@ -10,12 +11,12 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import kotlin.Triple;
 
 public class AppRepository {
 
@@ -266,6 +267,26 @@ public class AppRepository {
     return Transformations.map(
         userMonsterWithTypeDAO.getUserMonstersWithTypeMapLiveData(),
         m -> new ArrayList<>(m.entrySet())
+    );
+  }
+
+  public LiveData<List<Pair<UserMonster, MonsterType>>> getUserMonstersWithTypePairsLiveData() {
+    return Transformations.map(
+        userMonsterWithTypeDAO.getUserMonstersWithTypeMapLiveData(),
+        m -> m.entrySet().stream().map(e ->
+            new Pair<>(e.getKey(), e.getValue())).toList()
+    );
+  }
+
+  public LiveData<List<Triple<UserMonster, MonsterType, User>>> getUserMonstersWithTypeAndUserLiveData() {
+    return Transformations.map(
+        userMonsterWithTypeDAO.getUserMonstersWithTypeMapLiveData(),
+        m -> m.entrySet().stream().map(e ->
+            new Triple<>(
+                e.getKey(),
+                e.getValue(),
+                userDao.getUserByUserId(e.getKey().getUserId()).getValue())
+        ).toList()
     );
   }
 
