@@ -45,6 +45,7 @@
 
 
   <string name="view_label_type_health_attack_defense">🌈 Type:\n❤️ Health:\n🗡️ Attack:\n🛡️ Defense:</string>
+  <string name="view_label_type_health_attack_defense_owner">🌈 Type:\n❤️ Health:\n🗡️ Attack:\n🛡️ Defense:\n👤 Owner:</string>
   <string name="back_to_lobby">Back to Lobby</string>
   <string name="lobby_activity">Lobby Activity</string>
   <string name="battle_activity">Battle Activity</string>
@@ -66,6 +67,7 @@
   <string name="label_admin_nickname">📛 Nickname:</string>
   <string name="back_to_monster_types">Back to Monster Types</string>
   <string name="save">Save</string>
+  <string name="select_a_monster_to_edit">Select a Monster to Edit</string>
 
 
 </resources>
