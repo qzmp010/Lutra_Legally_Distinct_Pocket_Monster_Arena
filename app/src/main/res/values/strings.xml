@@ -63,7 +63,7 @@
   <string name="enter_health">Enter Health</string>
   <string name="enter_attack">Enter Attack</string>
   <string name="enter_defense">Enter Defense</string>
-  <string name="label_admin_nickname">📛 Nickname</string>
+  <string name="label_admin_nickname">📛 Nickname:</string>
   <string name="back_to_monster_types">Back to Monster Types</string>
   <string name="save">Save</string>
 
