@@ -35,7 +35,6 @@ public class AdminLobbyActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
-
         });
         binding.EditMonstersButton.setOnClickListener(new View.OnClickListener() {
             @Override

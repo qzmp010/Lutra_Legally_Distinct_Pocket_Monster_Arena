@@ -12,7 +12,6 @@ import androidx.appcompat.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
-
 import androidx.core.view.WindowInsetsCompat;
 
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
@@ -22,7 +21,7 @@ public class LobbyActivity extends AppCompatActivity {
 
     public static final String LOBBY_USER_ID = "LobbyActivity.java_LOBBY_USER_ID";
     private int loggedInUserID = -1;
-    private AppRepository repository;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +29,7 @@ public class LobbyActivity extends AppCompatActivity {
         ActivityLobbyBinding binding = ActivityLobbyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repository = AppRepository.getRepository(getApplication());
+
         loginUser();
 
 
