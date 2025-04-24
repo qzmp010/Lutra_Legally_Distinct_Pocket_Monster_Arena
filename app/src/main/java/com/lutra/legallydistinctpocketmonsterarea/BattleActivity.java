@@ -186,13 +186,12 @@ public class BattleActivity extends AppCompatActivity {
             String userHP = userMonster.getCurrentHealth() + "/" + userMonster.getMaxHealth();
             binding.userMonsterHP.setText(userHP);
             activeMonster = userMonster;
-            enemyTurn();
         } else {
             String userHP = "0/" + userMonster.getMaxHealth();
             binding.userMonsterHP.setText(userHP);
-            binding.battleDialog.append(String.format("%n%s%n%s fainted! Time to run!",
+            binding.battleDialog.append(String.format("%n\"%s\"%n%s fainted!",
                     userMonster.getPhrase(),userMonster.getNickname()));
-            userRun();
+            userSwitch();
         }
 
     }
@@ -255,6 +254,7 @@ public class BattleActivity extends AppCompatActivity {
     }
 
     public void userSwitch() {
+        repository.insertUserMonster(enemyMonster);
         Intent intent = SwitchMonsterActivity.intentFactory(getApplicationContext());
         intent.putExtra(USER_ID, loggedInUserID);
         startActivity(intent);

@@ -19,14 +19,7 @@ import com.lutra.legallydistinctpocketmonsterarea.BattleActivity;
 import com.lutra.legallydistinctpocketmonsterarea.LobbyActivity;
 import com.lutra.legallydistinctpocketmonsterarea.R;
 import com.lutra.legallydistinctpocketmonsterarea.SwitchMonsterActivity;
-import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SwitchMonsterViewHolder extends RecyclerView.ViewHolder {
 
@@ -68,11 +61,18 @@ public class SwitchMonsterViewHolder extends RecyclerView.ViewHolder {
                 alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        confirmDialog.dismiss();
-                        Intent intent = BattleActivity.intentFactory(itemView.getContext());
-                        intent.putExtra(LobbyActivity.LOBBY_USER_ID, userMonsterEntry.getUserId());
-                        intent.putExtra(SwitchMonsterActivity.MONSTER_ID, userMonsterEntry.getUserMonsterId());
-                        itemView.getContext().startActivity(intent);
+                        if(userMonsterEntry.getCurrentHealth() > 0) {
+                            confirmDialog.dismiss();
+                            Intent intent = BattleActivity.intentFactory(itemView.getContext());
+                            intent.putExtra(LobbyActivity.LOBBY_USER_ID, userMonsterEntry.getUserId());
+                            intent.putExtra(SwitchMonsterActivity.MONSTER_ID, userMonsterEntry.getUserMonsterId());
+                            itemView.getContext().startActivity(intent);
+                        } else {
+                            confirmDialog.dismiss();
+                            Toast.makeText(itemView.getContext(),
+                                            String.format("%s has fainted and can't fight!", userMonsterEntry.getNickname()),
+                                            LENGTH_SHORT).show();
+                        }
                     }
                 });
 
