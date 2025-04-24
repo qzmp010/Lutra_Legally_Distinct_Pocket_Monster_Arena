@@ -211,7 +211,7 @@ public class AppRepository {
     return userMonsterDAO.getByUserIdLiveData(userId);
   }
 
-  public void deleteMonsterByMonsterId(int monsterID) {
+  public boolean deleteMonsterByMonsterId(int monsterID) {
     Future future = AppDatabase.databaseWriteExecutor.submit(
         new Callable() {
           @Override
@@ -226,6 +226,7 @@ public class AppRepository {
     } catch (InterruptedException | ExecutionException e) {
       Log.i(LOG_TAG, "Problem deleting UserMonster with userMonsterId " + monsterID);
     }
+    return true;
   }
 
   public LiveData<User> getUserByUserName(String username) {

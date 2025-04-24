@@ -42,7 +42,7 @@ public class LobbyActivity extends AppCompatActivity {
         binding.battleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = BattleActivity.intentFactory(getApplicationContext());
+                Intent intent = SwitchMonsterActivity.intentFactory(getApplicationContext());
                 intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserID);
                 startActivity(intent);
             }
@@ -101,7 +101,19 @@ public class LobbyActivity extends AppCompatActivity {
         }
 
         if(loggedInUserID == -1) {
+            loggedInUserID = getIntent().getIntExtra(LoginActivity.USER_ID, -1);
+        }
+
+        if(loggedInUserID == -1) {
             loggedInUserID = getIntent().getIntExtra(BattleActivity.USER_ID, -1);
+        }
+
+        if(loggedInUserID == -1) {
+            loggedInUserID = getIntent().getIntExtra(SwitchMonsterActivity.USER_ID,-1);
+        }
+
+        if(loggedInUserID == -1) {
+            logout();
         }
     }
 

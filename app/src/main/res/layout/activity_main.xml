@@ -77,4 +77,15 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
 
+  <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toBottomOf="@id/captureActivityButton"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      android:text="SwitchMonsterActivity"
+      android:textSize="24sp"
+      android:id="@+id/switchMonsterActivityButton"
+      />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

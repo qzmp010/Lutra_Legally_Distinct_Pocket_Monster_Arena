@@ -46,6 +46,7 @@
 
 
   <string name="view_label_type_health_attack_defense">🌈 Type:\n❤️ Health:\n🗡️ Attack:\n🛡️ Defense:</string>
+    <string name="back_to_lobby">Back to Lobby</string>
   <string name="lobby_activity">Lobby Activity</string>
   <string name="battle_activity">Battle Activity</string>
   <string name="admin_lobby_activity">Admin Lobby Activity</string>

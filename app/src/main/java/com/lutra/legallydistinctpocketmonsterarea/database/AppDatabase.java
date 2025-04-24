@@ -106,12 +106,84 @@ public abstract class AppDatabase extends RoomDatabase {
                 22,17,
                 UserMonster.ElementalType.NORMAL));
 
+        //Test monsters for SwitchMonster
+        //TODO: Remove test monsters
+        UserMonsterDAO userMonsterDAO = INSTANCE.userMonsterDAO();
+        userMonsterDAO.insert(new UserMonster(
+                0,
+                "NotBulbasaur",
+                "Can't be bothered.",
+                R.drawable.ld_bulbasaur_png,
+                UserMonster.ElementalType.GRASS,
+                20,
+                20,
+                90,
+                49,
+                1
+        ));
+
+        userMonsterDAO.insert(new UserMonster(
+                0,
+                "NotSquirtle",
+                "Can't be bothered.",
+                R.drawable.ld_squirtle,
+                UserMonster.ElementalType.WATER,
+                21,
+                20,
+                90,
+                49,
+                2
+        ));
+
+        userMonsterDAO.insert(new UserMonster(
+                0,
+                "NotCharmander",
+                "Can't be bothered.",
+                R.drawable.ld_charizard,
+                UserMonster.ElementalType.FIRE,
+                20,
+                21,
+                90,
+                49,
+                3
+        ));
+
+        userMonsterDAO.insert(new UserMonster(
+                0,
+                "NotPika",
+                "Can't be bothered.",
+                R.drawable.ld_pikachu,
+                UserMonster.ElementalType.ELECTRIC,
+                20,
+                21,
+                91,
+                49,
+                4
+        ));
+
+        userMonsterDAO.insert(new UserMonster(
+                0,
+                "NotJiggly",
+                "Can't be bothered.",
+                R.drawable.ld_jiggly,
+                UserMonster.ElementalType.NORMAL,
+                22,
+                21,
+                91,
+                49,
+                5
+        ));
+
         UserDAO userDao = INSTANCE.userDao();
         User admin = new User("admin", "admin123", true);
         userDao.insert(admin);
 
         User testUser = new User("trainer1", "pokedex123", false);
         userDao.insert(testUser);
+
+        User davidTest = new User("david", "12345", false);
+        davidTest.setId(49);
+        userDao.insert(davidTest);
       });
     }
   };

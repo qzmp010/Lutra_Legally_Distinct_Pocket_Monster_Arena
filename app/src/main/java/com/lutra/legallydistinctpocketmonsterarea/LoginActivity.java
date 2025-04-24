@@ -20,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
     private AppRepository repository;
 
+    public static final String USER_ID = "LobbyActivity.USER_ID";
+
 
 
     @Override
@@ -65,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else {
                         // 👤 Redirect to Normal Lobby
                         Intent intent = LobbyActivity.intentFactory(getApplicationContext());
+                        intent.putExtra(USER_ID, user.getId());
                         startActivity(intent);
                     }
                     finish();
