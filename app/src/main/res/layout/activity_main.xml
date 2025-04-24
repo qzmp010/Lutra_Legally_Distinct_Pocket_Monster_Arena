@@ -73,7 +73,7 @@
       android:layout_height="wrap_content"
       android:text="@string/EDit_monsters"
       android:textSize="24sp"
-      app:layout_constraintTop_toBottomOf="@id/captureActivityButton"
+      app:layout_constraintTop_toBottomOf="@id/switchMonsterActivityButton"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintEnd_toEndOf="parent" />
 
