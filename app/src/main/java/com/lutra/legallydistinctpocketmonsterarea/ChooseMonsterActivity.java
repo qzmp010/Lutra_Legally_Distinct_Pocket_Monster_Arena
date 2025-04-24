@@ -140,7 +140,7 @@ public class ChooseMonsterActivity extends AppCompatActivity {
     }
     private void createNewMonster(String input){
         String nickname = input;
-        String setPhrase ="I am the default monster";
+        String setPhrase ="";
         int attack = 13;
         int defense = 7;
         int health = 30;
