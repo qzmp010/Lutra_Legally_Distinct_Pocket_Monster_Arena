@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     repository = AppRepository.getRepository(getApplication());
     loginUser(savedInstanceState);
 
-
     if(loggedInUserId == -1 ){
       Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
       startActivity(intent);
@@ -103,6 +102,13 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         startActivity(SwitchMonsterActivity.intentFactory(getApplicationContext()));
+      }
+    });
+
+    binding.adminCreateMonsterActivityButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        startActivity(AdminSelectMonsterTypeActivity.intentFactory(getApplicationContext()));
       }
     });
   }
