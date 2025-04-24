@@ -14,7 +14,6 @@
   <string name="Welcome">Welcome</string>
   <string name="edit_monsters">Edit monsters</string>
   <string name="Edit_monster">Edit Monster</string>
-  <string name="create_monster">Create monster</string>
   <string name="Create_monster">Create Monster</string>
   <string name="Edit_monsters">Edit Monsters</string>
 
@@ -46,7 +45,7 @@
 
 
   <string name="view_label_type_health_attack_defense">🌈 Type:\n❤️ Health:\n🗡️ Attack:\n🛡️ Defense:</string>
-    <string name="back_to_lobby">Back to Lobby</string>
+  <string name="back_to_lobby">Back to Lobby</string>
   <string name="lobby_activity">Lobby Activity</string>
   <string name="battle_activity">Battle Activity</string>
   <string name="admin_lobby_activity">Admin Lobby Activity</string>
@@ -54,6 +53,19 @@
   <string name="choose_monster_activity">Choose Monster Activity</string>
   <string name="capture_activity">Capture Activity</string>
   <string name="EDit_monsters">Edit Monsters</string>
+  <string name="select_a_type_of_monster">Select a type of Monster</string>
+  <string name="set_the_stats_of_the_monster">Set the stats of the Monster</string>
+  <string name="label_admin_health_range">❤️ Health (%d - %d):</string>
+  <string name="label_admin_attack_range">🗡️ Attack (%d - %d):</string>
+  <string name="label_admin_defense_range">🛡 Defense (%d - %d):</string>
+  <string name="label_admin_owner">👤 Owner:</string>
+  <string name="enter_nickname">Enter Nickname</string>
+  <string name="enter_health">Enter Health</string>
+  <string name="enter_attack">Enter Attack</string>
+  <string name="enter_defense">Enter Defense</string>
+  <string name="label_admin_nickname">📛 Nickname:</string>
+  <string name="back_to_monster_types">Back to Monster Types</string>
+  <string name="save">Save</string>
 
 
 </resources>

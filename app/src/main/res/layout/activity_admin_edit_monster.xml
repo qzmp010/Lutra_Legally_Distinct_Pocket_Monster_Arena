@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/adminEditMonsterActivity"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".AdminCreateMonsterActivity">
+
+  <Button
+    android:layout_width="0dp"
+    android:layout_height="50dp"
+    android:text="@string/back_to_monster_types"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="50dp"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginStart="10dp"
+    android:id="@+id/adminEditMonsterReturnButton" />
+
+  <TextView
+    android:id="@+id/adminEditMonsterEditTextView"
+    android:layout_width="395dp"
+    android:layout_height="70dp"
+    android:gravity="center"
+    android:text="@string/Edit_monster"
+    android:textSize="36sp"
+    app:layout_constraintTop_toBottomOf="@+id/adminEditMonsterReturnButton"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+  <TextView
+    android:id="@+id/adminEditMonsterInstructionsTextView"
+    android:layout_width="395dp"
+    android:layout_height="30dp"
+    android:gravity="center_horizontal"
+    android:text="@string/set_the_stats_of_the_monster"
+    android:textSize="20sp"
+    app:layout_constraintTop_toBottomOf="@+id/adminEditMonsterEditTextView"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+  <TextView
+    android:id="@+id/adminEditMonsterTypeNameTextView"
+    android:layout_width="395dp"
+    android:layout_height="60dp"
+    android:gravity="center_horizontal"
+    android:text="Monster Type Name"
+    android:textSize="22sp"
+    app:layout_constraintTop_toBottomOf="@+id/adminEditMonsterInstructionsTextView"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+  <TextView
+    android:id="@+id/adminEditMonsterNicknameTextView"
+    android:layout_width="190dp"
+    android:layout_height="50dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="16dp"
+    android:gravity="center_vertical"
+    android:text="@string/label_admin_nickname"
+    android:textSize="18sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/adminEditMonsterTypeNameTextView" />
+
+  <EditText
+    android:id="@+id/adminEditMonsterNicknameEditText"
+    android:layout_width="190dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="8dp"
+    android:autofillHints="@string/enter_nickname"
+    android:padding="8dp"
+    android:hint="@string/enter_nickname"
+    android:inputType="text"
+    app:layout_constraintBaseline_toBaselineOf="@+id/adminEditMonsterNicknameTextView"
+    app:layout_constraintStart_toEndOf="@+id/adminEditMonsterNicknameTextView" />
+
+  <TextView
+    android:id="@+id/adminEditMonsterHealthTextView"
+    android:layout_width="190dp"
+    android:layout_height="50dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="16dp"
+    android:gravity="center_vertical"
+    android:text="@string/label_admin_health_range"
+    android:textSize="18sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/adminEditMonsterNicknameTextView" />
+
+  <EditText
+    android:id="@+id/adminEditMonsterHealthEditText"
+    android:layout_width="190dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="8dp"
+    android:autofillHints="@string/enter_health"
+    android:padding="8dp"
+    android:hint="@string/enter_health"
+    android:inputType="number"
+    app:layout_constraintBaseline_toBaselineOf="@+id/adminEditMonsterHealthTextView"
+    app:layout_constraintStart_toEndOf="@+id/adminEditMonsterHealthTextView" />
+
+  <TextView
+    android:id="@+id/adminEditMonsterAttackTextView"
+    android:layout_width="190dp"
+    android:layout_height="50dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="16dp"
+    android:gravity="center_vertical"
+    android:text="@string/label_admin_attack_range"
+    android:textSize="18sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/adminEditMonsterHealthTextView" />
+
+  <EditText
+    android:id="@+id/adminEditMonsterAttackEditText"
+    android:layout_width="190dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="8dp"
+    android:autofillHints="@string/enter_attack"
+    android:padding="8dp"
+    android:hint="@string/enter_attack"
+    android:inputType="number"
+    app:layout_constraintBaseline_toBaselineOf="@+id/adminEditMonsterAttackTextView"
+    app:layout_constraintStart_toEndOf="@+id/adminEditMonsterAttackTextView" />
+
+  <TextView
+    android:id="@+id/adminEditMonsterDefenseTextView"
+    android:layout_width="190dp"
+    android:layout_height="50dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="16dp"
+    android:gravity="center_vertical"
+    android:text="@string/label_admin_defense_range"
+    android:textSize="18sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/adminEditMonsterAttackTextView" />
+
+  <EditText
+    android:id="@+id/adminEditMonsterDefenseEditText"
+    android:layout_width="190dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="8dp"
+    android:autofillHints="@string/enter_defense"
+    android:padding="8dp"
+    android:hint="@string/enter_defense"
+    android:inputType="number"
+    app:layout_constraintBaseline_toBaselineOf="@+id/adminEditMonsterDefenseTextView"
+    app:layout_constraintStart_toEndOf="@+id/adminEditMonsterDefenseTextView" />
+
+  <TextView
+    android:id="@+id/adminEditMonsterOwnerTextView"
+    android:layout_width="190dp"
+    android:layout_height="50dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="16dp"
+    android:gravity="center_vertical"
+    android:text="@string/label_admin_owner"
+    android:textSize="18sp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/adminEditMonsterDefenseTextView" />
+
+  <Spinner
+    android:id="@+id/adminEditMonsterOwnerSpinner"
+    android:layout_width="190dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="8dp"
+    android:padding="8dp"
+    app:layout_constraintBottom_toBottomOf="@+id/adminEditMonsterOwnerTextView"
+    app:layout_constraintStart_toEndOf="@+id/adminEditMonsterOwnerTextView" />
+
+  <Button
+    android:id="@+id/adminEditMonsterSaveButton"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginBottom="50dp"
+    android:text="@string/save"
+    android:textSize="25sp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
