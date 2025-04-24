@@ -149,8 +149,7 @@ public class BattleActivity extends AppCompatActivity {
         binding.battleDialog.append(String.format("You have encountered a wild %s!%n", enemyMonsterName.toUpperCase()));
         binding.battleDialog.append(String.format("\"%s\"%n%n", enemyMonster.getPhrase()));
 
-        //Todo: implement random phrases for monster entry
-        binding.battleDialog.append(String.format("Go-go-gadget %s!%n", userMonsterName.toUpperCase()));
+        binding.battleDialog.append(String.format("%s%s!%n", getEntrancePhrase(), userMonsterName.toUpperCase()));
         binding.battleDialog.append(String.format("\"%s\"%n%n", userMonster.getPhrase()));
 
         if(activeMonster == enemyMonster){
@@ -228,7 +227,7 @@ public class BattleActivity extends AppCompatActivity {
     /**
      * User makes regular attack against enemyMonster. Calls faintCheck() to see if enemy is defeated.
      */
-    public void userAttack() {
+    private void userAttack() {
         int attackValue = 0;
         int damage = 0;
 
@@ -242,7 +241,7 @@ public class BattleActivity extends AppCompatActivity {
     /**
      * User makes special attack against enemyMonster. Calls faintCheck() to see if enemy is defeated.
      */
-    public void userSpecial() {
+    private void userSpecial() {
         int attackValue = 0;
         int damage = 0;
 
@@ -270,7 +269,7 @@ public class BattleActivity extends AppCompatActivity {
      * bring it and the user to CaptureActivity, and pop up confirm dialog so user can tell what happened.
      * If not, update display and start enemy turn.
      */
-    public void faintCheck() {
+    private void faintCheck() {
         if (enemyMonster.getCurrentHealth() > 0) {
             String enemyHP = enemyMonster.getCurrentHealth() + "/" + enemyMonster.getMaxHealth();
             binding.enemyMonsterHP.setText(enemyHP);
@@ -281,8 +280,8 @@ public class BattleActivity extends AppCompatActivity {
             String userHP = "0/" + enemyMonster.getMaxHealth();
             enemyMonster.setCurrentHealth(0);
             binding.enemyMonsterHP.setText(userHP);
-            binding.battleDialog.append(String.format("%n%s%n%s fainted!",
-                    enemyMonster.getPhrase(), enemyMonster.getNickname()));
+            binding.battleDialog.append(String.format("%n\"%s\"%n%s fainted!",
+                    enemyMonster.getPhrase(), enemyMonster.getNickname().toUpperCase()));
 
             long enemyID = repository.insertUserMonster(enemyMonster);
 
@@ -305,9 +304,9 @@ public class BattleActivity extends AppCompatActivity {
     }
 
     /**
-     * Inserts current user monster into DB (to track health) and starts SwitchMonsterActivity
+     * Inserts current user monster into DB (to track health) and starts SwitchMonsterActivity.
      */
-    public void userSwitch() {
+    private void userSwitch() {
         repository.insertUserMonster(userMonster);
         Intent intent = SwitchMonsterActivity.intentFactory(getApplicationContext());
         intent.putExtra(USER_ID, loggedInUserID);
@@ -318,7 +317,7 @@ public class BattleActivity extends AppCompatActivity {
      * User has 67% chance to run away. If successful, return to lobby and restore all monster health.
      * Confirm dialogs to pause progress so user can understand result. If unsuccessful, enemy takes turn.
      */
-    public void userRun() {
+    private void userRun() {
         binding.battleDialog.append("\nYou try to run away...\n");
 
         Random rand = new Random();
@@ -377,6 +376,27 @@ public class BattleActivity extends AppCompatActivity {
         if(loggedInUserID == -1) {
             loggedInUserID = getIntent().getIntExtra(CaptureActivity.USER_ID, -1);
         }
+    }
+
+    /**
+     * @return One of four phrases to introduce the monster with.
+     */
+    private String getEntrancePhrase() {
+        Random rand = new Random();
+        int phrase = Math.abs(rand.nextInt() % 4);
+
+        switch(phrase) {
+            case 0:
+                return "Go-go-gadget ";
+            case 1:
+                return "I..uh..pick youuuu ";
+            case 2:
+                return "Your attention, please. Now batting, ";
+            case 3:
+                return "Drop a gem on 'em ";
+            default:
+        }
+        return "I don't have a clever intro for ";
     }
 
     public static Intent intentFactory(Context context) {
