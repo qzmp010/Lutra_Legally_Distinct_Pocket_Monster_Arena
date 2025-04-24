@@ -20,7 +20,14 @@ import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityCaptureBin
 
 import java.util.Random;
 
-
+/**
+ * CaptureActivity - entered from BattleActivity on enemy monster defeat. All exit paths lead to
+ * SwitchMonsterActivity. User is asked if they want to capture the enemy monster. If no, return to battle.
+ * If yes, user is 75% successful. On fail, return to battle. On success, user is prompted to choose a nickname.
+ * If not, return to battle. If yes, rename monster and return. On exit, show an alert dialog so user understands
+ * result before moving on.
+ * @author David Rosenfeld
+ */
 public class CaptureActivity extends AppCompatActivity {
 
     public static final String TAG = "CaptureActivity.java";
@@ -41,9 +48,14 @@ public class CaptureActivity extends AppCompatActivity {
 
         repository = AppRepository.getRepository(getApplication());
         enemyID = getIntent().getIntExtra(BattleActivity.ENEMY_ID, -1);
-        //TODO: Change default value below - currently using for testing
-        loggedInUser = getIntent().getIntExtra(BattleActivity.USER_ID, 99);
+        loggedInUser = getIntent().getIntExtra(BattleActivity.USER_ID, -1);
 
+        //No reason to continue if we'll never see it again.
+        if(loggedInUser == -1) {
+            startActivity(LoginActivity.loginIntentFactory(getApplicationContext()));
+        }
+
+        //Try to call captured monster from DB, instantiate MissingNo. on failure.
         if(enemyID != -1) {
             while(enemyMonster == null) {
                 try {
@@ -60,11 +72,17 @@ public class CaptureActivity extends AppCompatActivity {
                     UserMonster.ElementalType.NORMAL, 1, 1, 1, 420, -1);
         }
 
+        //Set up initial display conditions
         initializeDisplay();
+
+        //Capture monster
         showCaptureDialog();
 
     }
 
+    /**
+     * Sets up display with enemy monster stats and image.
+     */
     private void initializeDisplay() {
         binding.enemyMonsterImage.setImageResource(enemyMonster.getImageID());
         binding.enemyMonsterName.setText(enemyMonster.getNickname());
@@ -82,6 +100,11 @@ public class CaptureActivity extends AppCompatActivity {
         return intent;
     }
 
+    /**
+     * Gives user a choice to capture monster. Quits to exit dialog on no or if monster couldn't be retrieved.
+     * Attempt to capture monster on yes. I could really just kick them out in the error condition, but I like the GameBoy callback.
+     */
+
     private void showCaptureDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         AlertDialog captureDialog = alertBuilder.create();
@@ -93,7 +116,6 @@ public class CaptureActivity extends AppCompatActivity {
                 if(enemyMonster.getUserMonsterId() == -1) {
                     showExitDialog();
                 }
-                //captureDialog.dismiss();
                 captureMonster();
             }
         });
@@ -112,6 +134,10 @@ public class CaptureActivity extends AppCompatActivity {
         captureDialog.show();
     }
 
+    /**
+     * 67% chance to capture (that has to be at least equal or greater than in the source material!).
+     * On capture, prompt to rename. On fail, exit.
+     */
     private void captureMonster() {
         Random rand = new Random();
         binding.captureDialog.append("You throw a...monster...orb?\n");
@@ -127,6 +153,9 @@ public class CaptureActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * On yes, pop a dialog to rename the monster. On no, exit.
+     */
     private void showRenameDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setTitle("Rename this monster?");
@@ -152,6 +181,10 @@ public class CaptureActivity extends AppCompatActivity {
         renameDialog.show();
     }
 
+    /**
+     * Pops an edit text to rename the monster. Max length 12 chars. On bad choice, pops dialog again.
+     * On successful rename, exit. On cancel, pop the previous dialog again.
+     */
     private void renameMonster() {
         EditText editText = new EditText(this);
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
@@ -190,6 +223,9 @@ public class CaptureActivity extends AppCompatActivity {
         alertBuilder.create().show();
     }
 
+    /**
+     * Shows before exit with a confirm button. Needed to be able to let the user know what the result was.
+     */
     private void showExitDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         AlertDialog renameDialog = alertBuilder.create();
@@ -206,5 +242,4 @@ public class CaptureActivity extends AppCompatActivity {
 
         alertBuilder.create().show();
     }
-
 }
