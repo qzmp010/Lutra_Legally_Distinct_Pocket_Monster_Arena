@@ -41,7 +41,9 @@ public class AdminSelectMonsterTypeActivity extends AppCompatActivity {
     adapter.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(MonsterType monsterType) {
-        Toast.makeText(AdminSelectMonsterTypeActivity.this, "Clicked " + monsterType.getMonsterTypeName(), Toast.LENGTH_SHORT).show();
+        Intent intent = AdminCreateMonsterActivity.intentFactory(getApplicationContext(),
+            monsterType.getMonsterTypeId());
+        startActivity(intent);
       }
     });
 

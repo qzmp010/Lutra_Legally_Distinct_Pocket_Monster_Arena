@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     repository = AppRepository.getRepository(getApplication());
     loginUser(savedInstanceState);
 
-
     if(loggedInUserId == -1 ){
       Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
       startActivity(intent);

@@ -326,4 +326,8 @@ public class AppRepository {
       userDao.insert(user);
     });
   }
+
+  public LiveData<List<User>> getAllUsers() {
+    return userDao.getAllUsers();
+  }
 }
