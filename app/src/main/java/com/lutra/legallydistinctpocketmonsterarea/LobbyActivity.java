@@ -33,6 +33,7 @@ public class LobbyActivity extends AppCompatActivity {
         repository = AppRepository.getRepository(getApplication());
         loginUser();
 
+
         String user_name = getIntent().getStringExtra("username");
 
         if(!(user_name == null) && !user_name.isEmpty()){

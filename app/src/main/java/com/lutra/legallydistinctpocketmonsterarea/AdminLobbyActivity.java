@@ -40,7 +40,9 @@ public class AdminLobbyActivity extends AppCompatActivity {
         binding.EditMonstersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AdminLobbyActivity.this, "Edit Monster button is clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = EditMonstersActivity.intentFactory(getApplicationContext());
+                intent.putExtra(LobbyActivity.LOBBY_USER_ID,loggedInUserID);
+                startActivity(intent);
             }
         });
         binding.EditUsersButton.setOnClickListener(new View.OnClickListener() {
