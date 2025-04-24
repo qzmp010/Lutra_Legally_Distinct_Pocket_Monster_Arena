@@ -87,7 +87,7 @@ public class CaptureActivity extends AppCompatActivity {
         binding.enemyMonsterImage.setImageResource(enemyMonster.getImageID());
         binding.enemyMonsterName.setText(enemyMonster.getNickname());
         binding.enemyMonsterHP.setText(String.format("MAXHP: %d",enemyMonster.getMaxHealth()));
-        binding.enemyMonsterType.setText(String.format("TYPE: %s",enemyMonster.getType().name()));
+        binding.enemyMonsterType.setText(String.format("%s",enemyMonster.getType().name()));
         binding.enemyMonsterAttack.setText(String.format("ATT: %d", enemyMonster.getAttack()));
         binding.enemyMonsterDefense.setText(String.format("DEF: %d", enemyMonster.getDefense()));
 

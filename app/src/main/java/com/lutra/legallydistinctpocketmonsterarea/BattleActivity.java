@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -298,6 +299,7 @@ public class BattleActivity extends AppCompatActivity {
                 }
             });
             winDialog = alertBuilder.create();
+            winDialog.getWindow().setGravity(Gravity.BOTTOM);
             winDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
             winDialog.show();
         }
