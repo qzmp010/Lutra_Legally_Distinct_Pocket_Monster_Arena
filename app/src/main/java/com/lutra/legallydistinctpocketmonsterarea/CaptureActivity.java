@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -92,7 +93,7 @@ public class CaptureActivity extends AppCompatActivity {
                 if(enemyMonster.getUserMonsterId() == -1) {
                     showExitDialog();
                 }
-                captureDialog.dismiss();
+                //captureDialog.dismiss();
                 captureMonster();
             }
         });
@@ -106,7 +107,9 @@ public class CaptureActivity extends AppCompatActivity {
             }
         });
 
-        alertBuilder.create().show();
+        captureDialog = alertBuilder.create();
+        captureDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        captureDialog.show();
     }
 
     private void captureMonster() {
@@ -126,12 +129,10 @@ public class CaptureActivity extends AppCompatActivity {
 
     private void showRenameDialog() {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        AlertDialog renameDialog = alertBuilder.create();
         alertBuilder.setTitle("Rename this monster?");
         alertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                renameDialog.dismiss();
                 renameMonster();
             }
         });
@@ -146,7 +147,9 @@ public class CaptureActivity extends AppCompatActivity {
             }
         });
 
-        alertBuilder.create().show();
+        AlertDialog renameDialog = alertBuilder.create();
+        renameDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        renameDialog.show();
     }
 
     private void renameMonster() {

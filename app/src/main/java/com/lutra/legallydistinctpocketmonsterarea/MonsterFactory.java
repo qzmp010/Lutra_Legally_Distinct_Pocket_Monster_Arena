@@ -123,19 +123,4 @@ public abstract class MonsterFactory {
         ));
         return true;
     }
-
-    public static UserMonster getUserMonster(AppRepository repository, int userID) {
-        Random rand = new Random();
-        ArrayList<UserMonster> userMonsters = new ArrayList<>();
-        while(userMonsters.isEmpty()) {
-            try {
-                userMonsters = repository.getUserMonstersByUserId(userID);
-            } catch (RuntimeException e) {
-                Log.e(TAG, "Error: Unable to instantiate enemy monster.");
-                return new UserMonster(-1, "MISSINGNO.", "I shouldn't even exist.", R.drawable.missingno,
-                        UserMonster.ElementalType.NORMAL,1,1,1,420,-1);
-            }
-        }
-        return userMonsters.get(Math.abs(rand.nextInt() % userMonsters.size()));
-    }
 }

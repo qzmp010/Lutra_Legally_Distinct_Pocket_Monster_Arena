@@ -1,13 +1,16 @@
 package com.lutra.legallydistinctpocketmonsterarea;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.DrawableRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
@@ -191,7 +194,17 @@ public class BattleActivity extends AppCompatActivity {
             binding.userMonsterHP.setText(userHP);
             binding.battleDialog.append(String.format("%n\"%s\"%n%s fainted!",
                     userMonster.getPhrase(),userMonster.getNickname()));
-            userSwitch();
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            AlertDialog loseDialog;
+            alertBuilder.setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    userSwitch();
+                }
+            });
+            loseDialog = alertBuilder.create();
+            loseDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            loseDialog.show();
         }
 
     }
@@ -246,15 +259,26 @@ public class BattleActivity extends AppCompatActivity {
 
             long enemyID = repository.insertUserMonster(enemyMonster);
 
-            Intent intent = CaptureActivity.intentFactory(getApplicationContext());
-            intent.putExtra(BattleActivity.ENEMY_ID, (int) enemyID);
-            intent.putExtra(BattleActivity.USER_ID, loggedInUserID);
-            startActivity(intent);
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            AlertDialog winDialog;
+            alertBuilder.setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    repository.insertUserMonster(userMonster);
+                    Intent intent = CaptureActivity.intentFactory(getApplicationContext());
+                    intent.putExtra(BattleActivity.ENEMY_ID, (int) enemyID);
+                    intent.putExtra(BattleActivity.USER_ID, loggedInUserID);
+                    startActivity(intent);
+                }
+            });
+            winDialog = alertBuilder.create();
+            winDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            winDialog.show();
         }
     }
 
     public void userSwitch() {
-        repository.insertUserMonster(enemyMonster);
+        repository.insertUserMonster(userMonster);
         Intent intent = SwitchMonsterActivity.intentFactory(getApplicationContext());
         intent.putExtra(USER_ID, loggedInUserID);
         startActivity(intent);
@@ -283,10 +307,19 @@ public class BattleActivity extends AppCompatActivity {
                     Log.e(TAG, "Couldn't restore monster health.");
                 }
             }
-
-            Intent intent = LobbyActivity.intentFactory(getApplicationContext());
-            intent.putExtra(BattleActivity.USER_ID, loggedInUserID);
-            startActivity(intent);
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+            AlertDialog runDialog;
+            alertBuilder.setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = LobbyActivity.intentFactory(getApplicationContext());
+                    intent.putExtra(BattleActivity.USER_ID, loggedInUserID);
+                    startActivity(intent);
+                }
+            });
+            runDialog = alertBuilder.create();
+            runDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            runDialog.show();
         }
     }
 
