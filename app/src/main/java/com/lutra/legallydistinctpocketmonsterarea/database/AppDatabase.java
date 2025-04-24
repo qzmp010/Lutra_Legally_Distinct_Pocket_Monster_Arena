@@ -111,65 +111,65 @@ public abstract class AppDatabase extends RoomDatabase {
         UserMonsterDAO userMonsterDAO = INSTANCE.userMonsterDAO();
         userMonsterDAO.insert(new UserMonster(
                 0,
-                "NotBulbasaur",
-                "Can't be bothered.",
+                "Big Green",
+                "Got any grass?",
                 R.drawable.ld_bulbasaur_png,
                 UserMonster.ElementalType.GRASS,
-                20,
-                20,
-                90,
+                10,
+                6,
+                40,
                 49,
                 1
         ));
 
         userMonsterDAO.insert(new UserMonster(
                 0,
-                "NotSquirtle",
-                "Can't be bothered.",
+                "Texas Filburt",
+                "High five?",
                 R.drawable.ld_squirtle,
                 UserMonster.ElementalType.WATER,
-                21,
-                20,
-                90,
+                11,
+                5,
+                38,
                 49,
                 2
         ));
 
         userMonsterDAO.insert(new UserMonster(
                 0,
-                "NotCharmander",
-                "Can't be bothered.",
+                "Trogdoorrr",
+                "Burninating the countryside.",
                 R.drawable.ld_charizard,
                 UserMonster.ElementalType.FIRE,
-                20,
-                21,
-                90,
+                12,
+                4,
+                34,
                 49,
                 3
         ));
 
         userMonsterDAO.insert(new UserMonster(
                 0,
-                "NotPika",
-                "Can't be bothered.",
+                "Zappy",
+                "This is the room WITH electricity!",
                 R.drawable.ld_pikachu,
                 UserMonster.ElementalType.ELECTRIC,
-                20,
-                21,
-                91,
+                13,
+                5,
+                32,
                 49,
                 4
         ));
 
         userMonsterDAO.insert(new UserMonster(
                 0,
-                "NotJiggly",
-                "Can't be bothered.",
+                "Chupon",
+                "Ugh, my allergies!",
                 R.drawable.ld_jiggly,
                 UserMonster.ElementalType.NORMAL,
-                22,
-                21,
-                91,
+                8,
+                5,
+                17,
                 49,
                 5
         ));
