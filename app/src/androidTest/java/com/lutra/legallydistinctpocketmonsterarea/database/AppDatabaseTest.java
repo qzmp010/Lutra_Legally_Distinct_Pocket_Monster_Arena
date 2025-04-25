@@ -256,6 +256,29 @@ public class AppDatabaseTest extends TestCase {
     assertEquals(retrievedType, retrievedType2);
 
   }
+  @Test
+  public void testUpdateMonsterType(){
+    //Insert monster type into DB, record ID
+    int monsterTypeId = (int) monsterTypeDAO.insert(monsterType);
+
+    //Recall an instance of the monster type by that ID
+
+    MonsterType beforeUpdate = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
+    assertNotNull(beforeUpdate);
+
+    //Prove the recalled monster type does not have a given max health
+    assertFalse(beforeUpdate.getHealthMax() == NEW_HEALTH);
+
+    //Set the recalled monster type's max health to a given value, and reinsert
+
+    beforeUpdate.setHealthMax(NEW_HEALTH);
+    monsterTypeDAO.insert(beforeUpdate);
+
+    //Use our original monster type ID to recall the monster type and prove that its max health has changed
+    MonsterType afterUpdate = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
+    assertTrue(afterUpdate.getHealthMax() == NEW_HEALTH);
+
+  }
 
 
 
