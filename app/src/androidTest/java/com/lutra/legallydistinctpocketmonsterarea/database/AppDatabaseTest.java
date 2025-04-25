@@ -53,7 +53,7 @@ public class AppDatabaseTest extends TestCase {
             3,
             1,
             -99);
-    MonsterType monsterType = new MonsterType(
+     monsterType = new MonsterType(
             "Panther",
             "I hunt in the dark.",
             R.drawable.ld_squirtle,
@@ -241,28 +241,29 @@ public class AppDatabaseTest extends TestCase {
 
   @Test
   public void testInsertMonsterType(){
-    // Insert MonsterType into DB and record the ID
+    //Insert monster into DB, record ID
     int monsterTypeId = (int) monsterTypeDAO.insert(monsterType);
 
-    // Recall MonsterType from DB to prove it was inserted
+    monsterType.setMonsterTypeId(monsterTypeId);
+
+    //Recall monster type from DB to prove that it was inserted
     MonsterType retrievedType = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
     assertNotNull(retrievedType);
-
-    // Prove it's identical to the one we inserted
+    //Prove that it is identical to the monster type we inserted
     assertEquals(monsterType, retrievedType);
 
-    // Prove it's identical to a second retrieval by same ID
+    //Prove it is identical to a new monster type we recall by the same ID
     MonsterType retrievedType2 = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
     assertEquals(retrievedType, retrievedType2);
-
   }
+
   @Test
-  public void testUpdateMonsterType(){
-    //Insert monster type into DB, record ID
+  public void testUpdateMonsterType() {
+    //Insert monster into DB, record ID
     int monsterTypeId = (int) monsterTypeDAO.insert(monsterType);
+    monsterType.setMonsterTypeId(monsterTypeId);
 
     //Recall an instance of the monster type by that ID
-
     MonsterType beforeUpdate = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
     assertNotNull(beforeUpdate);
 
@@ -270,32 +271,32 @@ public class AppDatabaseTest extends TestCase {
     assertFalse(beforeUpdate.getHealthMax() == NEW_HEALTH);
 
     //Set the recalled monster type's max health to a given value, and reinsert
-
     beforeUpdate.setHealthMax(NEW_HEALTH);
     monsterTypeDAO.insert(beforeUpdate);
 
     //Use our original monster type ID to recall the monster type and prove that its max health has changed
     MonsterType afterUpdate = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
     assertTrue(afterUpdate.getHealthMax() == NEW_HEALTH);
-
   }
- @Test
- public void testDeleteMonsterType(){
-   //Insert MonsterType into DB and record the ID
-   int monsterTypeId = (int) monsterTypeDAO.insert(monsterType);
 
-   //Recall monster by ID and prove that it exists
-   UserMonster goodMonster = userMonsterDAO.getMonsterByMonsterId(monsterTypeId);
-   assertNotNull(goodMonster);
+  @Test
+  public void testDeleteMonsterType(){
+    //Insert monster into DB, record ID
+    int monsterTypeId = (int) monsterTypeDAO.insert(monsterType);
+    monsterType.setMonsterTypeId(monsterTypeId);
 
-   //Delete monster type id from the database
-   monsterTypeDAO.deleteMonsterTypeById(monsterTypeId);
+    //Recall monster type by ID and prove that it exists
+    MonsterType goodType = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
+    assertNotNull(goodType);
 
-   //Prove that we can't recall the monster type using that ID anymore
-   MonsterType badType = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
-   assertNull(badType);
+    //Delete monster type by ID from the database
+    monsterTypeDAO.deleteMonsterTypeById(monsterTypeId);
 
- }
+    //Prove that we can't recall monster type using that ID anymore
+    MonsterType badType = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
+    assertNull(badType);
+  }
+
 
 
   public void testUserDao() {
