@@ -123,6 +123,10 @@ public class LobbyActivity extends AppCompatActivity {
         }
 
         if(loggedInUserID == -1) {
+            loggedInUserID = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID,-1);
+        }
+
+        if(loggedInUserID == -1) {
             logout();
         }
     }
@@ -130,6 +134,12 @@ public class LobbyActivity extends AppCompatActivity {
 
     public static Intent intentFactory(Context context) {
         Intent intent = new Intent(context, LobbyActivity.class);
+        return intent;
+    }
+
+    public static Intent intentFactory(Context context, int loggedInUserId) {
+        Intent intent = new Intent(context, LobbyActivity.class);
+        intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserId);
         return intent;
     }
 }

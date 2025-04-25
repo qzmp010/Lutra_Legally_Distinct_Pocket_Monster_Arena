@@ -4,11 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.View;
+import android.view.View.OnClickListener;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityViewMonstersBinding;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterAdapter;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterAdapter.UserMonsterDiff;
@@ -37,6 +38,14 @@ public class ViewMonstersActivity extends AppCompatActivity {
 
     monsterViewModel.getUserMonstersWithTypeListByUserIdLiveData(loggedInUserId)
         .observe(this, adapter::submitList);
+
+    binding.returnButton.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = LobbyActivity.intentFactory(getApplicationContext(), loggedInUserId);
+        startActivity(intent);
+      }
+    });
   }
 
   public static Intent intentFactory(Context context, int loggedInUserId) {
