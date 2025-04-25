@@ -45,9 +45,12 @@ public class AdminSelectUserMonsterActivity extends AppCompatActivity {
 
     adapter.setOnClickListener(new OnClickListener() {
       @Override
-      public void onClick(Triple<UserMonster, MonsterType, User> monsterTriple) {
-        //Intent intent =
-        Toast.makeText(getApplicationContext(), monsterTriple.toString(), Toast.LENGTH_LONG);
+      public void onClick(UserMonster userMonster) {
+        Intent intent = AdminCreateMonsterActivity.intentFactory(getApplicationContext(),
+            userMonster.getMonsterTypeId(),
+            userMonster.getUserMonsterId()
+        );
+        startActivity(intent);
       }
     });
 

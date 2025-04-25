@@ -16,7 +16,7 @@ public class AdminUserMonsterAdapter extends
   private AdminUserMonsterAdapter.OnClickListener onClickListener;
 
   public interface OnClickListener{
-    void onClick(Triple<UserMonster, MonsterType, User> monsterTriple);
+    void onClick(UserMonster useMonster);
   }
   public void setOnClickListener(AdminUserMonsterAdapter.OnClickListener onClickListener) {
     this.onClickListener = onClickListener;
@@ -39,7 +39,7 @@ public class AdminUserMonsterAdapter extends
     holder.bind(current);
     holder.itemView.setOnClickListener(view -> {
       if (onClickListener != null) {
-        onClickListener.onClick(current);
+        onClickListener.onClick(current.getFirst());
       }
     });
   }

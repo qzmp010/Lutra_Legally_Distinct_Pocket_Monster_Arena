@@ -4,28 +4,31 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityAdminEditMonsterBinding;
 import java.util.List;
 
 public class AdminCreateMonsterActivity extends AppCompatActivity {
 
   private static final String MONSTER_TYPE_ID_KEY = "com.lutra.ldpm.create_monster_type_id_key";
+  private static final String USER_MONSTER_ID_KEY = "com.lutra.ldpm.edit_user_monster_id_key";
+  private static final int ID_DEFAULT = -1;
   private ActivityAdminEditMonsterBinding binding;
   private AppRepository repository;
   private int monsterTypeId;
+  private boolean isEditing;
   private MonsterType monsterType;
+  private int userMonsterId;
+  private UserMonster userMonster;
   private List<User> userList;
-
   private String monsterNickname;
   private int monsterHealth;
   private int monsterAttack;
@@ -40,23 +43,41 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
     View view = binding.getRoot();
     setContentView(view);
 
-    binding.adminEditMonsterEditTextView.setText(R.string.Create_monster);
-    monsterTypeId = getIntent().getIntExtra(MONSTER_TYPE_ID_KEY, 0);
+    monsterTypeId = getIntent().getIntExtra(MONSTER_TYPE_ID_KEY, ID_DEFAULT);
+    userMonsterId = getIntent().getIntExtra(USER_MONSTER_ID_KEY, ID_DEFAULT);
     monsterType = repository.getMonsterTypeById(monsterTypeId);
+    isEditing = userMonsterId != ID_DEFAULT;
 
-    LiveData<List<User>> userListObserver = repository.getAllUsers();
-    userListObserver.observe(this,uL -> {
+    if (isEditing) {
+      userMonster = repository.getUserMonsterById(userMonsterId);
+      binding.adminEditMonsterEditTextView.setText(R.string.Edit_monster);
+      binding.adminEditMonsterNicknameEditText.setText(userMonster.getNickname());
+      binding.adminEditMonsterHealthEditText.setText(String.valueOf(userMonster.getMaxHealth()));
+      binding.adminEditMonsterAttackEditText.setText(String.valueOf(userMonster.getAttack()));
+      binding.adminEditMonsterDefenseEditText.setText(String.valueOf(userMonster.getDefense()));
+    } else {
+      binding.adminEditMonsterEditTextView.setText(R.string.Create_monster);
+      binding.adminEditMonsterNicknameEditText.setText(monsterType.getMonsterTypeName());
+    }
+
+    repository.getAllUsers().observe(this,uL -> {
       userList = uL;
-      List<String> userNames = userList.stream().map(User::getUsername).toList();
-      ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(
+      List<String>userNames = userList.stream().map(User::getUsername).toList();
+      ArrayAdapter<String> userDataAdapter = new ArrayAdapter<>(
           this, android.R.layout.simple_spinner_item, userNames);
-      dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-      binding.adminEditMonsterOwnerSpinner.setAdapter(dataAdapter);
+      userDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      binding.adminEditMonsterOwnerSpinner.setAdapter(userDataAdapter);
+
+      if (isEditing) {
+        String userName = userList.stream()
+            .filter(u -> u.getId() == userMonster.getUserId())
+            .map(u -> u.getUsername())
+            .findFirst().orElse("");
+        binding.adminEditMonsterOwnerSpinner.setSelection(userDataAdapter.getPosition(userName));
+      }
     });
 
     binding.adminEditMonsterTypeNameTextView.setText(monsterType.getMonsterTypeName());
-
-    binding.adminEditMonsterNicknameEditText.setText(monsterType.getMonsterTypeName());
 
     binding.adminEditMonsterHealthTextView.setText(getString(
         R.string.label_admin_health_range,
@@ -79,7 +100,7 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
     binding.adminEditMonsterReturnButton.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        backToMonsterTypes();
+        backToRecycler();
       }
     });
 
@@ -88,8 +109,10 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
       public void onClick(View v) {
         if (validateInput()) {
           insertMonster();
-          toastMaker(monsterNickname + " was created successfully!");
-          backToMonsterTypes();
+          toastMaker(String.format("%s was %s successfully!",
+              monsterNickname,
+              isEditing ? "updated" : "created"));
+          backToRecycler();
         }
       }
     });
@@ -161,25 +184,41 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
   }
 
   private void insertMonster() {
-    MonsterFactory.createNewMonster(repository,
-        monsterTypeId,
-        monsterNickname,
-        "",
-        monsterAttack,
-        monsterDefense,
-        monsterHealth,
-        monsterUserId
-        );
+    if (isEditing) {
+      userMonster.setNickname(monsterNickname);
+      userMonster.setMaxHealth(monsterHealth);
+      userMonster.setAttack(monsterAttack);
+      userMonster.setDefense(monsterDefense);
+      userMonster.setUserId(monsterUserId);
+      repository.insertUserMonster(userMonster);
+    } else {
+      MonsterFactory.createNewMonster(repository,
+          monsterTypeId,
+          monsterNickname,
+          "",
+          monsterAttack,
+          monsterDefense,
+          monsterHealth,
+          monsterUserId
+      );
+    }
   }
 
-  public void backToMonsterTypes() {
-    Intent intent = AdminSelectMonsterTypeActivity.intentFactory(getApplicationContext());
+  public void backToRecycler() {
+    Intent intent = isEditing
+        ? AdminSelectUserMonsterActivity.intentFactory(getApplicationContext())
+        : AdminSelectMonsterTypeActivity.intentFactory(getApplicationContext());
     startActivity(intent);
   }
 
   public static Intent intentFactory(Context context, int monsterTypeId) {
+    return intentFactory(context, monsterTypeId, ID_DEFAULT);
+  }
+
+  public static Intent intentFactory(Context context, int monsterTypeId, int userMonsterId) {
     Intent intent = new Intent(context, AdminCreateMonsterActivity.class);
     intent.putExtra(MONSTER_TYPE_ID_KEY, monsterTypeId);
+    intent.putExtra(USER_MONSTER_ID_KEY, userMonsterId);
     return intent;
   }
 }
