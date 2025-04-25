@@ -19,6 +19,7 @@ import com.lutra.legallydistinctpocketmonsterarea.viewHolders.AdminMonsterTypeVi
 
 public class AdminSelectMonsterTypeActivity extends AppCompatActivity {
 
+  private int loggedInUserId;
   private ActivityAdminSelectMonsterTypeBinding binding;
   private AppRepository repository;
   private AdminMonsterTypeViewModel adminMonsterTypeViewModel;
@@ -29,6 +30,8 @@ public class AdminSelectMonsterTypeActivity extends AppCompatActivity {
     binding = ActivityAdminSelectMonsterTypeBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
 
+    loggedInUserId = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID, -1);
+
     adminMonsterTypeViewModel = new ViewModelProvider(this).get(AdminMonsterTypeViewModel.class);
 
     RecyclerView recyclerView = binding.selectMonsterTypeRecyclerView;
@@ -38,6 +41,7 @@ public class AdminSelectMonsterTypeActivity extends AppCompatActivity {
       @Override
       public void onClick(MonsterType monsterType) {
         Intent intent = AdminCreateMonsterActivity.intentFactory(getApplicationContext(),
+            loggedInUserId,
             monsterType.getMonsterTypeId());
         startActivity(intent);
       }
@@ -53,14 +57,15 @@ public class AdminSelectMonsterTypeActivity extends AppCompatActivity {
     binding.adminSelectMonsterTypeReturnButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = AdminLobbyActivity.intentFactory(getApplicationContext());
+        Intent intent = AdminLobbyActivity.intentFactory(getApplicationContext(), loggedInUserId);
         startActivity(intent);
       }
     });
   }
 
-  public static Intent intentFactory(Context context) {
+  public static Intent intentFactory(Context context, int loggedInUserId) {
     Intent intent = new Intent(context, AdminSelectMonsterTypeActivity.class);
+    intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserId);
     return intent;
   }
 }

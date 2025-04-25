@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putInt(getString(R.string.preference_userId_key), user.getId());
                     editor.apply();
                     if (user.isAdmin()) {
-                        startActivity(AdminLobbyActivity.intentFactory(getApplicationContext()));
+                        startActivity(AdminLobbyActivity.intentFactory(getApplicationContext(), user.getId()));
                     } else {
 
                         // 👤 Redirect to Normal Lobby

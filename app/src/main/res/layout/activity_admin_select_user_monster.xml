@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/adminSelectUserMonster"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".AdminSelectUserMonsterActivity">
+
+  <Button
+    android:layout_width="0dp"
+    android:layout_height="50dp"
+    android:text="@string/back_to_lobby"
+    app:layout_constraintTop_toTopOf="parent"
+    android:layout_marginTop="50dp"
+    app:layout_constraintStart_toStartOf="parent"
+    android:layout_marginStart="10dp"
+    android:id="@+id/adminSelectUserMonsterReturnButton" />
+
+  <TextView
+    android:id="@+id/adminSelectUserMonsterCreateTextView"
+    android:layout_width="395dp"
+    android:layout_height="50dp"
+    android:gravity="center"
+    android:text="@string/Edit_monsters"
+    android:textSize="36sp"
+    app:layout_constraintTop_toBottomOf="@+id/adminSelectUserMonsterReturnButton"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <TextView
+    android:id="@+id/adminSelectUserMonsterSelectTextView"
+    android:layout_width="395dp"
+    android:layout_height="30dp"
+    android:gravity="center"
+    android:text="@string/select_a_monster_to_edit"
+    android:textSize="18sp"
+    app:layout_constraintTop_toBottomOf="@+id/adminSelectUserMonsterCreateTextView"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"/>
+
+  <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/selectUserMonsterRecyclerView"
+    android:layout_width="0dp"
+    android:layout_height="0dp"
+    android:layout_margin="16dp"
+    android:padding="2dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/adminSelectUserMonsterSelectTextView"
+    app:layout_constraintBottom_toBottomOf="parent"
+    tools:listitem="@layout/recycler_item_monster" />
+</androidx.constraintlayout.widget.ConstraintLayout>

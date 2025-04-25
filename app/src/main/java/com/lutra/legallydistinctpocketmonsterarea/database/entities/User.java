@@ -66,5 +66,12 @@ public class User {
         isAdmin = admin;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+            "id=" + id +
+            ", username='" + username + '\'' +
+            ", isAdmin=" + isAdmin +
+            '}';
+    }
 }

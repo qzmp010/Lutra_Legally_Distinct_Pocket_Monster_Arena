@@ -51,6 +51,17 @@ public abstract class AppDatabase extends RoomDatabase {
     public void onCreate(@NonNull SupportSQLiteDatabase db) {
       super.onCreate(db);
       databaseWriteExecutor.execute(() -> {
+        UserDAO userDao = INSTANCE.userDao();
+        User admin = new User("admin", "admin123", true);
+        int userAdminId = (int) userDao.insert(admin);
+
+        User testUser = new User("trainer1", "pokedex123", false);
+        int userTestUserId = (int) userDao.insert(testUser);
+
+        User davidTest = new User("david", "12345", false);
+        davidTest.setId(49);
+        int userDavidId = (int) userDao.insert(davidTest);
+
         //Enemy Monsters:
         //Name
         //Phrase
@@ -61,129 +72,139 @@ public abstract class AppDatabase extends RoomDatabase {
         //Type
         MonsterTypeDAO monsterTypeDAO = INSTANCE.monsterTypeDAO();
 
-        monsterTypeDAO.insert(new MonsterType(
-                "Flower Dino",
-                "Flower power, ya dig?",
-                R.drawable.ld_bulbasaur_png,
-                8, 5,
-                8, 5,
-                27,22,
-                UserMonster.ElementalType.GRASS));
+        MonsterType typeDino = new MonsterType(
+            "Flower Dino",
+            "Flower power, ya dig?",
+            R.drawable.ld_bulbasaur_png,
+            8, 5,
+            8, 5,
+            27, 22,
+            UserMonster.ElementalType.GRASS);
 
-        monsterTypeDAO.insert(new MonsterType(
-                "Weird Turtle",
-                "'Urtle! 'Urtle!'",
-                R.drawable.ld_squirtle,
-                9, 6,
-                7, 4,
-                25,20,
-                UserMonster.ElementalType.WATER));
+        MonsterType typeTurtle = new MonsterType(
+            "Weird Turtle",
+            "'Urtle! 'Urtle!'",
+            R.drawable.ld_squirtle,
+            9, 6,
+            7, 4,
+            25, 20,
+            UserMonster.ElementalType.WATER);
 
-        monsterTypeDAO.insert(new MonsterType(
-                "Fire Lizard",
-                "Deal with it.",
-                R.drawable.ld_charizard,
-                11, 8,
-                6, 3,
-                23,16,
-                UserMonster.ElementalType.FIRE));
+        MonsterType typeLizard = new MonsterType(
+            "Fire Lizard",
+            "Deal with it.",
+            R.drawable.ld_charizard,
+            11, 8,
+            6, 3,
+            23, 16,
+            UserMonster.ElementalType.FIRE);
 
-        monsterTypeDAO.insert(new MonsterType(
-                "Lightning Mousey",
-                "Aa-chooooooo!",
-                R.drawable.ld_pikachu,
-                10, 7,
-                7, 5,
-                25,20,
-                UserMonster.ElementalType.ELECTRIC));
+        MonsterType typeMousey = new MonsterType(
+            "Lightning Mousey",
+            "Aa-chooooooo!",
+            R.drawable.ld_pikachu,
+            10, 7,
+            7, 5,
+            25, 20,
+            UserMonster.ElementalType.ELECTRIC);
 
-        monsterTypeDAO.insert(new MonsterType(
-                "Singing Balloon",
-                "Poooooooof!",
-                R.drawable.ld_jiggly,
-                7,4,
-                6,4,
-                22,17,
-                UserMonster.ElementalType.NORMAL));
+        MonsterType typeBalloon = new MonsterType(
+            "Singing Balloon",
+            "Poooooooof!",
+            R.drawable.ld_jiggly,
+            7, 4,
+            6, 4,
+            22, 17,
+            UserMonster.ElementalType.NORMAL);
+
+        typeDino.setMonsterTypeId((int) monsterTypeDAO.insert(typeDino));
+        typeTurtle.setMonsterTypeId((int) monsterTypeDAO.insert(typeTurtle));
+        typeLizard.setMonsterTypeId((int) monsterTypeDAO.insert(typeLizard));
+        typeMousey.setMonsterTypeId((int) monsterTypeDAO.insert(typeMousey));
+        typeBalloon.setMonsterTypeId((int) monsterTypeDAO.insert(typeBalloon));
 
         //Test monsters for SwitchMonster
         //TODO: Remove test monsters
         UserMonsterDAO userMonsterDAO = INSTANCE.userMonsterDAO();
+
+        //admin gets one monster
         userMonsterDAO.insert(new UserMonster(
-                0,
-                "Big Green",
-                "Got any grass?",
-                R.drawable.ld_bulbasaur_png,
-                UserMonster.ElementalType.GRASS,
-                10,
-                6,
-                40,
-                49,
-                1
+            0,
+            "Wiggly",
+            typeBalloon.getPhrase(),
+            typeBalloon.getImageID(),
+            typeBalloon.getElementalType(),
+            21,
+            42,
+            69,
+            userAdminId,
+            typeBalloon.getMonsterTypeId()
         ));
 
         userMonsterDAO.insert(new UserMonster(
-                0,
-                "Texas Filburt",
-                "High five?",
-                R.drawable.ld_squirtle,
-                UserMonster.ElementalType.WATER,
-                11,
-                5,
-                38,
-                49,
-                2
+            0,
+            "Big Green",
+            typeDino.getPhrase(),
+            typeDino.getImageID(),
+            typeDino.getElementalType(),
+            10,
+            6,
+            40,
+            userDavidId,
+            typeDino.getMonsterTypeId()
         ));
 
         userMonsterDAO.insert(new UserMonster(
-                0,
-                "Trogdoorrr",
-                "Burninating the countryside.",
-                R.drawable.ld_charizard,
-                UserMonster.ElementalType.FIRE,
-                12,
-                4,
-                34,
-                49,
-                3
+            0,
+            "Texas Filburt",
+            typeTurtle.getPhrase(),
+            typeTurtle.getImageID(),
+            typeTurtle.getElementalType(),
+            11,
+            5,
+            38,
+            userDavidId,
+            typeTurtle.getMonsterTypeId()
         ));
 
         userMonsterDAO.insert(new UserMonster(
-                0,
-                "Zappy",
-                "This is the room WITH electricity!",
-                R.drawable.ld_pikachu,
-                UserMonster.ElementalType.ELECTRIC,
-                13,
-                5,
-                32,
-                49,
-                4
+            0,
+            "Trogdoorrr",
+            typeLizard.getPhrase(),
+            typeLizard.getImageID(),
+            typeLizard.getElementalType(),
+            12,
+            4,
+            34,
+            userDavidId,
+            typeLizard.getMonsterTypeId()
         ));
 
         userMonsterDAO.insert(new UserMonster(
-                0,
-                "Chupon",
-                "Ugh, my allergies!",
-                R.drawable.ld_jiggly,
-                UserMonster.ElementalType.NORMAL,
-                8,
-                5,
-                17,
-                49,
-                5
+            0,
+            "Zappy",
+            typeMousey.getPhrase(),
+            typeMousey.getImageID(),
+            typeMousey.getElementalType(),
+            13,
+            5,
+            32,
+            userDavidId,
+            typeMousey.getMonsterTypeId()
         ));
 
-        UserDAO userDao = INSTANCE.userDao();
-        User admin = new User("admin", "admin123", true);
-        userDao.insert(admin);
-
-        User testUser = new User("trainer1", "pokedex123", false);
-        userDao.insert(testUser);
-
-        User davidTest = new User("david", "12345", false);
-        davidTest.setId(49);
-        userDao.insert(davidTest);
+        userMonsterDAO.insert(new UserMonster(
+            0,
+            "Chupon",
+            typeBalloon.getPhrase(),
+            typeBalloon.getImageID(),
+            typeBalloon.getElementalType(),
+            8,
+            5,
+            17,
+            userDavidId,
+            typeBalloon.getMonsterTypeId()
+        ));
       });
     }
   };
