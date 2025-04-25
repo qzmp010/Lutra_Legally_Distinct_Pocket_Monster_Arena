@@ -30,6 +30,7 @@ public class AppDatabaseTest extends TestCase {
 
   private static final int NEW_HEALTH = 99;
   private UserMonster userMonster;
+  private MonsterType monsterType;
 
   @Before
   public void setUp() throws Exception {
@@ -52,6 +53,15 @@ public class AppDatabaseTest extends TestCase {
             3,
             1,
             -99);
+    MonsterType monsterType = new MonsterType(
+            "Panther",
+            "I hunt in the dark.",
+            R.drawable.ld_squirtle,
+            21, 16,
+            14, 11,
+            36, 31,
+            UserMonster.ElementalType.NORMAL);
+
 
   }
 
@@ -228,6 +238,26 @@ public class AppDatabaseTest extends TestCase {
     UserMonster badMonster = userMonsterDAO.getMonsterByMonsterId(userMonsterId);
     assertNull(badMonster);
   }
+
+  @Test
+  public void testInsertMonsterType(){
+    // Insert MonsterType into DB and record the ID
+    int monsterTypeId = (int) monsterTypeDAO.insert(monsterType);
+
+    // Recall MonsterType from DB to prove it was inserted
+    MonsterType retrievedType = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
+    assertNotNull(retrievedType);
+
+    // Prove it's identical to the one we inserted
+    assertEquals(monsterType, retrievedType);
+
+    // Prove it's identical to a second retrieval by same ID
+    MonsterType retrievedType2 = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
+    assertEquals(retrievedType, retrievedType2);
+
+  }
+
+
 
   public void testUserDao() {
   }
