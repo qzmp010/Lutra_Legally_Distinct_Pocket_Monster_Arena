@@ -17,7 +17,6 @@ public class MonsterAdapter extends ListAdapter<Entry<UserMonster, MonsterType>,
     this.onClickListener = onClickListener;
   }
 
-
   public MonsterAdapter(@NonNull DiffUtil.ItemCallback<Entry<UserMonster, MonsterType>> diffCallback) {
     super(diffCallback);
   }

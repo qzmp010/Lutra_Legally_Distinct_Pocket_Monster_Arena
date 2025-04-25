@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -27,6 +29,8 @@ import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityEditMonste
 
 
 public class EditMonstersActivity extends AppCompatActivity {
+
+    int loggedInUserId;
     private ActivityEditMonstersBinding binding;
     private AppRepository repository;
     private MonsterViewModel monsterViewModel;
@@ -37,6 +41,8 @@ public class EditMonstersActivity extends AppCompatActivity {
         binding = ActivityEditMonstersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        loggedInUserId = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID, -1);
+
         monsterViewModel = new ViewModelProvider(this).get(MonsterViewModel.class);
         RecyclerView recyclerView = binding.EditMonstersRecyclerView;
 
@@ -45,7 +51,6 @@ public class EditMonstersActivity extends AppCompatActivity {
         adapter.setOnClickListener(new MonsterAdapter.OnClickListener() {
             @Override
             public void onClick(UserMonster monster) {
-                Toast.makeText(EditMonstersActivity.this, "Clicked " +monster.getNickname(), Toast.LENGTH_SHORT).show();
                 editNickname(monster);
             }
         });
@@ -54,8 +59,16 @@ public class EditMonstersActivity extends AppCompatActivity {
 
         repository = AppRepository.getRepository(getApplication());
 
+        monsterViewModel.getUserMonstersWithTypeListByUserIdLiveData(loggedInUserId)
+            .observe(this, adapter::submitList);
 
-        monsterViewModel.getUserMonstersWithTypeListLiveData().observe(this, adapter::submitList);
+        binding.returnButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = LobbyActivity.intentFactory(getApplicationContext(), loggedInUserId);
+                startActivity(intent);
+            }
+        });
     }
 
     public void editNickname(UserMonster monster){
@@ -92,8 +105,9 @@ public class EditMonstersActivity extends AppCompatActivity {
     }
 
 
-    public static Intent intentFactory(Context context) {
+    public static Intent intentFactory(Context context, int loggedInUserId) {
         Intent intent = new Intent(context, EditMonstersActivity.class);
+        intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserId);
         return intent;
     }
 }
