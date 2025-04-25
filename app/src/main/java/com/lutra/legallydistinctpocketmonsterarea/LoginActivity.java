@@ -60,10 +60,15 @@ public class LoginActivity extends AppCompatActivity {
             if(user != null){
                 String password = binding.passwordLoginEditText.getText().toString();
                 if (password.equals(user.getPassword())) {
+                    SharedPreferences sharedPrefs = getApplicationContext().getSharedPreferences(
+                            getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPrefs.edit();
+                    editor.putInt(getString(R.string.preference_userId_key), user.getId());
+                    editor.apply();
                     if (user.isAdmin()) {
-
                         startActivity(AdminLobbyActivity.intentFactory(getApplicationContext()));
                     } else {
+
                         // 👤 Redirect to Normal Lobby
                         Intent intent = LobbyActivity.intentFactory(getApplicationContext());
                         intent.putExtra(USER_ID, user.getId());
