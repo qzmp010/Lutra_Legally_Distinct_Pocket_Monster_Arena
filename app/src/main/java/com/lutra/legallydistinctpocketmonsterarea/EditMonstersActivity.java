@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -59,6 +61,14 @@ public class EditMonstersActivity extends AppCompatActivity {
 
         monsterViewModel.getUserMonstersWithTypeListByUserIdLiveData(loggedInUserId)
             .observe(this, adapter::submitList);
+
+        binding.returnButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = LobbyActivity.intentFactory(getApplicationContext(), loggedInUserId);
+                startActivity(intent);
+            }
+        });
     }
 
     public void editNickname(UserMonster monster){
