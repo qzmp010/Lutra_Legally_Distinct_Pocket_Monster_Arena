@@ -26,6 +26,12 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityMainBinding;
 
+/**
+ * MainActivity - THIS ACTIVITY IS NOT IN THE REGULAR APP FLOW
+ *
+ * LobbyActivity is the launcher activity, use MainActivity only for
+ * testing or debugging. This
+ */
 public class MainActivity extends AppCompatActivity {
   public static final String MAIN_ACTIVITY_USER_ID = "com.lutra.legallydistinctpocketmonsterarea.MAIN_ACTIVITY_USER_ID";
   static final String SHARED_PREFERENCE_USERID_KEY = "com.lutra.legallydistinctpocketmonsterarea.SHARED_PREFERENCE_USERID_KEY";
