@@ -62,13 +62,6 @@ public class AdminLobbyActivity extends AppCompatActivity {
           }
       });
 
-    binding.CreateUserButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Toast.makeText(AdminLobbyActivity.this, "Create user button is clicked", Toast.LENGTH_SHORT)
-            .show();
-      }
-    });
     binding.LogoutButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {

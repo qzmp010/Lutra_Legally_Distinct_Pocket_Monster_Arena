@@ -13,13 +13,12 @@
       android:id="@+id/AdminLobbyTextView"
       android:layout_width="match_parent"
       android:layout_height="70dp"
-      android:layout_marginBottom="644dp"
+      android:layout_marginTop="150dp"
       android:gravity="center"
       android:text="Admin Lobby"
       android:textSize="36sp"
-      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.472"
       app:layout_constraintStart_toStartOf="parent" />
 
   <TextView
@@ -74,19 +73,6 @@
     app:layout_constraintTop_toBottomOf="@id/create_monsters_button" />
 
   <Button
-      android:id="@+id/CreateUserButton"
-      android:layout_width="230dp"
-      android:layout_height="70dp"
-      android:layout_marginTop="24dp"
-      android:gravity="center"
-      android:text="@string/create_user"
-      android:textSize="24sp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.497"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/editMonstersButton" />
-
-  <Button
       android:id="@+id/LogoutButton"
       android:layout_width="230dp"
       android:layout_height="70dp"
@@ -97,7 +83,7 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.497"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/CreateUserButton" />
+      app:layout_constraintTop_toBottomOf="@+id/editMonstersButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
