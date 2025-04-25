@@ -1,11 +1,6 @@
 package com.lutra.legallydistinctpocketmonsterarea;
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
-
-import androidx.lifecycle.LiveData;
 
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
@@ -15,12 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * MonsterFactory - abstract class with static methods that can retrieve monsters for other activities.
+ * Requires repository to be passed because static methods can not retrieve application context.
+ * @author David Rosenfeld
+ */
 public abstract class MonsterFactory {
 
     private static final String TAG = "MonsterFactory.java";
     private static final int DEFAULT_USER = -1;
     private static final int DEFAULT_ID = 0;
 
+    /**
+     * Calls a template MonsterType monster from the DB, and rolls in stats between its listed maximums
+     * and minimums to create and return a new unique UserMonster.
+     * @param repository
+     * @return Random UserMonster
+     */
     public static UserMonster getRandomMonster(AppRepository repository) {
 
         Random rand = new Random();
@@ -52,7 +58,7 @@ public abstract class MonsterFactory {
                 Math.abs(rand.nextInt() % (template.getDefenseMax() - template.getDefenseMin()));
 
         return new UserMonster(
-                DEFAULT_ID,
+                DEFAULT_ID, //Will be rewritten on DB insertion
                 template.getMonsterTypeName(),
                 template.getPhrase(),
                 template.getImageID(),
@@ -60,7 +66,7 @@ public abstract class MonsterFactory {
                 attack,
                 defense,
                 health,
-                DEFAULT_USER,
+                DEFAULT_USER, //Will be rewritten when captured
                 template.getMonsterTypeId()
         );
     }

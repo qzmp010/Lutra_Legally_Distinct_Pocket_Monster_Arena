@@ -51,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
     private void verifyUser(){
         String username = binding.userNameLoginEditText.getText().toString();
 
-
         if(username.isEmpty()){
             ToastMaker("Username should not be blank");
             return;
@@ -68,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                         // 👤 Redirect to Normal Lobby
                         Intent intent = LobbyActivity.intentFactory(getApplicationContext());
                         intent.putExtra(USER_ID, user.getId());
+                        intent.putExtra("username", user.getUsername());
                         startActivity(intent);
                     }
                     finish();

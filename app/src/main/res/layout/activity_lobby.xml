@@ -11,13 +11,12 @@
         android:id="@+id/welcomeTextView"
         android:layout_width="395dp"
         android:layout_height="168dp"
-        android:layout_marginBottom="572dp"
+        android:layout_marginBottom="700dp"
         android:gravity="center"
         android:text="@string/welcome"
         android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -47,6 +46,19 @@
         app:layout_constraintTop_toBottomOf="@+id/battleButton" />
 
     <Button
+        android:id="@+id/EditMonstersButton"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="@string/edit_Monsters"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ViewMonster" />
+
+    <Button
         android:id="@+id/Logout"
         android:layout_width="200dp"
         android:layout_height="100dp"
@@ -57,7 +69,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ViewMonster" />
+        app:layout_constraintTop_toBottomOf="@+id/EditMonstersButton" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

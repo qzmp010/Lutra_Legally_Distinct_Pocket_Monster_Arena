@@ -11,7 +11,7 @@
         android:id="@+id/enemyMonsterImage"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="20dp"
         android:contentDescription="@string/enemy_monster_image"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
     <TextView
         android:id="@+id/battleDialog"
         android:layout_width="370dp"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         app:layout_constraintTop_toBottomOf="@id/userMonsterImage"
         app:layout_constraintStart_toStartOf="@id/userMonsterImage"
         app:layout_constraintEnd_toEndOf="@id/enemyMonsterImage"
@@ -90,6 +90,7 @@
         android:textSize="18sp"
         android:textStyle="italic"
         android:gravity="bottom"
+        android:padding="4dp"
         android:text="A wild EnemyMonsterName has appeared!\nEnemy Monster uses special attack.\nIt's kinda effective...\nUserMonsterName is hit for XX damage.\nUserMonsterName is ready for action!\nEnemyMonsterName has fainted.\nYou have defeated EnemyMonsterName!"
         />
 

@@ -34,8 +34,6 @@ public class SwitchMonsterViewHolder extends RecyclerView.ViewHolder {
         monsterRecyclerItemStatsTextView = monsterView.findViewById(R.id.monsterRecyclerItemStatsTextView);
     }
 
-    //todo: filter monsters by userId
-    //todo: show default text if no monsters
     public void bind(UserMonster userMonsterEntry) {
         monsterRecyclerItemNameTextView.setText(userMonsterEntry.getNickname());
 
@@ -50,7 +48,9 @@ public class SwitchMonsterViewHolder extends RecyclerView.ViewHolder {
 
         monsterRecyclerItemImageView.setImageResource(userMonsterEntry.getImageID());
 
-        //show monster phrase when clicked
+        //On click, show confirm dialog to confirm that this is the correct monster.
+        //If confirmed and monster has HP, start battle with that monster.
+        //If monster has no HP, display a message indicating the monster can't fight.
         itemView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

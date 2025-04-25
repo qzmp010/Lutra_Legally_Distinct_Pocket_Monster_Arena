@@ -5,6 +5,8 @@ import android.content.Context;
 import android.util.Log;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.lutra.legallydistinctpocketmonsterarea.MonsterFactory;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster.ElementalType;
@@ -18,6 +20,7 @@ import org.junit.runner.RunWith;
 public class AppRepositoryTest extends TestCase {
   private AppRepository repository;
   private final int MONSTER_ID = 22;
+  private final int NEW_HEALTH = 99;
   private MonsterType monsterType;
   private UserMonster userMonster;
 
