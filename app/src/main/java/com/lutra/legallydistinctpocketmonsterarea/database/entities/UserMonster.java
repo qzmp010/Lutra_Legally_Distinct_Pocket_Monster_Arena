@@ -163,7 +163,7 @@ public class UserMonster {
     }
 
     //We aren't dealing with fractional values in this man's program.
-    attackValue = (int) (attack + (rand.nextInt() % 3) * 1.5);
+    attackValue = (int) ((attack + (rand.nextInt() % 3)) * 1.5);
     attackValue = (int) (attackValue * attackModifier(type));
 
     return attackValue;
@@ -225,7 +225,6 @@ public class UserMonster {
         }
         break;
       default:
-
     }
 
     return modifier;

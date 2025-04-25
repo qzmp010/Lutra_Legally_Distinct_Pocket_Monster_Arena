@@ -1,34 +1,35 @@
 package com.lutra.legallydistinctpocketmonsterarea;
 
-import static android.widget.Toast.LENGTH_SHORT;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
-import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
+
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivitySwitchMonsterBinding;
-import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterAdapter;
-import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterViewModel;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterAdapter;
-import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterViewHolder;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * SwitchMonsterActivity - relies heavily on the template set in ViewMonsterActivity (all credit to
+ * Sunny for the format of the adapter, view holder, and view model) but with a couple modifications.
+ * Displays all monsters that belong to the current user in a recycler view that contains their name
+ * and stats. The goal of this activity is to choose a monster to battle with. On item click (code
+ * set in SwitchMonsterViewHolder), user confirms choice and returns to battle with the selected monster.
+ * Monsters can not be selected for battle if they have an HP of zero or less. Users have the option
+ * to return to the lobby directly from this activity. Future improvements could include health restoration
+ * on exit or storing of enemy data so the enemy can remain on screen if monster is switched.
+ * @author David Rosenfeld
+ */
 public class SwitchMonsterActivity extends AppCompatActivity {
 
     private ActivitySwitchMonsterBinding binding;
-    private AppRepository repository;
     private SwitchMonsterViewModel monsterViewModel;
 
     public static final String MONSTER_ID = "SwitchMonsterActivity.MONSTER_ID";
@@ -51,10 +52,6 @@ public class SwitchMonsterActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        repository = AppRepository.getRepository(getApplication());
-
-        //todo: get data for specific userId
-        //todo: separate each entry by UserMonster
         monsterViewModel.getUserMonstersByUserIdLiveData(loggedInUser).observe(
                 this,monsters -> {adapter.submitList(monsters);});
 
@@ -69,6 +66,10 @@ public class SwitchMonsterActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Checks extras tagged with any of the activities that interact with SwitchMonsterActivity to see
+     * if they contain the ID of the logged-in user. If not, redirects back to LoginActivity.
+     */
     private void loginUser() {
         if(loggedInUser == -1) {
             loggedInUser = getIntent().getIntExtra(BattleActivity.USER_ID, -1);
