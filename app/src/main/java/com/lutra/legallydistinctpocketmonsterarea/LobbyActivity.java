@@ -52,15 +52,15 @@ public class LobbyActivity extends AppCompatActivity {
         binding.EditMonstersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = EditMonstersActivity.intentFactory(getApplicationContext());
-                intent.putExtra(LobbyActivity.LOBBY_USER_ID,loggedInUserID);
+                Intent intent = EditMonstersActivity.intentFactory(getApplicationContext(), loggedInUserID);
+                intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserID);
                 startActivity(intent);
             }
         });
         binding.ViewMonster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = ViewMonstersActivity.intentFactory(getApplicationContext());
+                Intent intent = ViewMonstersActivity.intentFactory(getApplicationContext(), loggedInUserID);
                 startActivity(intent);
             }
         });

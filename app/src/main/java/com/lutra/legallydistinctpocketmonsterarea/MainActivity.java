@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     binding.viewMonstersActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        startActivity(ViewMonstersActivity.intentFactory(getApplicationContext()));
+        startActivity(ViewMonstersActivity.intentFactory(getApplicationContext(), loggedInUserId));
       }
     });
     binding.chooseMonsterActivityButton.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     binding.editMonstersActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        startActivity(EditMonstersActivity.intentFactory(getApplicationContext()));
+        startActivity(EditMonstersActivity.intentFactory(getApplicationContext(), loggedInUserId));
       }
     });
 

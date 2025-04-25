@@ -27,6 +27,8 @@ import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityEditMonste
 
 
 public class EditMonstersActivity extends AppCompatActivity {
+
+    int loggedInUserId;
     private ActivityEditMonstersBinding binding;
     private AppRepository repository;
     private MonsterViewModel monsterViewModel;
@@ -37,6 +39,8 @@ public class EditMonstersActivity extends AppCompatActivity {
         binding = ActivityEditMonstersBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        loggedInUserId = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID, -1);
+
         monsterViewModel = new ViewModelProvider(this).get(MonsterViewModel.class);
         RecyclerView recyclerView = binding.EditMonstersRecyclerView;
 
@@ -45,7 +49,6 @@ public class EditMonstersActivity extends AppCompatActivity {
         adapter.setOnClickListener(new MonsterAdapter.OnClickListener() {
             @Override
             public void onClick(UserMonster monster) {
-                Toast.makeText(EditMonstersActivity.this, "Clicked " +monster.getNickname(), Toast.LENGTH_SHORT).show();
                 editNickname(monster);
             }
         });
@@ -54,8 +57,8 @@ public class EditMonstersActivity extends AppCompatActivity {
 
         repository = AppRepository.getRepository(getApplication());
 
-
-        monsterViewModel.getUserMonstersWithTypeListLiveData().observe(this, adapter::submitList);
+        monsterViewModel.getUserMonstersWithTypeListByUserIdLiveData(loggedInUserId)
+            .observe(this, adapter::submitList);
     }
 
     public void editNickname(UserMonster monster){
@@ -92,8 +95,9 @@ public class EditMonstersActivity extends AppCompatActivity {
     }
 
 
-    public static Intent intentFactory(Context context) {
+    public static Intent intentFactory(Context context, int loggedInUserId) {
         Intent intent = new Intent(context, EditMonstersActivity.class);
+        intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserId);
         return intent;
     }
 }

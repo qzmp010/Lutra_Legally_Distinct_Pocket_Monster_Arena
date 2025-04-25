@@ -16,8 +16,8 @@ import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterViewModel;
 
 public class ViewMonstersActivity extends AppCompatActivity {
 
+  private int loggedInUserId;
   private ActivityViewMonstersBinding binding;
-  private AppRepository repository;
   private MonsterViewModel monsterViewModel;
 
   @Override
@@ -26,6 +26,8 @@ public class ViewMonstersActivity extends AppCompatActivity {
     binding = ActivityViewMonstersBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
 
+    loggedInUserId = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID, -1);
+
     monsterViewModel = new ViewModelProvider(this).get(MonsterViewModel.class);
 
     RecyclerView recyclerView = binding.viewMonstersRecyclerView;
@@ -33,15 +35,13 @@ public class ViewMonstersActivity extends AppCompatActivity {
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-    repository = AppRepository.getRepository(getApplication());
-
-    //todo: get data for specific userId
-    //todo: separate each entry by UserMonster
-    monsterViewModel.getUserMonstersWithTypeListLiveData().observe(this, adapter::submitList);
+    monsterViewModel.getUserMonstersWithTypeListByUserIdLiveData(loggedInUserId)
+        .observe(this, adapter::submitList);
   }
 
-  public static Intent intentFactory(Context context) {
+  public static Intent intentFactory(Context context, int loggedInUserId) {
     Intent intent = new Intent(context, ViewMonstersActivity.class);
+    intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserId);
     return intent;
   }
 }

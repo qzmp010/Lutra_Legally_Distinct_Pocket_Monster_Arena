@@ -22,4 +22,8 @@ public class MonsterViewModel extends AndroidViewModel {
   public LiveData<List<Entry<UserMonster, MonsterType>>> getUserMonstersWithTypeListLiveData() {
     return repository.getUserMonstersWithTypeListLiveData();
   }
+
+  public LiveData<List<Entry<UserMonster, MonsterType>>> getUserMonstersWithTypeListByUserIdLiveData(int userId) {
+    return repository.getUserMonsterWithTypeListByUserIdLiveData(userId);
+  }
 }
