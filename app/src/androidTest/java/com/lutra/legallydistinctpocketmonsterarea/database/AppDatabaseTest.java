@@ -279,7 +279,23 @@ public class AppDatabaseTest extends TestCase {
     assertTrue(afterUpdate.getHealthMax() == NEW_HEALTH);
 
   }
+ @Test
+ public void testDeleteMonsterType(){
+   //Insert MonsterType into DB and record the ID
+   int monsterTypeId = (int) monsterTypeDAO.insert(monsterType);
 
+   //Recall monster by ID and prove that it exists
+   UserMonster goodMonster = userMonsterDAO.getMonsterByMonsterId(monsterTypeId);
+   assertNotNull(goodMonster);
+
+   //Delete monster type id from the database
+   monsterTypeDAO.deleteMonsterTypeById(monsterTypeId);
+
+   //Prove that we can't recall the monster type using that ID anymore
+   MonsterType badType = monsterTypeDAO.getByMonsterTypeId(monsterTypeId);
+   assertNull(badType);
+
+ }
 
 
   public void testUserDao() {

@@ -16,6 +16,10 @@ public interface MonsterTypeDAO {
   @Query("SELECT * FROM " + AppDatabase.MONSTER_TYPE_TABLE)
   List<MonsterType> getAll();
 
+  @Query("DELETE FROM " + AppDatabase.MONSTER_TYPE_TABLE + " WHERE monsterTypeId = :monsterTypeId")
+  void deleteMonsterTypeById(int monsterTypeId);
+
+
   @Query("SELECT * FROM " + AppDatabase.MONSTER_TYPE_TABLE)
   LiveData<List<MonsterType>> getAllLiveData();
 
@@ -23,4 +27,6 @@ public interface MonsterTypeDAO {
       + AppDatabase.MONSTER_TYPE_TABLE
       + " WHERE monsterTypeId = :monsterTypeId LIMIT 1")
   MonsterType getByMonsterTypeId(int monsterTypeId);
+
+
 }
