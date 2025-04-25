@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -159,8 +160,13 @@ public class ChooseMonsterActivity extends AppCompatActivity {
         );
         Toast.makeText(this, "Monster's nickname is " + input, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(ChooseMonsterActivity.this, LobbyActivity.class);
+        intent.putExtra("USER_ID", userID);
+        intent.putExtra("username", "");
         startActivity(intent);
+        finish();
+        Log.d("DEBUG_CHOOSE", "User ID received in ChooseMonster: " + userID);
     }
+
     public static Intent intentFactory(Context context) {
         Intent intent = new Intent(context, ChooseMonsterActivity.class);
         return intent;

@@ -15,7 +15,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityLobbyBinding;
+
+import java.util.ArrayList;
 
 public class LobbyActivity extends AppCompatActivity {
 
