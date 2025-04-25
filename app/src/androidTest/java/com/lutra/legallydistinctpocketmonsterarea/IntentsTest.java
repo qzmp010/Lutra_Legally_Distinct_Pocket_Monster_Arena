@@ -23,8 +23,10 @@ public class IntentsTest {
   public void testAdminCreateMonsterActivity() {
     Intents.init();
 
-    Intent intent = AdminCreateMonsterActivity.intentFactory(ApplicationProvider.getApplicationContext(), TEST_INT);
+    Intent intent = AdminCreateMonsterActivity.intentFactory(ApplicationProvider.getApplicationContext(), TEST_INT, TEST_INT, TEST_INT);
     assert(intent).hasExtra(AdminCreateMonsterActivity.MONSTER_TYPE_ID_KEY);
+    assert(intent).hasExtra(AdminCreateMonsterActivity.USER_MONSTER_ID_KEY);
+    assert(intent).hasExtra(LobbyActivity.LOBBY_USER_ID);
 
     Intent intent2 = new Intent(ApplicationProvider.getApplicationContext(), AdminCreateMonsterActivity.class);
     assert(intent).filterEquals(intent2);
@@ -36,7 +38,9 @@ public class IntentsTest {
   public void testAdminLobbyActivity() {
     Intents.init();
 
-    Intent intent = AdminLobbyActivity.intentFactory(ApplicationProvider.getApplicationContext());
+    Intent intent = AdminLobbyActivity.intentFactory(ApplicationProvider.getApplicationContext(),TEST_INT);
+    assert(intent).hasExtra(LobbyActivity.LOBBY_USER_ID);
+
     Intent intent2 = new Intent(ApplicationProvider.getApplicationContext(), AdminLobbyActivity.class);
     assert(intent).filterEquals(intent2);
 
@@ -47,7 +51,9 @@ public class IntentsTest {
   public void testAdminSelectMonsterTypeActivity() {
     Intents.init();
 
-    Intent intent = AdminSelectMonsterTypeActivity.intentFactory(ApplicationProvider.getApplicationContext());
+    Intent intent = AdminSelectMonsterTypeActivity.intentFactory(ApplicationProvider.getApplicationContext(), TEST_INT);
+    assert(intent).hasExtra(LobbyActivity.LOBBY_USER_ID);
+
     Intent intent2 = new Intent(ApplicationProvider.getApplicationContext(), AdminSelectMonsterTypeActivity.class);
     assert(intent).filterEquals(intent2);
 
@@ -91,7 +97,9 @@ public class IntentsTest {
   public void testEditMonstersActivity() {
     Intents.init();
 
-    Intent intent = EditMonstersActivity.intentFactory(ApplicationProvider.getApplicationContext());
+    Intent intent = EditMonstersActivity.intentFactory(ApplicationProvider.getApplicationContext(), TEST_INT);
+    assert(intent).hasExtra(LobbyActivity.LOBBY_USER_ID);
+
     Intent intent2 = new Intent(ApplicationProvider.getApplicationContext(), EditMonstersActivity.class);
     assert(intent).filterEquals(intent2);
 
@@ -146,7 +154,9 @@ public class IntentsTest {
   public void testViewMonstersActivity() {
     Intents.init();
 
-    Intent intent = ViewMonstersActivity.intentFactory(ApplicationProvider.getApplicationContext());
+    Intent intent = ViewMonstersActivity.intentFactory(ApplicationProvider.getApplicationContext(), TEST_INT);
+    assert(intent).hasExtra(LobbyActivity.LOBBY_USER_ID);
+
     Intent intent2 = new Intent(ApplicationProvider.getApplicationContext(), ViewMonstersActivity.class);
     assert(intent).filterEquals(intent2);
 

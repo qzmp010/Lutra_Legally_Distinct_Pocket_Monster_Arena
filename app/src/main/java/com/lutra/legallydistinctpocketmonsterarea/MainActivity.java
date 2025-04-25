@@ -62,20 +62,20 @@ public class MainActivity extends AppCompatActivity {
       return;
     }
 
-    User user = repository.getUserByUserIdBlocking(loggedInUserId);
-    if (user != null && user.isAdmin()) {
-      startActivity(AdminLobbyActivity.intentFactory(this));
-      finish();
-      return;
-    } else if (user != null) {
-      Intent intent = LobbyActivity.intentFactory(this);
-      intent.putExtra("USER_ID", loggedInUserId);
-      intent.putExtra("username", user.getUsername());
-      startActivity(intent);
-      finish();
-      return;
-    }
-    startActivity(LoginActivity.loginIntentFactory(this));
+//    User user = repository.getUserByUserIdBlocking(loggedInUserId);
+//    if (user != null && user.isAdmin()) {
+//      startActivity(AdminLobbyActivity.intentFactory(this));
+//      finish();
+//      return;
+//    } else if (user != null) {
+//      Intent intent = LobbyActivity.intentFactory(this);
+//      intent.putExtra("USER_ID", loggedInUserId);
+//      intent.putExtra("username", user.getUsername());
+//      startActivity(intent);
+//      finish();
+//      return;
+//    }
+//    startActivity(LoginActivity.loginIntentFactory(this));
 
 
 
