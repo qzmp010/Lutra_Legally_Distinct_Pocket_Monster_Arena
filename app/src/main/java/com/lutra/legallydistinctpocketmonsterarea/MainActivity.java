@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     User user = repository.getUserByUserIdBlocking(loggedInUserId);
     if (user != null && user.isAdmin()) {
-      startActivity(AdminLobbyActivity.intentFactory(this));
+      startActivity(AdminLobbyActivity.intentFactory(this, loggedInUserId));
       finish();
       return;
     } else if (user != null) {
