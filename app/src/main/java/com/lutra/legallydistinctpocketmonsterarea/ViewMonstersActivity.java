@@ -6,10 +6,12 @@ import android.os.Bundle;
 
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityViewMonstersBinding;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterAdapter;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.MonsterAdapter.UserMonsterDiff;
@@ -33,6 +35,14 @@ public class ViewMonstersActivity extends AppCompatActivity {
 
     RecyclerView recyclerView = binding.viewMonstersRecyclerView;
     final MonsterAdapter adapter = new MonsterAdapter(new UserMonsterDiff());
+
+    adapter.setOnClickListener(new MonsterAdapter.OnClickListener() {
+      @Override
+      public void onClick(UserMonster monster) {
+        Toast.makeText(getApplicationContext(), monster.getPhrase(), Toast.LENGTH_SHORT).show();
+      }
+    });
+
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
