@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     binding.adminLobbyActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        startActivity(AdminLobbyActivity.intentFactory(getApplicationContext()));
+        startActivity(AdminLobbyActivity.intentFactory(getApplicationContext(), loggedInUserId));
       }
     });
 
@@ -108,14 +108,14 @@ public class MainActivity extends AppCompatActivity {
     binding.adminCreateMonsterActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        startActivity(AdminSelectMonsterTypeActivity.intentFactory(getApplicationContext()));
+        startActivity(AdminSelectMonsterTypeActivity.intentFactory(getApplicationContext(), loggedInUserId));
       }
     });
 
     binding.adminEditMonsterActivityButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        startActivity(AdminSelectUserMonsterActivity.intentFactory(getApplicationContext()));
+        startActivity(AdminSelectUserMonsterActivity.intentFactory(getApplicationContext(), loggedInUserId));
       }
     });
   }

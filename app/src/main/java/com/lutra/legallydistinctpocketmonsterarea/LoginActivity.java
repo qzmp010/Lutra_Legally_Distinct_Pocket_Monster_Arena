@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (password.equals(user.getPassword())) {
                     if (user.isAdmin()) {
 
-                        startActivity(AdminLobbyActivity.intentFactory(getApplicationContext()));
+                        startActivity(AdminLobbyActivity.intentFactory(getApplicationContext(), user.getId()));
                     } else {
                         // 👤 Redirect to Normal Lobby
                         Intent intent = LobbyActivity.intentFactory(getApplicationContext());

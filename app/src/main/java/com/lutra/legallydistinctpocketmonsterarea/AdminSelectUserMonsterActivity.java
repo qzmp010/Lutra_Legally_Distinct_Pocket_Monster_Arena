@@ -29,6 +29,7 @@ import kotlin.Triple;
 
 public class AdminSelectUserMonsterActivity extends AppCompatActivity {
 
+  private int loggedInUserId;
   private ActivityAdminSelectUserMonsterBinding binding;
   private AdminUserMonsterViewModel adminUserMonsterViewModel;
 
@@ -37,6 +38,8 @@ public class AdminSelectUserMonsterActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     binding = ActivityAdminSelectUserMonsterBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
+
+    loggedInUserId = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID, -1);
 
     adminUserMonsterViewModel = new ViewModelProvider(this).get(AdminUserMonsterViewModel.class);
 
@@ -47,6 +50,7 @@ public class AdminSelectUserMonsterActivity extends AppCompatActivity {
       @Override
       public void onClick(UserMonster userMonster) {
         Intent intent = AdminCreateMonsterActivity.intentFactory(getApplicationContext(),
+            loggedInUserId,
             userMonster.getMonsterTypeId(),
             userMonster.getUserMonsterId()
         );
@@ -62,14 +66,15 @@ public class AdminSelectUserMonsterActivity extends AppCompatActivity {
     binding.adminSelectUserMonsterReturnButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = AdminLobbyActivity.intentFactory(getApplicationContext());
+        Intent intent = AdminLobbyActivity.intentFactory(getApplicationContext(), loggedInUserId);
         startActivity(intent);
       }
     });
   }
 
-  public static Intent intentFactory(Context context) {
+  public static Intent intentFactory(Context context, int loggedInUserId) {
     Intent intent = new Intent(context, AdminSelectUserMonsterActivity.class);
+    intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserId);
     return intent;
   }
 }
