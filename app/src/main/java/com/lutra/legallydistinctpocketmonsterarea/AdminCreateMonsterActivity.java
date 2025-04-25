@@ -19,7 +19,7 @@ import java.util.List;
 
 public class AdminCreateMonsterActivity extends AppCompatActivity {
 
-  private static final String MONSTER_TYPE_ID_KEY = "com.lutra.ldpm.create_monster_type_id_key";
+  public static final String MONSTER_TYPE_ID_KEY = "com.lutra.ldpm.create_monster_type_id_key";
   private ActivityAdminEditMonsterBinding binding;
   private AppRepository repository;
   private int monsterTypeId;
