@@ -18,6 +18,7 @@ import java.util.List;
 
 public class AdminCreateMonsterActivity extends AppCompatActivity {
 
+  int loggedInUserId;
   public static final String MONSTER_TYPE_ID_KEY = "com.lutra.ldpm.create_monster_type_id_key";
   private static final String USER_MONSTER_ID_KEY = "com.lutra.ldpm.edit_user_monster_id_key";
   private static final int ID_DEFAULT = -1;
@@ -43,6 +44,7 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
     View view = binding.getRoot();
     setContentView(view);
 
+    loggedInUserId = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID, ID_DEFAULT);
     monsterTypeId = getIntent().getIntExtra(MONSTER_TYPE_ID_KEY, ID_DEFAULT);
     userMonsterId = getIntent().getIntExtra(USER_MONSTER_ID_KEY, ID_DEFAULT);
     monsterType = repository.getMonsterTypeById(monsterTypeId);
@@ -206,17 +208,18 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
 
   public void backToRecycler() {
     Intent intent = isEditing
-        ? AdminSelectUserMonsterActivity.intentFactory(getApplicationContext())
-        : AdminSelectMonsterTypeActivity.intentFactory(getApplicationContext());
+        ? AdminSelectUserMonsterActivity.intentFactory(getApplicationContext(), loggedInUserId)
+        : AdminSelectMonsterTypeActivity.intentFactory(getApplicationContext(), loggedInUserId);
     startActivity(intent);
   }
 
-  public static Intent intentFactory(Context context, int monsterTypeId) {
-    return intentFactory(context, monsterTypeId, ID_DEFAULT);
+  public static Intent intentFactory(Context context, int loggedInUserId, int monsterTypeId) {
+    return intentFactory(context, loggedInUserId, monsterTypeId, ID_DEFAULT);
   }
 
-  public static Intent intentFactory(Context context, int monsterTypeId, int userMonsterId) {
+  public static Intent intentFactory(Context context, int loggedInUserId, int monsterTypeId, int userMonsterId) {
     Intent intent = new Intent(context, AdminCreateMonsterActivity.class);
+    intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserId);
     intent.putExtra(MONSTER_TYPE_ID_KEY, monsterTypeId);
     intent.putExtra(USER_MONSTER_ID_KEY, userMonsterId);
     return intent;

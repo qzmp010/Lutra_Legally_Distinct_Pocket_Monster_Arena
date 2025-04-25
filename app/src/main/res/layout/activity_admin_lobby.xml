@@ -10,21 +10,33 @@
 
 
   <TextView
-      android:id="@+id/WelcomeAdminTextView"
-      android:layout_width="193dp"
+      android:id="@+id/AdminLobbyTextView"
+      android:layout_width="match_parent"
       android:layout_height="70dp"
       android:layout_marginBottom="644dp"
       android:gravity="center"
-      android:text="@string/Welcome"
+      android:text="Admin Lobby"
       android:textSize="36sp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.472"
       app:layout_constraintStart_toStartOf="parent" />
 
+  <TextView
+    android:id="@+id/WelcomeAdminTextView"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_marginBottom="644dp"
+    android:gravity="center"
+    android:text="@string/welcome_s"
+    android:textSize="28sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/AdminLobbyTextView"/>
+
   <Button
       android:id="@+id/BattleB"
-      android:layout_width="200dp"
+      android:layout_width="230dp"
       android:layout_height="70dp"
       android:layout_marginTop="48dp"
       android:gravity="center"
@@ -36,21 +48,34 @@
       app:layout_constraintTop_toBottomOf="@+id/WelcomeAdminTextView" />
 
   <Button
-      android:id="@+id/EditUsersButton"
-      android:layout_width="200dp"
-      android:layout_height="70dp"
-      android:layout_marginTop="24dp"
-      android:gravity="center"
-      android:text="@string/edit_users"
-      android:textSize="30sp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.497"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/BattleB" />
+    android:id="@+id/create_monsters_button"
+    android:layout_width="230dp"
+    android:layout_height="70dp"
+    android:layout_marginTop="24dp"
+    android:gravity="center"
+    android:text="@string/create_monsters"
+    android:textSize="24sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.497"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/BattleB" />
+
+  <Button
+    android:id="@+id/editMonstersButton"
+    android:layout_width="230dp"
+    android:layout_height="70dp"
+    android:layout_marginTop="24dp"
+    android:gravity="center"
+    android:text="@string/edit_Monsters"
+    android:textSize="24sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.497"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/create_monsters_button" />
 
   <Button
       android:id="@+id/CreateUserButton"
-      android:layout_width="200dp"
+      android:layout_width="230dp"
       android:layout_height="70dp"
       android:layout_marginTop="24dp"
       android:gravity="center"
@@ -59,11 +84,11 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="0.497"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/EditUsersButton" />
+      app:layout_constraintTop_toBottomOf="@+id/editMonstersButton" />
 
   <Button
       android:id="@+id/LogoutButton"
-      android:layout_width="200dp"
+      android:layout_width="230dp"
       android:layout_height="70dp"
       android:layout_marginTop="24dp"
       android:gravity="center"
