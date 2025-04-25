@@ -73,7 +73,7 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
       if (isEditing) {
         String userName = userList.stream()
             .filter(u -> u.getId() == userMonster.getUserId())
-            .map(u -> u.getUsername())
+            .map(User::getUsername)
             .findFirst().orElse("");
         binding.adminEditMonsterOwnerSpinner.setSelection(userDataAdapter.getPosition(userName));
       }

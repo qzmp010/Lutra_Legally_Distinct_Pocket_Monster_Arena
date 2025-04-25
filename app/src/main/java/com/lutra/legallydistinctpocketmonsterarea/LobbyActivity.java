@@ -19,127 +19,131 @@ import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityLobbyBindi
 
 public class LobbyActivity extends AppCompatActivity {
 
-    public static final String LOBBY_USER_ID = "LobbyActivity.java_LOBBY_USER_ID";
-    private int loggedInUserID = -1;
+  public static final String LOBBY_USER_ID = "LobbyActivity.java_LOBBY_USER_ID";
+  private int loggedInUserID = -1;
+  AppRepository repository;
 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    ActivityLobbyBinding binding = ActivityLobbyBinding.inflate(getLayoutInflater());
+    setContentView(binding.getRoot());
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ActivityLobbyBinding binding = ActivityLobbyBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+    loginUser();
 
-
-        loginUser();
-
-
-        String user_name = getIntent().getStringExtra("username");
-
-        if(!(user_name == null) && !user_name.isEmpty()){
-            binding.welcomeTextView.setText("Welcome "+ user_name + "!");
-        }else{
-            System.out.println("Username cannot be blank");
+    repository = AppRepository.getRepository(getApplication());
+    if (repository != null) {
+      repository.getUserByUserId(loggedInUserID).observe(this, user -> {
+        if (user.isAdmin()) {
+            Intent intent = AdminLobbyActivity.intentFactory(getApplicationContext(), loggedInUserID);
+            startActivity(intent);
+        } else {
+            binding.welcomeTextView.setText(String.format("Welcome %s!", user.getUsername()));
         }
-
-        binding.battleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = SwitchMonsterActivity.intentFactory(getApplicationContext());
-                intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserID);
-                startActivity(intent);
-            }
-        });
-        binding.EditMonstersButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = EditMonstersActivity.intentFactory(getApplicationContext(), loggedInUserID);
-                intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserID);
-                startActivity(intent);
-            }
-        });
-        binding.ViewMonster.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = ViewMonstersActivity.intentFactory(getApplicationContext(), loggedInUserID);
-                startActivity(intent);
-            }
-        });
-        binding.Logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLogoutDialog();
-            }
-        });
-
-
-    }
-    private void showLogoutDialog() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(LobbyActivity.this);
-        alertBuilder.setMessage("Logout?");
-
-        alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                logout();
-            }
-        });
-
-        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        alertBuilder.create().show();
+      });
     }
 
-    private void logout() {
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-        sharedPrefEditor.putInt(getString(R.string.preference_userId_key), -1);
-        sharedPrefEditor.apply();
-
-        Intent intent = new Intent(LobbyActivity.this, LoginActivity.class);
+    binding.battleButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = SwitchMonsterActivity.intentFactory(getApplicationContext());
+        intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserID);
         startActivity(intent);
-        finish();
+      }
+    });
+
+    binding.EditMonstersButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = EditMonstersActivity.intentFactory(getApplicationContext(), loggedInUserID);
+        intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserID);
+        startActivity(intent);
+      }
+    });
+
+    binding.ViewMonster.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = ViewMonstersActivity.intentFactory(getApplicationContext(), loggedInUserID);
+        startActivity(intent);
+      }
+    });
+
+    binding.Logout.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        showLogoutDialog();
+      }
+    });
+  }
+
+  private void showLogoutDialog() {
+    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(LobbyActivity.this);
+    alertBuilder.setMessage("Logout?");
+
+    alertBuilder.setPositiveButton("Logout", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        logout();
+      }
+    });
+
+    alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        dialog.dismiss();
+      }
+    });
+
+    alertBuilder.create().show();
+  }
+
+  private void logout() {
+    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(
+        getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+    SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
+    sharedPrefEditor.putInt(getString(R.string.preference_userId_key), -1);
+    sharedPrefEditor.apply();
+
+    Intent intent = new Intent(LobbyActivity.this, LoginActivity.class);
+    startActivity(intent);
+    finish();
+  }
+
+  private void loginUser() {
+    if (loggedInUserID == -1) {
+      loggedInUserID = getIntent().getIntExtra(MainActivity.MAIN_ACTIVITY_USER_ID, -1);
     }
 
-    private void loginUser() {
-        if(loggedInUserID == -1) {
-            loggedInUserID =  getIntent().getIntExtra(MainActivity.MAIN_ACTIVITY_USER_ID, -1);
-        }
-
-        if(loggedInUserID == -1) {
-            loggedInUserID = getIntent().getIntExtra(LoginActivity.USER_ID, -1);
-        }
-
-        if(loggedInUserID == -1) {
-            loggedInUserID = getIntent().getIntExtra(BattleActivity.USER_ID, -1);
-        }
-
-        if(loggedInUserID == -1) {
-            loggedInUserID = getIntent().getIntExtra(SwitchMonsterActivity.USER_ID,-1);
-        }
-
-        if(loggedInUserID == -1) {
-            loggedInUserID = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID,-1);
-        }
-
-        if(loggedInUserID == -1) {
-            logout();
-        }
+    if (loggedInUserID == -1) {
+      loggedInUserID = getIntent().getIntExtra(LoginActivity.USER_ID, -1);
     }
 
-
-    public static Intent intentFactory(Context context) {
-        Intent intent = new Intent(context, LobbyActivity.class);
-        return intent;
+    if (loggedInUserID == -1) {
+      loggedInUserID = getIntent().getIntExtra(BattleActivity.USER_ID, -1);
     }
 
-    public static Intent intentFactory(Context context, int loggedInUserId) {
-        Intent intent = new Intent(context, LobbyActivity.class);
-        intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserId);
-        return intent;
+    if (loggedInUserID == -1) {
+      loggedInUserID = getIntent().getIntExtra(SwitchMonsterActivity.USER_ID, -1);
     }
+
+    if (loggedInUserID == -1) {
+      loggedInUserID = getIntent().getIntExtra(LobbyActivity.LOBBY_USER_ID, -1);
+    }
+
+    if (loggedInUserID == -1) {
+      logout();
+    }
+  }
+
+  public static Intent intentFactory(Context context) {
+    Intent intent = new Intent(context, LobbyActivity.class);
+    return intent;
+  }
+
+  public static Intent intentFactory(Context context, int loggedInUserId) {
+    Intent intent = new Intent(context, LobbyActivity.class);
+    intent.putExtra(LobbyActivity.LOBBY_USER_ID, loggedInUserId);
+    return intent;
+  }
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivitySwitchMonsterBinding;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterAdapter;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterViewModel;
@@ -36,6 +37,8 @@ public class SwitchMonsterActivity extends AppCompatActivity {
     public static final String USER_ID = "SwitchMonsterActivity.USER_ID";
 
     private int loggedInUser = -1;
+    private boolean isAdmin;
+    private AppRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +61,16 @@ public class SwitchMonsterActivity extends AppCompatActivity {
         binding.returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = LobbyActivity.intentFactory(getApplicationContext());
-                intent.putExtra(USER_ID, loggedInUser);
-                startActivity(intent);
+                backToLobby();
             }
         });
 
+        repository = AppRepository.getRepository(getApplication());
+        if (repository != null) {
+            repository.getUserByUserId(loggedInUser).observe(this, user -> {
+                isAdmin = user.isAdmin();
+            });
+        }
     }
 
     /**
@@ -87,6 +94,14 @@ public class SwitchMonsterActivity extends AppCompatActivity {
             Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
             startActivity(intent);
         }
+    }
+
+    private void backToLobby() {
+        Intent intent = isAdmin
+            ? AdminLobbyActivity.intentFactory(getApplicationContext(), loggedInUser)
+            : LobbyActivity.intentFactory(getApplicationContext(), loggedInUser);
+        intent.putExtra(USER_ID, loggedInUser);
+        startActivity(intent);
     }
 
     public static Intent intentFactory(Context context) {
