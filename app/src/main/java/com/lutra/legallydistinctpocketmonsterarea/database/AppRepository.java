@@ -330,4 +330,16 @@ public class AppRepository {
   public LiveData<List<User>> getAllUsers() {
     return userDao.getAllUsers();
   }
+
+    public User getUserByUserIdBlocking(int loggedInUserId) {
+        Future<User> future = AppDatabase.databaseWriteExecutor.submit(() ->
+                userDao.getUserByUserIdBlocking(loggedInUserId)
+        );
+        try {
+            return future.get();
+        } catch (Exception e) {
+            Log.e("AppRepository", "Failed to get user by ID: " + loggedInUserId, e);
+            return null;
+        }
+    }
 }

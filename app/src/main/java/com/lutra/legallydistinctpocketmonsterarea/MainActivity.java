@@ -50,16 +50,34 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
+    SharedPreferences sharedPrefs = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
+    loggedInUserId = sharedPrefs.getInt(getString(R.string.preference_userId_key), -1);
 
     repository = AppRepository.getRepository(getApplication());
     loginUser(savedInstanceState);
 
-    if(loggedInUserId == -1 ){
-      Intent intent = LoginActivity.loginIntentFactory(getApplicationContext());
-      startActivity(intent);
+    if (loggedInUserId == -1) {
+      startActivity(LoginActivity.loginIntentFactory(this));
+      finish();
+      return;
     }
 
-    updateSharedPreference();
+    User user = repository.getUserByUserIdBlocking(loggedInUserId);
+    if (user != null && user.isAdmin()) {
+      startActivity(AdminLobbyActivity.intentFactory(this));
+      finish();
+      return;
+    } else if (user != null) {
+      Intent intent = LobbyActivity.intentFactory(this);
+      intent.putExtra("USER_ID", loggedInUserId);
+      intent.putExtra("username", user.getUsername());
+      startActivity(intent);
+      finish();
+      return;
+    }
+    startActivity(LoginActivity.loginIntentFactory(this));
+
+
 
 
     binding.battleActivityButton.setOnClickListener(new View.OnClickListener() {
