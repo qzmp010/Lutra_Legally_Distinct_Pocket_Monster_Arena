@@ -26,12 +26,6 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityMainBinding;
 
-/**
- * MainActivity - THIS ACTIVITY IS NOT IN THE REGULAR APP FLOW
- *
- * LobbyActivity is the launcher activity, use MainActivity only for
- * testing or debugging. This
- */
 public class MainActivity extends AppCompatActivity {
   public static final String MAIN_ACTIVITY_USER_ID = "com.lutra.legallydistinctpocketmonsterarea.MAIN_ACTIVITY_USER_ID";
   static final String SHARED_PREFERENCE_USERID_KEY = "com.lutra.legallydistinctpocketmonsterarea.SHARED_PREFERENCE_USERID_KEY";
@@ -68,20 +62,20 @@ public class MainActivity extends AppCompatActivity {
       return;
     }
 
-//    User user = repository.getUserByUserIdBlocking(loggedInUserId);
-//    if (user != null && user.isAdmin()) {
-//      startActivity(AdminLobbyActivity.intentFactory(this));
-//      finish();
-//      return;
-//    } else if (user != null) {
-//      Intent intent = LobbyActivity.intentFactory(this);
-//      intent.putExtra("USER_ID", loggedInUserId);
-//      intent.putExtra("username", user.getUsername());
-//      startActivity(intent);
-//      finish();
-//      return;
-//    }
-//    startActivity(LoginActivity.loginIntentFactory(this));
+    User user = repository.getUserByUserIdBlocking(loggedInUserId);
+    if (user != null && user.isAdmin()) {
+      startActivity(AdminLobbyActivity.intentFactory(this, loggedInUserId));
+      finish();
+      return;
+    } else if (user != null) {
+      Intent intent = LobbyActivity.intentFactory(this);
+      intent.putExtra("USER_ID", loggedInUserId);
+      intent.putExtra("username", user.getUsername());
+      startActivity(intent);
+      finish();
+      return;
+    }
+    startActivity(LoginActivity.loginIntentFactory(this));
 
 
 
