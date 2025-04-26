@@ -35,6 +35,18 @@ public class LobbyActivity extends AppCompatActivity {
     loginUser();
 
     repository = AppRepository.getRepository(getApplication());
+
+    ArrayList<UserMonster> userMonsters = repository.getUserMonstersByUserId(loggedInUserID);
+
+    if (userMonsters == null || userMonsters.isEmpty()) {
+      Toast.makeText(this, "You don't have a monster yet. Choose one first!", Toast.LENGTH_SHORT).show();
+      Intent intent = ChooseMonsterActivity.intentFactory(this);
+      intent.putExtra("USER_ID", loggedInUserID);
+      startActivity(intent);
+      finish();
+      return;
+    }
+
     if (repository != null) {
       repository.getUserByUserId(loggedInUserID).observe(this, user -> {
         if (user.isAdmin()) {

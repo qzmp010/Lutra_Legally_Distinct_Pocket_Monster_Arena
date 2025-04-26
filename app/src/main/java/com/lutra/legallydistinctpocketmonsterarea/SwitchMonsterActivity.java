@@ -4,6 +4,7 @@ package com.lutra.legallydistinctpocketmonsterarea;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,9 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivitySwitchMonsterBinding;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterAdapter;
 import com.lutra.legallydistinctpocketmonsterarea.viewHolders.SwitchMonsterViewModel;
+
+import java.util.ArrayList;
 
 /**
  * SwitchMonsterActivity - relies heavily on the template set in ViewMonsterActivity (all credit to
@@ -35,6 +39,7 @@ public class SwitchMonsterActivity extends AppCompatActivity {
 
     public static final String MONSTER_ID = "SwitchMonsterActivity.MONSTER_ID";
     public static final String USER_ID = "SwitchMonsterActivity.USER_ID";
+    public static final String TAG = "SwitchMonsterActivity.java";
 
     private int loggedInUser = -1;
     private boolean isAdmin;
@@ -61,6 +66,18 @@ public class SwitchMonsterActivity extends AppCompatActivity {
         binding.returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<UserMonster> userMonsters = new ArrayList<>();
+                while(userMonsters.isEmpty()) {
+                    try {
+                        userMonsters = repository.getAllUserMonsters();
+                        for(UserMonster monster : userMonsters) {
+                            monster.setCurrentHealth(monster.getMaxHealth());
+                            repository.insertUserMonster(monster);
+                        }
+                    } catch (RuntimeException e) {
+                        Log.e(TAG, "Couldn't restore monster health.");
+                    }
+                }
                 backToLobby();
             }
         });
