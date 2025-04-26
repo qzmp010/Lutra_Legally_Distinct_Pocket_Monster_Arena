@@ -133,14 +133,13 @@ public class ChooseMonsterActivity extends AppCompatActivity {
         alertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                createNewMonster(type);
+                createNewMonster(""); //Will use default MonsterType name
             }
         });
 
         alertBuilder.create().show();
     }
-    private void createNewMonster(String input){
-        String nickname = input;
+    private void createNewMonster(String nickname){
         String setPhrase ="";
         int attack = 13;
         int defense = 7;
@@ -158,10 +157,9 @@ public class ChooseMonsterActivity extends AppCompatActivity {
         health,
         userID
         );
-        Toast.makeText(this, "Monster's nickname is " + input, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Your monster will love that name!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(ChooseMonsterActivity.this, LobbyActivity.class);
-        intent.putExtra("USER_ID", userID);
-        intent.putExtra("username", "");
+        intent.putExtra(LoginActivity.USER_ID, userID);
         startActivity(intent);
         finish();
         Log.d("DEBUG_CHOOSE", "User ID received in ChooseMonster: " + userID);
@@ -171,7 +169,4 @@ public class ChooseMonsterActivity extends AppCompatActivity {
         Intent intent = new Intent(context, ChooseMonsterActivity.class);
         return intent;
     }
-
-
-
 }
