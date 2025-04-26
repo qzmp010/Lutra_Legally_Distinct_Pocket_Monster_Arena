@@ -9,19 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.lutra.legallydistinctpocketmonsterarea.database.AppRepository;
-import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
-import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityChooseMonsterBinding;
-
-import java.util.ArrayList;
 
 
 public class ChooseMonsterActivity extends AppCompatActivity {
