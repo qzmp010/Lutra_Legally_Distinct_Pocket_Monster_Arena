@@ -1,16 +1,13 @@
 package com.lutra.legallydistinctpocketmonsterarea.database;
 
-import static org.junit.Assert.assertEquals;
-
 import android.content.Context;
-import android.util.Log;
 import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.lutra.legallydistinctpocketmonsterarea.R;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterType;
+import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
-import com.lutra.legallydistinctpocketmonsterarea.database.entities.MonsterTypeWithUserMonsters;
 import java.util.List;
 import java.util.Map;
 import junit.framework.TestCase;
@@ -31,17 +28,29 @@ public class AppDatabaseTest extends TestCase {
   private static final int NEW_HEALTH = 99;
   private UserMonster userMonster;
 
+  int userId;
+  private User user;
+  private MonsterType mouseyType;
+  private MonsterType dinoType;
+  private UserMonster zappy;
+  private UserMonster plantisaurus;
+
   @Before
   public void setUp() throws Exception {
-    //super.setUp();
     Context context = ApplicationProvider.getApplicationContext();
     db = Room.inMemoryDatabaseBuilder(context, AppDatabase.class).build();
     userDAO = db.userDao();
     userMonsterDAO = db.userMonsterDAO();
     monsterTypeDAO = db.monsterTypeDAO();
     userMonsterWithTypeDAO = db.userMonsterWithTypeDAO();
+    userId = 42;
 
-    userMonster = userMonster = new UserMonster(
+    user = new User(
+        "MonsterTrainer",
+        "secret",
+        false);
+
+    userMonster = new UserMonster(
             420,
             "my nick",
             "my phrase",
@@ -53,26 +62,7 @@ public class AppDatabaseTest extends TestCase {
             1,
             -99);
 
-  }
-
-  @After
-  public void tearDown() throws Exception {
-    //super.tearDown();
-    db.close();
-  }
-
-  public void testGetDatabase() {
-  }
-
-  public void testMonsterTypeDAO() {
-  }
-
-  public void testUserMonsterDAO() {
-  }
-
-  @Test
-  public void testUserMonsterWithTypeDAO() {
-    MonsterType mouseyType = new MonsterType(
+    mouseyType = new MonsterType(
         "Lightning Mouse",
         "Aa-chooooooo!",
         R.drawable.ld_pikachu,
@@ -81,7 +71,7 @@ public class AppDatabaseTest extends TestCase {
         25, 20,
         UserMonster.ElementalType.ELECTRIC);
 
-    MonsterType dinoType = new MonsterType(
+    dinoType = new MonsterType(
         "Flower Dinoo",
         "Flower power, ya dig?",
         R.drawable.ld_bulbasaur_png,
@@ -89,79 +79,18 @@ public class AppDatabaseTest extends TestCase {
         8, 5,
         27, 22,
         UserMonster.ElementalType.GRASS);
+  }
 
-    MonsterType turtleType = new MonsterType(
-        "Weird Turtley",
-        "'Urtle! 'Urtle!'",
-        R.drawable.ld_squirtle,
-        9, 6,
-        7, 4,
-        25, 20,
-        UserMonster.ElementalType.WATER);
+  @After
+  public void tearDown() throws Exception {
+    userId = 0;
+    userMonster = null;
+    mouseyType = null;
+    dinoType = null;
+    zappy = null;
+    plantisaurus = null;
 
-    MonsterType lizardType = new MonsterType(
-        "Fire Lizarder",
-        "Deal with it.",
-        R.drawable.ld_charizard,
-        11, 8,
-        6, 3,
-        23, 16,
-        UserMonster.ElementalType.FIRE);
-
-    int userId = 0;
-    int mouseyId = (int) monsterTypeDAO.insert(mouseyType);
-    int dinoId = (int) monsterTypeDAO.insert(dinoType);
-    int lizardId = (int) monsterTypeDAO.insert(lizardType);
-    int turtleId = (int) monsterTypeDAO.insert(turtleType);
-
-    mouseyType.setMonsterTypeId(mouseyId);
-    dinoType.setMonsterTypeId(dinoId);
-    lizardType.setMonsterTypeId(lizardId);
-    turtleType.setMonsterTypeId(turtleId);
-
-    UserMonster zappy = new UserMonster(1,"Zappyer", "BUZZZZZZZT", R.drawable.ld_pikachu,
-        UserMonster.ElementalType.ELECTRIC, 11, 6,
-        35, userId, mouseyId);
-
-    UserMonster plantisaurus = new UserMonster(2,"Plantisaurusy", "Yo, got any grass?",
-        R.drawable.ld_bulbasaur_png, UserMonster.ElementalType.GRASS, 10, 7,
-        40, userId, dinoId);
-
-    UserMonster flamizord = new UserMonster(3,"Flamizordor", "Burninating the countryside!",
-        R.drawable.ld_charizard, UserMonster.ElementalType.FIRE, 13, 4,
-        25, userId, lizardId);
-
-    UserMonster warturt = new UserMonster(4,"Warturtle", "I didn't know you liked to get wet!",
-        R.drawable.ld_squirtle, UserMonster.ElementalType.WATER, 12, 5,
-        30, userId, turtleId);
-
-    UserMonster splashturt = new UserMonster(5,"Splashturty", "I didn't know you liked to get wet!",
-        R.drawable.ld_squirtle, UserMonster.ElementalType.WATER, 12, 5,
-        30, userId, turtleId);
-
-    zappy.setUserMonsterId((int) userMonsterDAO.insert(zappy));
-    plantisaurus.setUserMonsterId((int) userMonsterDAO.insert(plantisaurus));
-    flamizord.setUserMonsterId((int) userMonsterDAO.insert(flamizord));
-    splashturt.setUserMonsterId((int) userMonsterDAO.insert(splashturt));
-    warturt.setUserMonsterId((int) userMonsterDAO.insert(warturt));
-
-    List<MonsterTypeWithUserMonsters> monsterTypesListWithUserMonsters = userMonsterWithTypeDAO.getMonsterTypesWithUserMonsters();
-
-    monsterTypesListWithUserMonsters.forEach(
-        m -> Log.d("getMonsterTypesWithUserMonsters", m.toString()));
-
-    Map<UserMonster, MonsterType> userMonsterTypeMap = userMonsterWithTypeDAO.getUserMonstersWithTypeMap();
-
-    userMonsterTypeMap.forEach((k, v) ->
-        Log.d("getUserMonstersWithTypeMap", k.toString() + " ---- " + v.toString()));
-
-// TODO: create assert statements
-// TODO: make separate test for each DAO method
-//
-//    assertEquals(userMonsterTypeMap.get(zappy), mouseyType);
-//    assertEquals(userMonsterTypeMap.get(plantisaurus), dinoType);
-//    assertEquals(userMonsterTypeMap.get(flamizord), lizardType);
-//    assertEquals(userMonsterTypeMap.get(splashturt), turtleType);
+    db.close();
   }
 
   @Test
@@ -229,6 +158,75 @@ public class AppDatabaseTest extends TestCase {
     assertNull(badMonster);
   }
 
-  public void testUserDao() {
+  @Test
+  public void testGetUserMonstersWithTypeMap() {
+    int mouseyId = (int) monsterTypeDAO.insert(mouseyType);
+    int dinoId = (int) monsterTypeDAO.insert(dinoType);
+
+    mouseyType.setMonsterTypeId(mouseyId);
+    dinoType.setMonsterTypeId(dinoId);
+
+    zappy = new UserMonster(0,"Zappyer", "BUZZZZZZZT", R.drawable.ld_pikachu,
+        UserMonster.ElementalType.ELECTRIC, 11, 6,
+        35, userId, mouseyId);
+
+    plantisaurus = new UserMonster(0,"Plantisaurusy", "Yo, got any grass?",
+        R.drawable.ld_bulbasaur_png, UserMonster.ElementalType.GRASS, 10, 7,
+        40, userId, dinoId);
+
+    zappy.setUserMonsterId((int) userMonsterDAO.insert(zappy));
+    plantisaurus.setUserMonsterId((int) userMonsterDAO.insert(plantisaurus));
+
+    Map<UserMonster, MonsterType> userMonsterTypeMap = userMonsterWithTypeDAO.getUserMonstersWithTypeMap();
+
+    assertEquals(userMonsterTypeMap.get(zappy), mouseyType);
+    assertEquals(userMonsterTypeMap.get(plantisaurus), dinoType);
+  }
+
+  @Test
+  public void testUserInsert() {
+    List<User> noUser = userDAO.getAllUsersSync();
+    assertTrue(noUser.isEmpty());
+
+    long myUserId = userDAO.insert(user);
+    user.setId((int) myUserId);
+
+    List<User> myUsers = userDAO.getAllUsersSync();
+    assertEquals(user, myUsers.getLast());
+  }
+
+  @Test
+  public void testGetAllUsers() {
+    List<User> myUsers = userDAO.getAllUsersSync();
+    assertTrue(myUsers.isEmpty());
+
+    long myUserId = userDAO.insert(user);
+    user.setId((int) myUserId);
+
+    User user2 = new User(
+        "user2",
+        "secret2",
+          true);
+
+    user2.setId((int) userDAO.insert(user2));
+
+    myUsers = userDAO.getAllUsersSync();
+    assertTrue(myUsers.containsAll(List.of(user, user2)));
+  }
+
+  @Test
+  public void testUserDelete() {
+    List<User> myUsers = userDAO.getAllUsersSync();
+    assertTrue(myUsers.isEmpty());
+
+    long myUserId = userDAO.insert(user);
+    user.setId((int) myUserId);
+
+    myUsers = userDAO.getAllUsersSync();
+    assertEquals(user, myUsers.getLast());
+
+    userDAO.delete(user);
+    myUsers = userDAO.getAllUsersSync();
+    assertTrue(myUsers.isEmpty());
   }
 }

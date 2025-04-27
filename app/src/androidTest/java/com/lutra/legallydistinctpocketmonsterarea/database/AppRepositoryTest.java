@@ -54,15 +54,19 @@ public class AppRepositoryTest extends TestCase {
 
   @After
   public void tearDown() throws Exception {
+    monsterType = null;
+    userMonster = null;
     repository = null;
   }
 
   @Test
   public void testGetUserMonsterWithTypeById() {
-    int monsterTypeId = (int)repository.insertMonsterType(monsterType);
-    int userMonsterId = (int)repository.insertUserMonster(userMonster);
+    monsterType.setMonsterTypeId((int)repository.insertMonsterType(monsterType));
+    userMonster.setUserMonsterId((int)repository.insertUserMonster(userMonster));
     var monsterEntry = repository.getUserMonsterWithTypeById(MONSTER_ID);
     Log.d("getUserMonsterWithTypeById_Key", monsterEntry.getKey().toString());
     Log.d("getUserMonsterWithTypeById_Value", monsterEntry.getValue().toString());
+    assertEquals(monsterEntry.getKey(), userMonster);
+    assertEquals(monsterEntry.getValue(), monsterType);
   }
 }
