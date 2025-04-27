@@ -15,6 +15,7 @@ import com.lutra.legallydistinctpocketmonsterarea.database.entities.User;
 import com.lutra.legallydistinctpocketmonsterarea.database.entities.UserMonster;
 import com.lutra.legallydistinctpocketmonsterarea.databinding.ActivityAdminEditMonsterBinding;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AdminCreateMonsterActivity extends AppCompatActivity {
 
@@ -64,7 +65,7 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
 
     repository.getAllUsers().observe(this,uL -> {
       userList = uL;
-      List<String>userNames = userList.stream().map(User::getUsername).toList();
+      List<String>userNames = userList.stream().map(User::getUsername).collect(Collectors.toList());
       ArrayAdapter<String> userDataAdapter = new ArrayAdapter<>(
           this, android.R.layout.simple_spinner_item, userNames);
       userDataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
