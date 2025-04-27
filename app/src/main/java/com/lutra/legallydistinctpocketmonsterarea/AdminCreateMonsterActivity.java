@@ -20,8 +20,8 @@ public class AdminCreateMonsterActivity extends AppCompatActivity {
 
   int loggedInUserId;
   public static final String MONSTER_TYPE_ID_KEY = "com.lutra.ldpm.create_monster_type_id_key";
-  private static final String USER_MONSTER_ID_KEY = "com.lutra.ldpm.edit_user_monster_id_key";
-  private static final int ID_DEFAULT = -1;
+  public static final String USER_MONSTER_ID_KEY = "com.lutra.ldpm.edit_user_monster_id_key";
+  public static final int ID_DEFAULT = -1;
   private ActivityAdminEditMonsterBinding binding;
   private AppRepository repository;
   private int monsterTypeId;

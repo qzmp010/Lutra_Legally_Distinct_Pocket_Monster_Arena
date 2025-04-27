@@ -27,6 +27,7 @@ public class AppDatabaseTest extends TestCase {
 
   private static final int NEW_HEALTH = 99;
   private UserMonster userMonster;
+  private MonsterType monsterType;
 
   int userId;
   private User user;
@@ -61,6 +62,15 @@ public class AppDatabaseTest extends TestCase {
             3,
             1,
             -99);
+     monsterType = new MonsterType(
+            "Panther",
+            "I hunt in the dark.",
+            R.drawable.ld_squirtle,
+            21, 16,
+            14, 11,
+            36, 31,
+            UserMonster.ElementalType.NORMAL);
+
 
     mouseyType = new MonsterType(
         "Lightning Mouse",

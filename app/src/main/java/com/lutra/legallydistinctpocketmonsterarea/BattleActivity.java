@@ -8,7 +8,6 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -205,9 +204,8 @@ public class BattleActivity extends AppCompatActivity {
             binding.userMonsterHP.setText(userHP);
             activeMonster = userMonster;
         } else {
-            //TODO: consider splitting this off into another method.
-            String userHP = "0/" + userMonster.getMaxHealth();
-            binding.userMonsterHP.setText(userHP);
+            userMonster.setCurrentHealth(0);
+            binding.userMonsterHP.setText(String.format("%d/%d", userMonster.getCurrentHealth(),userMonster.getMaxHealth()));
             binding.battleDialog.append(String.format("%n\"%s\"%n%s fainted!",
                     userMonster.getPhrase(),userMonster.getNickname()));
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
@@ -219,7 +217,7 @@ public class BattleActivity extends AppCompatActivity {
                 }
             });
             loseDialog = alertBuilder.create();
-            loseDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            loseDialog.getWindow().setGravity(Gravity.BOTTOM);
             loseDialog.show();
         }
 
@@ -300,7 +298,6 @@ public class BattleActivity extends AppCompatActivity {
             });
             winDialog = alertBuilder.create();
             winDialog.getWindow().setGravity(Gravity.BOTTOM);
-            winDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
             winDialog.show();
         }
     }
@@ -353,7 +350,7 @@ public class BattleActivity extends AppCompatActivity {
                 }
             });
             runDialog = alertBuilder.create();
-            runDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            runDialog.getWindow().setGravity(Gravity.BOTTOM);
             runDialog.show();
         }
     }
