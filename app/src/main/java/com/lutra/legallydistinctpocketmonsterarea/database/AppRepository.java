@@ -18,6 +18,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 import kotlin.Triple;
 
 public class AppRepository {
@@ -295,7 +296,7 @@ public class AppRepository {
                           userListLiveData.getValue().stream()
                               .filter(u -> u.getId() == e.getKey().getUserId())
                               .findFirst().orElse(null)
-                      )).toList());
+                      )).collect(Collectors.toList()));
             }
           }
         });
@@ -312,7 +313,7 @@ public class AppRepository {
                       users.stream()
                           .filter(u -> u.getId() == e.getKey().getUserId())
                           .findFirst().orElse(null)
-                  )).toList());
+                  )).collect(Collectors.toList()));
         }
       }
     });
