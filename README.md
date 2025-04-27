@@ -1,7 +1,6 @@
 # Legally Distinct Pocket Monster Arena
 
-A game that allows users to train creatures and have them fight other creatures.
+A game that allows users to capture monsters and have them fight other monsters.
 
-Normal users would be able to choose creatures, train creatures, and battle other creatures
-Admin users would be able to create users, creatures, and arenas
-Admins would also have all the abilities of a normal user
+Normal users would be able to choose a starter monster, view their own monsters, battle other monsters, and capture monsters that they defeat in battle.
+Admin users would be able to create and edit monsters. They also have all the abilities of a normal user.
