@@ -20,6 +20,9 @@ public interface UserDAO {
     void delete(User user);
 
     @Query("SELECT * FROM " + AppDatabase.USER_TABLE + " ORDER BY username")
+    List<User> getAllUsersSync();
+
+    @Query("SELECT * FROM " + AppDatabase.USER_TABLE + " ORDER BY username")
     LiveData<List<User>> getAllUsers();
 
     @Query("DELETE FROM " +AppDatabase.USER_TABLE )
